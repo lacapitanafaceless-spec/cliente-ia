@@ -1,42 +1,193 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Cliente IA Generator</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cliente IA Generator</title>
+
+<style>
+body {
+  background:#0B0B0F;
+  color:#f1f5f9;
+  font-family:sans-serif;
+  margin:0;
+  padding:20px;
+}
+
+h1 { text-align:center; }
+
+.container {
+  max-width:700px;
+  margin:auto;
+}
+
+.box {
+  background:#111116;
+  border:1px solid #2a2a3e;
+  border-radius:10px;
+  padding:20px;
+  margin-top:20px;
+}
+
+input {
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  background:#0B0B0F;
+  border:1px solid #2a2a3e;
+  color:white;
+}
+
+button {
+  width:100%;
+  margin-top:15px;
+  padding:12px;
+  background:#FACC15;
+  border:none;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.pro {
+  color:#FACC15;
+  text-align:center;
+  margin-bottom:10px;
+}
+
+.paywall {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  justify-content:center;
+  align-items:center;
+}
+
+.paywall-box {
+  background:#111116;
+  padding:30px;
+  border-radius:10px;
+  text-align:center;
+  max-width:350px;
+}
+
+.small {
+  font-size:12px;
+  color:#94a3b8;
+}
+</style>
 </head>
-<body class="bg-black text-white p-6">
 
-<h1 class="text-2xl text-purple-500 mb-4">Cliente IA Generator</h1>
+<body>
 
-<button onclick="generar()" class="bg-yellow-400 text-black px-4 py-2 mb-4">
-Generar hooks
-</button>
+<div class="container">
 
-<div id="resultado"></div>
+<h1>Cliente IA Generator</h1>
+
+<div id="proBadge" class="pro"></div>
+
+<div class="box">
+<p><strong>Ejemplo listo 👇</strong></p>
+<p id="demo"></p>
+</div>
+
+<div class="box">
+<input id="nicho" placeholder="Tu nicho (ej: fitness)">
+<button onclick="generate()">⚡ Generar hooks</button>
+</div>
+
+<div class="box" id="output"></div>
+
+<button onclick="handlePurchase()">🔓 Empezar a conseguir clientes por 9€</button>
+
+</div>
+
+<!-- PAYWALL -->
+<div class="paywall" id="paywall">
+  <div class="paywall-box">
+    <h2>Ya has visto cómo funciona ⚡</h2>
+    <p>La mayoría se queda aquí.<br>Los que desbloquean PRO consiguen clientes.</p>
+
+    <p><strong>🔥 Precio sube a 19€ en 48h</strong></p>
+    <p class="small">+137 usuarios desbloquearon PRO esta semana</p>
+
+    <button onclick="handlePurchase()">🔓 Empezar a conseguir clientes por 9€</button>
+    <button onclick="closePaywall()">Seguir gratis</button>
+  </div>
+</div>
 
 <script>
-let usado = false;
+let uses = 3;
+let isPro = false;
 
-function generar() {
-  if (usado) {
-    document.getElementById(\"resultado\").innerHTML = `
-      <p>🚫 Has alcanzado el límite</p>
-      <button>Desbloquear por 9€</button>
-    `;
-    return;
+// INIT
+function init(){
+  document.getElementById("demo").innerText =
+  "Este error te está haciendo perder clientes sin darte cuenta";
+
+  checkPro();
+}
+
+// CHECK PRO
+function checkPro(){
+  if(localStorage.getItem("proUser")==="true"){
+    activatePro();
   }
 
-  usado = true;
+  if(localStorage.getItem("pendingPro")==="true"){
+    localStorage.setItem("proUser","true");
+    localStorage.removeItem("pendingPro");
+    activatePro();
+    alert("PRO activado 🚀");
+  }
+}
 
-  document.getElementById(\"resultado\").innerHTML = `
-    <p>🔥 Cómo conseguir clientes en 7 días</p>
-    <p>💰 El mensaje que convierte</p>
-    <p>🚀 Sistema oculto</p>
-    <p style=\"filter: blur(4px)\">⚡ Hook secreto 1</p>
-    <p style=\"filter: blur(4px)\">⚡ Hook secreto 2</p>
+// ACTIVATE PRO
+function activatePro(){
+  isPro = true;
+  uses = 999;
+  document.getElementById("proBadge").innerText="PRO ACTIVO";
+}
+
+// GENERATE
+function generate(){
+  if(!isPro){
+    uses--;
+    if(uses < 0){
+      showPaywall();
+      return;
+    }
+  }
+
+  document.getElementById("output").innerHTML = `
+  <p>1. Este error está bloqueando tus resultados</p>
+  <p>2. Nadie te cuenta esto sobre tu nicho</p>
+  <p>3. Así consigues clientes sin esfuerzo</p>
+
+  <hr>
+
+  <p>💰 Este contenido puede generarte clientes si lo publicas hoy</p>
+  <p>👉 Publica esto hoy y revisa tus DMs mañana</p>
+  <p class="small">Paso 1 completado — ahora conviértelo en clientes</p>
   `;
 }
+
+// PAYWALL
+function showPaywall(){
+  document.getElementById("paywall").style.display="flex";
+}
+
+function closePaywall(){
+  document.getElementById("paywall").style.display="none";
+}
+
+// PAYMENT
+function handlePurchase(){
+  localStorage.setItem("pendingPro","true");
+  window.location.href="https://beacons.ai/lacapitanafaceless/pro";
+}
+
+init();
 </script>
 
 </body>
