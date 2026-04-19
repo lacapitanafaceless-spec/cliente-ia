@@ -98,7 +98,7 @@ button {
 
 <div class="box" id="output"></div>
 
-<button onclick="handlePurchase()">🔓 Empezar a conseguir clientes por 9€</button>
+<button onclick="handlePurchase()">🔥 Conseguir mis primeros clientes con IA — 9€</button>
 
 </div>
 
@@ -111,7 +111,7 @@ button {
     <p><strong>🔥 Precio sube a 19€ en 48h</strong></p>
     <p class="small">+137 usuarios desbloquearon PRO esta semana</p>
 
-    <button onclick="handlePurchase()">🔓 Empezar a conseguir clientes por 9€</button>
+    <button onclick="handlePurchase()">🔥 Conseguir clientes ahora — 9€</button>
     <button onclick="closePaywall()">Seguir gratis</button>
   </div>
 </div>
@@ -128,17 +128,20 @@ function init(){
   checkPro();
 }
 
-// CHECK PRO
+// CHECK PRO (CORREGIDO)
 function checkPro(){
-  if(localStorage.getItem("proUser")==="true"){
-    activatePro();
+  const urlParams = new URLSearchParams(window.location.search);
+
+  // SOLO activa PRO si viene de pago real
+  if(urlParams.get("success") === "true"){
+    localStorage.setItem("proUser","true");
+
+    // limpia la URL
+    window.history.replaceState({}, document.title, window.location.pathname);
   }
 
-  if(localStorage.getItem("pendingPro")==="true"){
-    localStorage.setItem("proUser","true");
-    localStorage.removeItem("pendingPro");
+  if(localStorage.getItem("proUser")==="true"){
     activatePro();
-    alert("PRO activado 🚀");
   }
 }
 
@@ -181,9 +184,8 @@ function closePaywall(){
   document.getElementById("paywall").style.display="none";
 }
 
-// PAYMENT
+// PAYMENT (BEACONS)
 function handlePurchase(){
-  localStorage.setItem("pendingPro","true");
   window.location.href="https://beacons.ai/lacapitanafaceless/pro";
 }
 
