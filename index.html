@@ -3,55 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cliente IA Generator</title>
+<title>Cliente IA</title>
 
 <style>
 body {
   background:#0B0B0F;
-  color:#f1f5f9;
+  color:white;
   font-family:sans-serif;
-  margin:0;
+  text-align:center;
   padding:20px;
 }
 
-h1 { text-align:center; }
-
 .container {
-  max-width:700px;
+  max-width:500px;
   margin:auto;
 }
 
-.box {
-  background:#111116;
-  border:1px solid #2a2a3e;
-  border-radius:10px;
-  padding:20px;
-  margin-top:20px;
+h1 {
+  font-size:24px;
 }
 
-input {
+.sub {
+  color:#a78bfa;
+  font-size:14px;
+}
+
+input, select {
   width:100%;
-  padding:10px;
+  padding:12px;
   margin-top:10px;
-  background:#0B0B0F;
+  background:#111116;
   border:1px solid #2a2a3e;
   color:white;
+  border-radius:8px;
 }
 
 button {
   width:100%;
+  padding:14px;
   margin-top:15px;
-  padding:12px;
   background:#FACC15;
   border:none;
   font-weight:bold;
   cursor:pointer;
+  border-radius:8px;
 }
 
-.pro {
-  color:#FACC15;
-  text-align:center;
-  margin-bottom:10px;
+.result {
+  margin-top:20px;
+  background:#111116;
+  padding:20px;
+  border-radius:10px;
+  border:1px solid #2a2a3e;
 }
 
 .paywall {
@@ -71,9 +74,9 @@ button {
   max-width:350px;
 }
 
-.small {
-  font-size:12px;
-  color:#94a3b8;
+.lock {
+  color:#FACC15;
+  font-weight:bold;
 }
 </style>
 </head>
@@ -82,114 +85,100 @@ button {
 
 <div class="container">
 
-<h1>Cliente IA Generator</h1>
+<h1>Consigue clientes con IA</h1>
+<p class="sub">Sin anuncios. Sin experiencia.</p>
 
-<div id="proBadge" class="pro"></div>
+<select id="nicho">
+<option>Fitness</option>
+<option>Marketing</option>
+<option>Coaching</option>
+<option>Ecommerce</option>
+</select>
 
-<div class="box">
-<p><strong>Ejemplo listo 👇</strong></p>
-<p id="demo"></p>
-</div>
+<input id="producto" placeholder="Tu producto">
+<input id="precio" placeholder="Precio ($)">
 
-<div class="box">
-<input id="nicho" placeholder="Tu nicho (ej: fitness)">
-<button onclick="generate()">⚡ Generar hooks</button>
-</div>
+<button onclick="generar()">⚡ Generar cliente</button>
 
-<div class="box" id="output"></div>
+<div id="resultado" class="result" style="display:none;"></div>
 
-<button onclick="handlePurchase()">🔥 Conseguir mis primeros clientes con IA — 9€</button>
+<button onclick="irPago()">🔥 Unlock full system — $19</button>
+
+<p class="sub">+127 personas ya generaron clientes hoy</p>
 
 </div>
 
 <!-- PAYWALL -->
 <div class="paywall" id="paywall">
   <div class="paywall-box">
-    <h2>Ya has visto cómo funciona ⚡</h2>
-    <p>La mayoría se queda aquí.<br>Los que desbloquean PRO consiguen clientes.</p>
+    <h2>🔒 Acceso limitado</h2>
+    <p>Ya has probado el sistema.<br>Desbloquea acceso completo.</p>
 
-    <p><strong>🔥 Precio sube a 19€ en 48h</strong></p>
-    <p class="small">+137 usuarios desbloquearon PRO esta semana</p>
-
-    <button onclick="handlePurchase()">🔥 Conseguir clientes ahora — 9€</button>
-    <button onclick="closePaywall()">Seguir gratis</button>
+    <button onclick="irPago()">🔥 Desbloquear ahora — $19</button>
+    <button onclick="cerrarPaywall()">Seguir gratis</button>
   </div>
 </div>
 
 <script>
-let uses = 3;
-let isPro = false;
+let usos = 1;
+let pro = false;
 
-// INIT
-function init(){
-  document.getElementById("demo").innerText =
-  "Este error te está haciendo perder clientes sin darte cuenta";
-
-  checkPro();
-}
-
-// CHECK PRO (CORREGIDO)
+// CHECK PRO DESDE URL
 function checkPro(){
-  const urlParams = new URLSearchParams(window.location.search);
+  const url = new URLSearchParams(window.location.search);
 
-  // SOLO activa PRO si viene de pago real
-  if(urlParams.get("success") === "true"){
+  if(url.get("success") === "true"){
     localStorage.setItem("proUser","true");
-
-    // limpia la URL
     window.history.replaceState({}, document.title, window.location.pathname);
   }
 
   if(localStorage.getItem("proUser")==="true"){
-    activatePro();
+    activarPro();
   }
 }
 
-// ACTIVATE PRO
-function activatePro(){
-  isPro = true;
-  uses = 999;
-  document.getElementById("proBadge").innerText="PRO ACTIVO";
+// ACTIVAR PRO
+function activarPro(){
+  pro = true;
+  usos = 999;
 }
 
-// GENERATE
-function generate(){
-  if(!isPro){
-    uses--;
-    if(uses < 0){
-      showPaywall();
+// GENERAR
+function generar(){
+
+  if(!pro){
+    usos--;
+    if(usos < 0){
+      document.getElementById("paywall").style.display="flex";
       return;
     }
   }
 
-  document.getElementById("output").innerHTML = `
-  <p>1. Este error está bloqueando tus resultados</p>
-  <p>2. Nadie te cuenta esto sobre tu nicho</p>
-  <p>3. Así consigues clientes sin esfuerzo</p>
+  document.getElementById("resultado").style.display="block";
+
+  document.getElementById("resultado").innerHTML = `
+  <p><strong>🎯 Contenido:</strong> "Este error está frenando tus resultados"</p>
+  <p><strong>💬 DM:</strong> "Hey, vi que quieres mejorar tus resultados..."</p>
+  <p><strong>💰 Resultado:</strong> 1-3 clientes potenciales en 24h</p>
 
   <hr>
 
-  <p>💰 Este contenido puede generarte clientes si lo publicas hoy</p>
-  <p>👉 Publica esto hoy y revisa tus DMs mañana</p>
-  <p class="small">Paso 1 completado — ahora conviértelo en clientes</p>
+  <p class="lock">🔒 Desbloquea el sistema completo para generar clientes cada día</p>
   `;
 }
 
-// PAYWALL
-function showPaywall(){
-  document.getElementById("paywall").style.display="flex";
+// PAGO → SYSTEME
+function irPago(){
+  window.location.href="https://www.lacapitanafaceless.com/cf82f970";
 }
 
-function closePaywall(){
+// CERRAR PAYWALL
+function cerrarPaywall(){
   document.getElementById("paywall").style.display="none";
 }
 
-// PAYMENT (BEACONS)
-function handlePurchase(){
-  window.location.href="https://beacons.ai/lacapitanafaceless/pro";
-}
-
-init();
+// INIT
+checkPro();
 </script>
 
 </body>
