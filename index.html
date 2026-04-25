@@ -55,6 +55,12 @@ button {
   font-weight:bold;
 }
 
+.pro-badge {
+  text-align:center;
+  color:#FACC15;
+  font-weight:bold;
+}
+
 .paywall {
   display:none;
   position:fixed;
@@ -84,6 +90,8 @@ button {
 <div class="container">
 
 <h1>🚀 Cliente IA Generator</h1>
+
+<div id="proBadge" class="pro-badge"></div>
 
 <div class="box">
 <p><strong>Simulación en tiempo real 👇</strong></p>
@@ -137,11 +145,13 @@ function checkPro(){
 
   if(localStorage.getItem("pro")==="yes"){
     isPro = true;
+    document.getElementById("proBadge").innerText = "🟣 PRO ACTIVADO";
   }
 }
 
 // GENERATE
 function generate(){
+
   if(!isPro && used){
     showPaywall();
     return;
@@ -158,29 +168,70 @@ function generate(){
   const ingresoMin = ventas * precio;
   const ingresoMax = ingresoMin * 2;
 
-  document.getElementById("output").innerHTML = `
-  <p>📊 <strong>Simulación realista:</strong></p>
+  // 🟣 PRO VERSION
+  if(isPro){
 
-  <p>→ Alcance: ${alcance}</p>
-  <p>→ Leads: ${leads}</p>
-  <p>→ Ventas: ${ventas}</p>
+    document.getElementById("output").innerHTML = `
+    <p>🔥 Hooks optimizados:</p>
+    <p>1. Este error está bloqueando tus resultados</p>
+    <p>2. Nadie te cuenta esto sobre tu nicho</p>
+    <p>3. Así consigues clientes sin esfuerzo</p>
 
-  <hr>
+    <hr>
 
-  <p class="highlight">
-  💰 Ingresos estimados: $${ingresoMin} - $${ingresoMax}
-  </p>
+    <p>💬 Mensaje DM listo:</p>
+    <p>"Hey! He visto tu perfil y creo que esto puede ayudarte a conseguir clientes rápido. ¿Te interesa que te explique?"</p>
 
-  <p class="small">
-  ⚠️ Esto es lo que estás perdiendo cada día sin contenido optimizado
-  </p>
+    <hr>
 
-  <hr>
+    <p>📈 Plan de acción:</p>
+    <p>1. Publica hoy este contenido</p>
+    <p>2. Responde TODOS los comentarios</p>
+    <p>3. Usa el mensaje DM</p>
 
-  <p class="small">
-  Has desbloqueado solo el 10% del sistema
-  </p>
-  `;
+    <hr>
+
+    <p class="highlight">
+    💰 Ingresos estimados: $${ingresoMin*2} - $${ingresoMax*2}
+    </p>
+
+    <p class="small">
+    🚀 Esto es lo que puedes generar aplicándolo hoy
+    </p>
+    `;
+
+  } else {
+
+  // 🟡 FREE VERSION
+
+    document.getElementById("output").innerHTML = `
+    <p>📊 <strong>Simulación realista:</strong></p>
+
+    <p>→ Alcance: ${alcance}</p>
+    <p>→ Leads: ${leads}</p>
+    <p>→ Ventas: ${ventas}</p>
+
+    <hr>
+
+    <p class="highlight">
+    💰 Ingresos estimados: $${ingresoMin} - $${ingresoMax}
+    </p>
+
+    <p class="small">
+    ⚠️ Esto es lo que estás perdiendo cada día sin contenido optimizado
+    </p>
+
+    <hr>
+
+    <p class="small">
+    ⛔ Has desbloqueado solo el 10% del sistema
+    </p>
+
+    <p style="color:#FACC15; font-weight:bold;">
+    🔥 23 personas han desbloqueado PRO hoy
+    </p>
+    `;
+  }
 }
 
 // PAYWALL
@@ -197,6 +248,7 @@ function goCheckout(){
   window.location.href="https://www.lacapitanafaceless.com/cf82f970";
 }
 
+// INIT
 checkPro();
 </script>
 
