@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carousel Lab VIP | by lacapitanafaceless</title>
 
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -40,15 +40,15 @@
     </script>
     
     <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Montserrat:wght@400;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- HTML2Canvas para Exportación HD PNG 1080x1350 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- HTML2Canvas para Exportación HD PNG -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <style>
         :root {
@@ -78,7 +78,7 @@
         ::-webkit-scrollbar-thumb { background: #4c1d95; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #eab308; }
 
-        /* Paneles Glassmorphism de Lujo */
+        /* Paneles Glassmorphism VIP */
         .glass-panel-vip {
             background: rgba(15, 7, 28, 0.85);
             backdrop-filter: blur(24px);
@@ -87,15 +87,10 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
         }
 
-        .glass-panel-soft {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-        }
-
-        /* Aspect Ratios dinámicos */
-        .ratio-4-5 { aspect-ratio: 4 / 5; max-height: 570px; }
-        .ratio-9-16 { aspect-ratio: 9 / 16; max-height: 570px; }
-        .ratio-1-1 { aspect-ratio: 1 / 1; max-height: 520px; }
+        /* Aspect Ratios Dinámicos */
+        .ratio-4-5 { aspect-ratio: 4 / 5; max-height: 560px; }
+        .ratio-1-1 { aspect-ratio: 1 / 1; max-height: 500px; }
+        .ratio-9-16 { aspect-ratio: 9 / 16; max-height: 580px; }
 
         /* Render Target Oculto HD */
         .export-render-target {
@@ -107,7 +102,7 @@
             z-index: -100;
         }
 
-        /* Botón e insignias con reflejo metálico */
+        /* Gradientes y Botones Gold */
         .gold-gradient-text {
             background: linear-gradient(135deg, #fffbeb 0%, #fde047 30%, #eab308 70%, #ca8a04 100%);
             -webkit-background-clip: text;
@@ -129,11 +124,10 @@
             box-shadow: 0 0 15px rgba(234, 179, 8, 0.15);
         }
 
-        /* Resaltado de texto automático con corchetes {palabra} */
         .highlight-gold {
             color: #fde047;
             font-weight: 900;
-            text-shadow: 0 0 12px rgba(234, 179, 8, 0.5);
+            text-shadow: 0 0 12px rgba(234, 179, 8, 0.4);
         }
     </style>
 </head>
@@ -233,7 +227,7 @@
                     </div>
 
                     <div id="slides-tabs-container" class="flex gap-2.5 overflow-x-auto pb-2 scrollbar-thin">
-                        <!-- Generado por JS -->
+                        <!-- Generado dinámicamente por JS -->
                     </div>
                 </div>
 
@@ -306,13 +300,15 @@
                                 <option value="fa-lock">🔒 Secreto Exclusivo</option>
                                 <option value="fa-coins">💰 Monetización Faceless</option>
                                 <option value="fa-brain">🧠 Mentalidad Millonaria</option>
+                                <option value="fa-lightbulb">💡 Idea de Negocio</option>
+                                <option value="fa-chart-line">📈 Crecimiento Acelerado</option>
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- PESTAÑA IA: GENERADOR DE PROMPTS & IMPORTADOR CLAUDE / CHATGPT -->
+            <!-- PESTAÑA 2: GENERADOR IA (SIN API KEY) -->
             <div id="tab-section-ai" class="space-y-6 hidden">
                 <div class="glass-panel-vip p-5 rounded-2xl space-y-5">
                     
@@ -372,7 +368,64 @@
                 </div>
             </div>
 
-            <!-- PESTAÑA 3: ESTILOS & FONDO -->
+            <!-- PESTAÑA 3: ESTILOS, FONDOS & MARCA -->
+            <div id="tab-section-style" class="space-y-6 hidden">
+                <div class="glass-panel-vip p-5 rounded-2xl space-y-5">
+                    
+                    <!-- Aspect Ratio Selector -->
+                    <div>
+                        <label class="block text-xs font-extrabold text-purple-200 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-crop-simple text-amber-400"></i> Formato de Proporción (Aspect Ratio)
+                        </label>
+                        <div class="grid grid-cols-3 gap-3">
+                            <button onclick="setAspectRatio('4-5')" id="ratio-btn-4-5" class="py-2.5 px-3 rounded-xl border border-amber-400 bg-amber-500/20 text-amber-300 font-bold text-xs transition flex flex-col items-center gap-1">
+                                <i class="fa-solid fa-mobile-screen"></i> 4:5 Feed (1080x1350)
+                            </button>
+                            <button onclick="setAspectRatio('1-1')" id="ratio-btn-1-1" class="py-2.5 px-3 rounded-xl border border-purple-800 bg-purple-950/60 text-purple-300 font-semibold text-xs transition flex flex-col items-center gap-1">
+                                <i class="fa-solid fa-square"></i> 1:1 Cuadrado (1080x1080)
+                            </button>
+                            <button onclick="setAspectRatio('9-16')" id="ratio-btn-9-16" class="py-2.5 px-3 rounded-xl border border-purple-800 bg-purple-950/60 text-purple-300 font-semibold text-xs transition flex flex-col items-center gap-1">
+                                <i class="fa-solid fa-mobile text-sm"></i> 9:16 Story (1080x1920)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preset Gradient Themes -->
+                    <div>
+                        <label class="block text-xs font-extrabold text-purple-200 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-wand-magic text-amber-400"></i> Temas de Fondo VIP
+                        </label>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                            <button onclick="setBgTheme('obsidian')" class="p-2.5 rounded-xl border border-amber-500/40 bg-gradient-to-br from-purple-950 to-gray-950 text-left text-xs font-bold text-white hover:border-amber-400 transition">
+                                🌌 Noche Imperial
+                            </button>
+                            <button onclick="setBgTheme('purple-gold')" class="p-2.5 rounded-xl border border-purple-700 bg-gradient-to-br from-purple-900 to-amber-950 text-left text-xs font-bold text-amber-300 hover:border-amber-400 transition">
+                                👑 Púrpura Dorado
+                            </button>
+                            <button onclick="setBgTheme('emerald')" class="p-2.5 rounded-xl border border-emerald-800 bg-gradient-to-br from-emerald-950 to-gray-950 text-left text-xs font-bold text-emerald-300 hover:border-amber-400 transition">
+                                💎 Lujo Esmeralda
+                            </button>
+                            <button onclick="setBgTheme('minimal-dark')" class="p-2.5 rounded-xl border border-gray-800 bg-gradient-to-br from-gray-900 to-black text-left text-xs font-bold text-gray-200 hover:border-amber-400 transition">
+                                🖤 Negro Azabache
+                            </button>
+                            <button onclick="setBgTheme('mystic')" class="p-2.5 rounded-xl border border-indigo-800 bg-gradient-to-br from-indigo-950 via-purple-950 to-slate-950 text-left text-xs font-bold text-indigo-300 hover:border-amber-400 transition">
+                                🔮 Degradado Místico
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Color Customization -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-purple-900/40">
+                        <div>
+                            <label class="block text-xs font-semibold text-purple-300 mb-1.5">Color Primario</label>
+                            <div class="flex items-center gap-2 bg-purple-950 border border-purple-800 rounded-xl p-1.5">
+                                <input type="color" id="primary-color-picker" value="#581c87" onchange="updateBrandConfig('primaryColor', this.value)" class="w-7 h-7 rounded border-0 cursor-pointer bg-transparent">
+                                <input type="text" id="primary-color-text" value="#581c87" onchange="updateBrandConfig('primaryColor', this.value)" class="w-full bg-transparent text-xs text-gray-200 uppercase font-mono">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-purple-300 mb-1.5">Color Acento (Gold)</label>
                             <div class="flex items-center gap-2 bg-purple-950 border border-purple-800 rounded-xl p-1.5">
                                 <input type="color" id="secondary-color-picker" value="#eab308" onchange="updateBrandConfig('secondaryColor', this.value)" class="w-7 h-7 rounded border-0 cursor-pointer bg-transparent">
                                 <input type="text" id="secondary-color-text" value="#eab308" onchange="updateBrandConfig('secondaryColor', this.value)" class="w-full bg-transparent text-xs text-gray-200 uppercase font-mono">
@@ -404,7 +457,7 @@
                 </div>
             </div>
 
-            <!-- PESTAÑA 3: BIBLIOTECA DE HOOKS VIRALES (FOMO & CONVERSIÓN) -->
+            <!-- PESTAÑA 4: BIBLIOTECA DE HOOKS VIRALES -->
             <div id="tab-section-hooks" class="space-y-6 hidden">
                 <div class="glass-panel-vip p-5 rounded-2xl space-y-4">
                     <div class="flex items-center justify-between border-b border-purple-900/40 pb-3">
@@ -444,7 +497,7 @@
                 </div>
             </div>
 
-            <!-- PESTAÑA 4: CAPTION GENERATOR -->
+            <!-- PESTAÑA 5: CAPTION GENERATOR -->
             <div id="tab-section-caption" class="space-y-6 hidden">
                 <div class="glass-panel-vip p-5 rounded-2xl space-y-3">
                     <div class="flex items-center justify-between border-b border-purple-900/40 pb-3">
@@ -509,7 +562,7 @@
                                     Descubre el paso a paso estratégico para monetizar tu cuenta usando contenido faceless de alto impacto.
                                 </p>
                                 <div id="preview-cta-box" class="pt-2">
-                                    <div id="preview-cta-text" class="inline-block px-4 py-2 rounded-xl text-gray-950 font-black text-xs shadow-xl">
+                                    <div id="preview-cta-text" class="inline-block px-4 py-2 rounded-xl text-gray-950 font-black text-xs shadow-xl" style="background: linear-gradient(135deg, #fde047, #eab308);">
                                         GUARDA ESTE POST 📌
                                     </div>
                                 </div>
@@ -595,7 +648,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE FUNCIONALIDAD -->
+    <!-- SCRIPT DE FUNCIONALIDAD COMPLETO CORREGIDO -->
     <script>
         let slides = [
             {
@@ -639,7 +692,7 @@
                 layout: 'cta',
                 badge: 'ÚNETE HOY 🔥',
                 title: '¿Lista para escalar tu {marca faceless}?',
-                body: 'Comenta la palabra {"EMPEZAR"} abajo y te envío la guía paso a paso directamente a tus mensajes privados.',
+                body: 'Comenta la palabra EMPEZAR abajo y te envío la guía paso a paso directamente a tus mensajes privados.',
                 ctaText: 'SÍGUEME @lacapitanafaceless 👑',
                 icon: 'fa-crown'
             }
@@ -682,94 +735,81 @@
             });
         }
 
-        function copyAIMasterPrompt() {
-            const topic = document.getElementById('ai-topic-input').value.trim() || 'Monetización de cuentas faceless en Instagram';
-            
-            const promptText = `Actúa como un experto estratega de contenido Faceless y copywriting de alto impacto para Instagram (@lacapitanafaceless).
-Crea un carrusel de 5 diapositivas sobre el siguiente tema: "${topic}".
+        function renderTabs() {
+            const container = document.getElementById('slides-tabs-container');
+            const badgeCount = document.getElementById('slide-count-badge');
+            if (!container) return;
 
-Reglas estrictas de formato:
-1. Responde ÚNICAMENTE con un array de JSON válido en formato de código raw.
-2. Cada objeto debe tener estas claves: "badge", "title", "body", "ctaText", "icon".
-3. En los campos "title" y "body", encierra entre llaves {palabras} las 1 o 2 palabras clave más potentes que deban resaltarse en color Oro.
-4. "icon" debe ser un icono de FontAwesome válido (ej: "fa-crown", "fa-fire", "fa-rocket", "fa-brain", "fa-gem").
+            badgeCount.textContent = slides.length;
+            container.innerHTML = '';
 
-Ejemplo de estructura JSON esperada:
-[
-  {
-    "badge": "DESLIZA ➡️",
-    "title": "Cómo generar {$1,000/mes} sin mostrar tu cara",
-    "body": "Estrategia probada para crear una marca {faceless} rentable en 2026.",
-    "ctaText": "GUARDA ESTE POST 📌",
-    "icon": "fa-crown"
-  },
-  {
-    "badge": "PASO 01 💡",
-    "title": "Especialízate en un {Nicho de Alto Valor}",
-    "body": "Elige temas como finanzas, marketing digital o crecimiento personal.",
-    "ctaText": "SIGUIENTE SLIDE ➡️",
-    "icon": "fa-rocket"
-  }
-]`;
-
-            const dummyArea = document.createElement('textarea');
-            dummyArea.value = promptText;
-            document.body.appendChild(dummyArea);
-            dummyArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(dummyArea);
-
-            showToast('¡Prompt copiado! Pásalo a Claude o ChatGPT.');
+            slides.forEach((slide, idx) => {
+                const btn = document.createElement('button');
+                btn.onclick = () => selectSlide(idx);
+                
+                const isActive = idx === currentSlideIndex;
+                btn.className = `flex-shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 border ${
+                    isActive 
+                    ? 'bg-amber-500/20 text-amber-300 border-amber-400/80 shadow-lg' 
+                    : 'bg-purple-950/50 text-purple-300 border-purple-800/60 hover:border-purple-600'
+                }`;
+                btn.innerHTML = `<span class="w-4 h-4 rounded-full bg-purple-900 border border-purple-700 flex items-center justify-center text-[10px] ${isActive ? 'bg-amber-500 text-gray-950 font-black' : ''}">${idx + 1}</span> Slide ${idx + 1}`;
+                container.appendChild(btn);
+            });
         }
 
-        function importAISlides() {
-            const raw = document.getElementById('ai-import-json').value.trim();
-            if (!raw) {
-                showToast('Por favor pega la respuesta de Claude o ChatGPT.');
-                return;
+        function selectSlide(idx) {
+            if (idx >= 0 && idx < slides.length) {
+                currentSlideIndex = idx;
+                renderTabs();
+                loadSlideToEditor();
+                updatePreview();
             }
+        }
 
-            try {
-                let parsed = null;
-                // Intento de extracción de JSON
-                const jsonMatch = raw.match(/\[\s*\{[\s\S]*\}\s*\]/);
-                if (jsonMatch) {
-                    parsed = JSON.parse(jsonMatch[0]);
-                } else {
-                    parsed = JSON.parse(raw);
-                }
+        function loadSlideToEditor() {
+            const slide = slides[currentSlideIndex];
+            if (!slide) return;
 
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                    slides = parsed.map((item, idx) => ({
-                        id: Date.now() + idx,
-                        layout: idx === 0 ? 'cover' : (idx === parsed.length - 1 ? 'cta' : 'standard'),
-                        badge: item.badge || `SLIDE 0${idx + 1}`,
-                        title: item.title || `Diapositiva ${idx + 1}`,
-                        body: item.body || '',
-                        ctaText: item.ctaText || 'DESLIZA ➡️',
-                        icon: item.icon || 'fa-crown'
-                    }));
+            document.getElementById('current-slide-num').textContent = currentSlideIndex + 1;
+            document.getElementById('editor-layout').value = slide.layout || 'standard';
+            document.getElementById('editor-badge').value = slide.badge || '';
+            document.getElementById('editor-title').value = slide.title || '';
+            document.getElementById('editor-body').value = slide.body || '';
+            document.getElementById('editor-ctaText').value = slide.ctaText || '';
+            document.getElementById('editor-icon').value = slide.icon || 'fa-crown';
+        }
 
-                    currentSlideIndex = 0;
-                    renderTabs();
-                    loadSlideToEditor();
-                    updatePreview();
-                    generateCaptionText();
-                    switchEditorTab('content');
-                    showToast(`¡Exito! Se importaron ${slides.length} diapositivas.`);
-                } else {
-                    throw new Error('El formato no es una lista de diapositivas válida.');
-                }
-            } catch (err) {
-                console.error(err);
-                showToast('Error al procesar el JSON. Asegúrate de copiar la lista devuelta por la IA.');
+        function updateSlideData(key, value) {
+            if (!slides[currentSlideIndex]) return;
+            slides[currentSlideIndex][key] = value;
+            updatePreview();
+            generateCaptionText();
+        }
+
+        function navigateSlide(direction) {
+            let target = currentSlideIndex + direction;
+            if (target >= 0 && target < slides.length) {
+                selectSlide(target);
             }
+        }
+
+        function moveSlide(direction) {
+            let target = currentSlideIndex + direction;
+            if (target < 0 || target >= slides.length) return;
+            
+            const temp = slides[currentSlideIndex];
+            slides[currentSlideIndex] = slides[target];
+            slides[target] = temp;
+
+            selectSlide(target);
+            showToast('Orden de diapositivas actualizado');
         }
 
         function addNewSlide() {
             const newId = slides.length + 1;
             slides.push({
-                id: newId,
+                id: Date.now(),
                 layout: 'standard',
                 badge: `PASO 0${newId} ✨`,
                 title: `Nuevo Titular {Slide ${newId}}`,
@@ -829,7 +869,7 @@ Ejemplo de estructura JSON esperada:
                     layout: 'cta',
                     badge: 'ÚNETE HOY 🔥',
                     title: '¿Lista para escalar tu {marca faceless}?',
-                    body: 'Comenta la palabra {"EMPEZAR"} abajo y te envío la guía paso a paso directamente a tus mensajes privados.',
+                    body: 'Comenta la palabra EMPEZAR abajo y te envío la guía paso a paso directamente a tus mensajes privados.',
                     ctaText: 'SÍGUEME @lacapitanafaceless 👑',
                     icon: 'fa-crown'
                 }
@@ -841,8 +881,205 @@ Ejemplo de estructura JSON esperada:
             showToast('Carrusel restaurado exitosamente');
         }
 
+        function copyAIMasterPrompt() {
+            try {
+                const topic = document.getElementById('ai-topic-input').value.trim() || 'Monetización de cuentas faceless en Instagram';
+                
+                const promptText = `Actúa como un experto estratega de contenido Faceless y copywriting de alto impacto para Instagram (@lacapitanafaceless).
+Crea un carrusel de 5 diapositivas sobre el siguiente tema: "${topic}".
+
+Reglas estrictas de formato:
+1. Responde ÚNICAMENTE con un array de JSON válido en formato de código raw.
+2. Cada objeto debe tener estas claves: "badge", "title", "body", "ctaText", "icon".
+3. En los campos "title" y "body", encierra entre llaves {palabras} las 1 o 2 palabras clave más potentes que deban resaltarse en color Oro.
+4. "icon" debe ser un icono de FontAwesome válido (ej: "fa-crown", "fa-fire", "fa-rocket", "fa-brain", "fa-gem").
+
+Ejemplo de estructura JSON esperada:
+[
+  {
+    "badge": "DESLIZA ➡️",
+    "title": "Cómo generar {$1,000/mes} sin mostrar tu cara",
+    "body": "Estrategia probada para crear una marca {faceless} rentable en 2026.",
+    "ctaText": "GUARDA ESTE POST 📌",
+    "icon": "fa-crown"
+  },
+  {
+    "badge": "PASO 01 💡",
+    "title": "Especialízate en un {Nicho de Alto Valor}",
+    "body": "Elige temas como finanzas, marketing digital o crecimiento personal.",
+    "ctaText": "SIGUIENTE SLIDE ➡️",
+    "icon": "fa-rocket"
+  }
+]`;
+
+                const dummyArea = document.createElement('textarea');
+                dummyArea.value = promptText;
+                document.body.appendChild(dummyArea);
+                dummyArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(dummyArea);
+
+                showToast('¡Prompt copiado! Pásalo a Claude, ChatGPT o DeepSeek.');
+            } catch (err) {
+                console.error(err);
+                showToast('Error al copiar el prompt.');
+            }
+        }
+
+        function importAISlides() {
+            const raw = document.getElementById('ai-import-json').value.trim();
+            if (!raw) {
+                showToast('Por favor pega la respuesta de Claude o ChatGPT.');
+                return;
+            }
+
+            try {
+                let parsed = null;
+                const jsonMatch = raw.match(/\[\s*\{[\s\S]*\}\s*\]/);
+                if (jsonMatch) {
+                    parsed = JSON.parse(jsonMatch[0]);
+                } else {
+                    parsed = JSON.parse(raw);
+                }
+
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    slides = parsed.map((item, idx) => ({
+                        id: Date.now() + idx,
+                        layout: idx === 0 ? 'cover' : (idx === parsed.length - 1 ? 'cta' : 'standard'),
+                        badge: item.badge || `SLIDE 0${idx + 1}`,
+                        title: item.title || `Diapositiva ${idx + 1}`,
+                        body: item.body || '',
+                        ctaText: item.ctaText || 'DESLIZA ➡️',
+                        icon: item.icon || 'fa-crown'
+                    }));
+
+                    currentSlideIndex = 0;
+                    renderTabs();
+                    loadSlideToEditor();
+                    updatePreview();
+                    generateCaptionText();
+                    switchEditorTab('content');
+                    showToast(`¡Éxito! Se importaron ${slides.length} diapositivas.`);
+                } else {
+                    throw new Error('El formato no es una lista de diapositivas válida.');
+                }
+            } catch (err) {
+                console.error(err);
+                showToast('Error al procesar el JSON. Copia la lista completa de la IA.');
+            }
+        }
+
         function loadViralTemplatePrompt() {
             applyHookTemplate('El Secreto Faceless que te hará generar {$1,000} este mes');
+        }
+
+        function applyHookTemplate(templateTitle) {
+            updateSlideData('title', templateTitle);
+            document.getElementById('editor-title').value = templateTitle;
+            switchEditorTab('content');
+            showToast('¡Hook aplicado a la diapositiva actual!');
+        }
+
+        function updateBrandConfig(key, value) {
+            brandConfig[key] = value;
+            if (key === 'primaryColor') {
+                document.getElementById('primary-color-picker').value = value;
+                document.getElementById('primary-color-text').value = value;
+            } else if (key === 'secondaryColor') {
+                document.getElementById('secondary-color-picker').value = value;
+                document.getElementById('secondary-color-text').value = value;
+            }
+            updatePreview();
+        }
+
+        function setAspectRatio(ratio) {
+            currentAspectRatio = ratio;
+            ['4-5', '1-1', '9-16'].forEach(r => {
+                const btn = document.getElementById(`ratio-btn-${r}`);
+                if (!btn) return;
+                if (r === ratio) {
+                    btn.className = 'py-2.5 px-3 rounded-xl border border-amber-400 bg-amber-500/20 text-amber-300 font-bold text-xs transition flex flex-col items-center gap-1 shadow-md';
+                } else {
+                    btn.className = 'py-2.5 px-3 rounded-xl border border-purple-800 bg-purple-950/60 text-purple-300 font-semibold text-xs transition flex flex-col items-center gap-1';
+                }
+            });
+
+            const card = document.getElementById('slide-preview-card');
+            if (card) {
+                card.classList.remove('ratio-4-5', 'ratio-1-1', 'ratio-9-16');
+                card.classList.add(`ratio-${ratio}`);
+            }
+            showToast(`Formato actualizado a ${ratio}`);
+        }
+
+        function setBgTheme(theme) {
+            currentBgTheme = theme;
+            const card = document.getElementById('slide-preview-card');
+            const glow1 = document.getElementById('preview-glow-1');
+            const glow2 = document.getElementById('preview-glow-2');
+
+            if (!card) return;
+
+            switch(theme) {
+                case 'obsidian':
+                    card.style.background = 'linear-gradient(135deg, #120624 0%, #06020c 100%)';
+                    glow1.style.background = '#581c87';
+                    glow2.style.background = '#eab308';
+                    break;
+                case 'purple-gold':
+                    card.style.background = 'linear-gradient(135deg, #2e1065 0%, #0f071c 100%)';
+                    glow1.style.background = '#7e22ce';
+                    glow2.style.background = '#facc15';
+                    break;
+                case 'emerald':
+                    card.style.background = 'linear-gradient(135deg, #064e3b 0%, #022c22 100%)';
+                    glow1.style.background = '#059669';
+                    glow2.style.background = '#facc15';
+                    break;
+                case 'minimal-dark':
+                    card.style.background = 'linear-gradient(135deg, #18181b 0%, #09090b 100%)';
+                    glow1.style.background = '#3f3f46';
+                    glow2.style.background = '#ca8a04';
+                    break;
+                case 'mystic':
+                    card.style.background = 'linear-gradient(135deg, #1e1b4b 0%, #311042 50%, #090514 100%)';
+                    glow1.style.background = '#4338ca';
+                    glow2.style.background = '#eab308';
+                    break;
+            }
+            showToast('Tema visual aplicado');
+        }
+
+        function formatGoldHighlights(text) {
+            if (!text) return '';
+            return text.replace(/\{([^}]+)\}/g, '<span class="highlight-gold">$1</span>');
+        }
+
+        function updatePreview() {
+            const slide = slides[currentSlideIndex];
+            if (!slide) return;
+
+            document.getElementById('preview-current-idx').textContent = currentSlideIndex + 1;
+            document.getElementById('preview-total-idx').textContent = slides.length;
+
+            document.getElementById('preview-badge').textContent = slide.badge || 'SLIDE';
+            document.getElementById('preview-top-handle').textContent = brandConfig.handle;
+
+            document.getElementById('preview-icon').className = `fa-solid ${slide.icon || 'fa-crown'}`;
+            document.getElementById('preview-title').innerHTML = formatGoldHighlights(slide.title);
+            document.getElementById('preview-body').innerHTML = formatGoldHighlights(slide.body);
+
+            const ctaBox = document.getElementById('preview-cta-box');
+            const ctaText = document.getElementById('preview-cta-text');
+            if (slide.ctaText) {
+                ctaBox.classList.remove('hidden');
+                ctaText.textContent = slide.ctaText;
+            } else {
+                ctaBox.classList.add('hidden');
+            }
+
+            document.getElementById('preview-bottom-author').textContent = brandConfig.author;
+            document.getElementById('preview-pagination-badge').textContent = `${currentSlideIndex + 1}/${slides.length}`;
         }
 
         function generateCaptionText() {
@@ -870,91 +1107,139 @@ Ejemplo de estructura JSON esperada:
         }
 
         function copyCaptionToClipboard() {
-            const textarea = document.getElementById('generated-caption');
-            textarea.select();
-            document.execCommand('copy');
-            showToast('¡Caption copiado con éxito!');
+            try {
+                const textarea = document.getElementById('generated-caption');
+                textarea.select();
+                document.execCommand('copy');
+                showToast('¡Caption copiado con éxito!');
+            } catch (e) {
+                console.error(e);
+                showToast('Error al copiar el texto.');
+            }
         }
 
-        function exportCurrentSlidePNG() {
-            showToast('Generando imagen HD 1080x1350...');
+        function exportCurrentSlidePNG(slideIndexToExport = currentSlideIndex) {
+            return new Promise((resolve) => {
+                try {
+                    showToast('Generando imagen HD 1080x1350...');
+                    const container = document.getElementById('export-render-container');
+                    const slide = slides[slideIndexToExport];
+                    if (!slide) {
+                        resolve();
+                        return;
+                    }
 
-            const container = document.getElementById('export-render-container');
-            const slide = slides[currentSlideIndex];
+                    const titleFormatted = formatGoldHighlights(slide.title);
+                    const bodyFormatted = formatGoldHighlights(slide.body);
 
-            const titleFormatted = formatGoldHighlights(slide.title);
-            const bodyFormatted = formatGoldHighlights(slide.body);
+                    let exportWidth = 1080;
+                    let exportHeight = 1350;
+                    if (currentAspectRatio === '1-1') {
+                        exportHeight = 1080;
+                    } else if (currentAspectRatio === '9-16') {
+                        exportHeight = 1920;
+                    }
 
-            container.innerHTML = `
-                <div style="width: 1080px; height: 1350px; background: linear-gradient(135deg, #120624 0%, #06020c 100%); padding: 80px 70px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; overflow: hidden;">
-                    <!-- Ambient Glow Orbs -->
-                    <div style="position: absolute; top: -150px; right: -150px; width: 600px; height: 600px; border-radius: 50%; background: ${brandConfig.primaryColor}; filter: blur(120px); opacity: 0.45;"></div>
-                    <div style="position: absolute; bottom: -150px; left: -150px; width: 600px; height: 600px; border-radius: 50%; background: ${brandConfig.secondaryColor}; filter: blur(120px); opacity: 0.35;"></div>
+                    let bgGradient = 'linear-gradient(135deg, #120624 0%, #06020c 100%)';
+                    let orb1 = brandConfig.primaryColor;
+                    let orb2 = brandConfig.secondaryColor;
 
-                    <!-- Header Bar -->
-                    <div style="position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center;">
-                        <span style="background: rgba(88, 28, 135, 0.6); border: 2px solid ${brandConfig.secondaryColor}; color: #fde047; font-size: 26px; font-weight: 800; text-transform: uppercase; padding: 12px 28px; border-radius: 9999px; letter-spacing: 2px;">
-                            ${slide.badge || 'SLIDE'}
-                        </span>
-                        <span style="color: #f3e8ff; font-size: 26px; font-weight: 700;">
-                            ${brandConfig.handle}
-                        </span>
-                    </div>
+                    if (currentBgTheme === 'purple-gold') {
+                        bgGradient = 'linear-gradient(135deg, #2e1065 0%, #0f071c 100%)';
+                    } else if (currentBgTheme === 'emerald') {
+                        bgGradient = 'linear-gradient(135deg, #064e3b 0%, #022c22 100%)';
+                    } else if (currentBgTheme === 'minimal-dark') {
+                        bgGradient = 'linear-gradient(135deg, #18181b 0%, #09090b 100%)';
+                    } else if (currentBgTheme === 'mystic') {
+                        bgGradient = 'linear-gradient(135deg, #1e1b4b 0%, #311042 50%, #090514 100%)';
+                    }
 
-                    <!-- Content -->
-                    <div style="position: relative; z-index: 10; margin: auto 0; padding: 40px 0;">
-                        <h2 style="color: #ffffff; font-size: 62px; font-weight: 900; line-height: 1.18; margin-bottom: 30px;">
-                            ${titleFormatted}
-                        </h2>
-                        <p style="color: #e9d5ff; font-size: 32px; line-height: 1.5; font-weight: 400; margin-bottom: 40px; white-space: pre-line;">
-                            ${bodyFormatted}
-                        </p>
-                        ${slide.ctaText ? `
-                            <div style="display: inline-block; background: linear-gradient(135deg, ${brandConfig.secondaryColor}, #fde047); color: #07030d; padding: 22px 44px; border-radius: 20px; font-size: 28px; font-weight: 900; box-shadow: 0 12px 35px rgba(0,0,0,0.7);">
-                                ${slide.ctaText}
+                    container.style.width = `${exportWidth}px`;
+                    container.style.height = `${exportHeight}px`;
+
+                    container.innerHTML = `
+                        <div style="width: ${exportWidth}px; height: ${exportHeight}px; background: ${bgGradient}; padding: 80px 70px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; overflow: hidden;">
+                            <div style="position: absolute; top: -150px; right: -150px; width: 600px; height: 600px; border-radius: 50%; background: ${orb1}; filter: blur(120px); opacity: 0.45;"></div>
+                            <div style="position: absolute; bottom: -150px; left: -150px; width: 600px; height: 600px; border-radius: 50%; background: ${orb2}; filter: blur(120px); opacity: 0.35;"></div>
+
+                            <div style="position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="background: rgba(88, 28, 135, 0.6); border: 2px solid ${brandConfig.secondaryColor}; color: #fde047; font-size: 26px; font-weight: 800; text-transform: uppercase; padding: 12px 28px; border-radius: 9999px; letter-spacing: 2px;">
+                                    ${slide.badge || 'SLIDE'}
+                                </span>
+                                <span style="color: #f3e8ff; font-size: 26px; font-weight: 700; display: flex; align-items: center; gap: 10px;">
+                                    <i class="fa-solid fa-crown" style="color: ${brandConfig.secondaryColor};"></i> ${brandConfig.handle}
+                                </span>
                             </div>
-                        ` : ''}
-                    </div>
 
-                    <!-- Footer -->
-                    <div style="position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid rgba(255,255,255,0.15); padding-top: 35px;">
-                        <span style="color: #fde047; font-size: 26px; font-weight: 800;">
-                            ${brandConfig.author}
-                        </span>
-                        <span style="background: rgba(26, 5, 43, 0.9); color: #ffffff; padding: 8px 26px; border-radius: 12px; font-size: 24px; font-weight: 800; border: 1px solid rgba(255,255,255,0.2);">
-                            ${currentSlideIndex + 1}/${slides.length}
-                        </span>
-                    </div>
-                </div>
-            `;
+                            <div style="position: relative; z-index: 10; margin: auto 0; padding: 40px 0;">
+                                <div style="font-size: 48px; color: ${brandConfig.secondaryColor}; margin-bottom: 20px;">
+                                    <i class="fa-solid ${slide.icon || 'fa-crown'}"></i>
+                                </div>
+                                <h2 style="color: #ffffff; font-size: 58px; font-weight: 900; line-height: 1.2; margin-bottom: 30px; letter-spacing: -1px;">
+                                    ${titleFormatted}
+                                </h2>
+                                <p style="color: #e9d5ff; font-size: 30px; line-height: 1.5; font-weight: 400; margin-bottom: 40px; white-space: pre-line;">
+                                    ${bodyFormatted}
+                                </p>
+                                ${slide.ctaText ? `
+                                    <div style="display: inline-block; background: linear-gradient(135deg, ${brandConfig.secondaryColor}, #fde047); color: #07030d; padding: 20px 42px; border-radius: 20px; font-size: 26px; font-weight: 900; box-shadow: 0 12px 35px rgba(0,0,0,0.7);">
+                                        ${slide.ctaText}
+                                    </div>
+                                ` : ''}
+                            </div>
 
-            setTimeout(() => {
-                html2canvas(container.firstElementChild, { scale: 1.5 }).then(canvas => {
-                    const link = document.createElement('a');
-                    link.download = `slide-${currentSlideIndex + 1}-lacapitanafaceless.png`;
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                    showToast('¡Slide descargado en HD!');
-                }).catch(err => {
-                    console.error(err);
-                    showToast('Error al exportar la imagen.');
-                });
-            }, 200);
+                            <div style="position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid rgba(255,255,255,0.15); padding-top: 35px;">
+                                <span style="color: #fde047; font-size: 26px; font-weight: 800;">
+                                    ${brandConfig.author}
+                                </span>
+                                <span style="background: rgba(26, 5, 43, 0.9); color: #ffffff; padding: 8px 26px; border-radius: 12px; font-size: 24px; font-weight: 800; border: 1px solid rgba(255,255,255,0.2);">
+                                    ${slideIndexToExport + 1}/${slides.length}
+                                </span>
+                            </div>
+                        </div>
+                    `;
+
+                    setTimeout(() => {
+                        html2canvas(container.firstElementChild, { 
+                            scale: 2,
+                            useCORS: true,
+                            allowTaint: true,
+                            logging: false,
+                            backgroundColor: null
+                        }).then(canvas => {
+                            const link = document.createElement('a');
+                            link.download = `slide-${slideIndexToExport + 1}-lacapitanafaceless.png`;
+                            link.href = canvas.toDataURL('image/png');
+                            link.click();
+                            showToast(`¡Slide ${slideIndexToExport + 1} descargado en HD!`);
+                            resolve();
+                        }).catch(err => {
+                            console.error('Error html2canvas:', err);
+                            showToast('Error al exportar la imagen PNG.');
+                            resolve();
+                        });
+                    }, 300);
+                } catch (e) {
+                    console.error(e);
+                    showToast('Ocurrió un error al exportar.');
+                    resolve();
+                }
+            });
         }
 
         async function exportAllSlidesPNG() {
-            showToast('Descargando todos los slides en secuencia...');
+            showToast('Iniciando descarga secuencial HD...');
             const originalIndex = currentSlideIndex;
 
             for (let i = 0; i < slides.length; i++) {
                 selectSlide(i);
-                await new Promise(r => setTimeout(r, 350));
-                exportCurrentSlidePNG();
-                await new Promise(r => setTimeout(r, 700));
+                await new Promise(r => setTimeout(r, 200));
+                await exportCurrentSlidePNG(i);
+                await new Promise(r => setTimeout(r, 400));
             }
 
             selectSlide(originalIndex);
-            showToast('¡Descarga completa finalizada!');
+            showToast('¡Carrusel completo exportado con éxito!');
         }
 
         function showToast(message) {
