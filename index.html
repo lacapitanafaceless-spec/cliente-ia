@@ -1,256 +1,975 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cliente IA Generator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel Lab VIP | by lacapitanafaceless</title>
 
-<style>
-body {
-  background:#0B0B0F;
-  color:#f1f5f9;
-  font-family:sans-serif;
-  margin:0;
-  padding:20px;
-}
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        imperial: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#3b0764',
+                            950: '#1a052b',
+                        },
+                        gold: {
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            700: '#a16207',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Montserrat:wght@400;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-.container {
-  max-width:700px;
-  margin:auto;
-}
+    <!-- HTML2Canvas para Exportación HD PNG 1080x1350 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-h1 {
-  text-align:center;
-}
+    <style>
+        :root {
+            --brand-primary: #581c87;
+            --brand-secondary: #eab308;
+            --brand-bg: #07030d;
+        }
 
-.box {
-  background:#111116;
-  border:1px solid #2a2a3e;
-  border-radius:10px;
-  padding:20px;
-  margin-top:20px;
-}
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--brand-bg);
+            color: #f3f4f6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(88, 28, 135, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(234, 179, 8, 0.12) 0%, transparent 40%);
+        }
 
-input {
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  background:#0B0B0F;
-  border:1px solid #2a2a3e;
-  color:white;
-}
+        .font-display { font-family: 'Outfit', sans-serif; }
+        .font-serif-luxury { font-family: 'Playfair Display', serif; }
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
 
-button {
-  width:100%;
-  padding:14px;
-  margin-top:15px;
-  background:#FACC15;
-  border:none;
-  font-weight:bold;
-  cursor:pointer;
-}
+        /* Scrollbar ultra fina luxury */
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: #0c0517; }
+        ::-webkit-scrollbar-thumb { background: #4c1d95; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #eab308; }
 
-.highlight {
-  color:#FACC15;
-  font-weight:bold;
-}
+        /* Paneles Glassmorphism de Lujo */
+        .glass-panel-vip {
+            background: rgba(15, 7, 28, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(234, 179, 8, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
 
-.pro-badge {
-  text-align:center;
-  color:#FACC15;
-  font-weight:bold;
-}
+        .glass-panel-soft {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
 
-.paywall {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.92);
-  justify-content:center;
-  align-items:center;
-}
+        /* Aspect Ratios dinámicos */
+        .ratio-4-5 { aspect-ratio: 4 / 5; max-height: 570px; }
+        .ratio-9-16 { aspect-ratio: 9 / 16; max-height: 570px; }
+        .ratio-1-1 { aspect-ratio: 1 / 1; max-height: 520px; }
 
-.paywall-box {
-  background:#111116;
-  padding:30px;
-  border-radius:12px;
-  text-align:center;
-  max-width:380px;
-}
+        /* Render Target Oculto HD */
+        .export-render-target {
+            width: 1080px !important;
+            height: 1350px !important;
+            position: fixed;
+            left: -9999px;
+            top: -9999px;
+            z-index: -100;
+        }
 
-.small {
-  font-size:12px;
-  color:#94a3b8;
-}
-</style>
+        /* Botón e insignias con reflejo metálico */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fffbeb 0%, #fde047 30%, #eab308 70%, #ca8a04 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .purple-gold-btn {
+            background: linear-gradient(135deg, #4c1d95 0%, #6b21a8 50%, #ca8a04 100%);
+            box-shadow: 0 8px 25px rgba(107, 33, 168, 0.4);
+        }
+
+        .purple-gold-btn:hover {
+            background: linear-gradient(135deg, #3b0764 0%, #581c87 50%, #eab308 100%);
+            box-shadow: 0 12px 30px rgba(234, 179, 8, 0.35);
+        }
+
+        .gold-badge-border {
+            border: 1px solid rgba(234, 179, 8, 0.4);
+            box-shadow: 0 0 15px rgba(234, 179, 8, 0.15);
+        }
+
+        /* Resaltado de texto automático con corchetes {palabra} */
+        .highlight-gold {
+            color: #fde047;
+            font-weight: 900;
+            text-shadow: 0 0 12px rgba(234, 179, 8, 0.5);
+        }
+    </style>
 </head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-black">
 
-<body>
+    <!-- ==================== HEADER PRINCIPAL VIP ==================== -->
+    <header class="border-b border-amber-500/20 bg-gray-950/90 backdrop-blur-xl sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
+            
+            <!-- Branding Header -->
+            <div class="flex items-center space-x-3.5">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-900 via-amber-500 to-yellow-200 p-0.5 shadow-xl shadow-purple-950/80">
+                    <div class="w-full h-full bg-gray-950 rounded-[14px] flex items-center justify-center">
+                        <i class="fa-solid fa-crown gold-gradient-text text-xl"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <h1 class="font-display font-extrabold text-2xl tracking-tight text-white">
+                            Carousel<span class="gold-gradient-text font-black">Lab</span>
+                        </h1>
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-amber-500/10 text-amber-300 border border-amber-500/30">
+                            VIP EXCLUSIVE
+                        </span>
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
+                            <i class="fa-solid fa-bolt-lightning text-emerald-400"></i> SIN API KEY • 100% GRATIS
+                        </span>
+                    </div>
+                    <p class="text-xs text-purple-300/80 flex items-center gap-1.5">
+                        <span>Creador de Carruseles de Alto Valor Faceless</span>
+                    </p>
+                </div>
+            </div>
 
-<div class="container">
+            <!-- Handle & Acciones Rápidas -->
+            <div class="flex items-center gap-3">
+                <a href="https://instagram.com/lacapitanafaceless" target="_blank" rel="noopener noreferrer" 
+                   class="group inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-gradient-to-r from-purple-950 via-gray-900 to-purple-950 border border-amber-500/40 hover:border-amber-400 transition-all text-xs font-semibold text-gray-200 hover:text-white shadow-xl">
+                    <span class="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-500 to-purple-600 p-0.5 flex items-center justify-center">
+                        <span class="w-full h-full bg-gray-950 rounded-full flex items-center justify-center">
+                            <i class="fa-brands fa-instagram text-[11px] text-amber-400"></i>
+                        </span>
+                    </span>
+                    <span>by <strong class="gold-gradient-text font-bold">lacapitanafaceless</strong> <span class="text-purple-300 text-[11px] hidden sm:inline">ig @lacapitanafaceless</span></span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-amber-400 text-[10px]"></i>
+                </a>
 
-<h1>🚀 Cliente IA Generator</h1>
+                <button onclick="loadViralTemplatePrompt()" class="px-3.5 py-2 rounded-xl bg-purple-900/40 border border-purple-700/50 hover:bg-purple-900/80 text-amber-300 text-xs font-bold transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span class="hidden md:inline">Plantilla Viral</span>
+                </button>
 
-<div id="proBadge" class="pro-badge"></div>
+                <button onclick="resetCarousel()" class="px-3 py-2 rounded-xl bg-gray-900 border border-gray-800 hover:bg-purple-950 text-purple-300 hover:text-white text-xs font-medium transition" title="Restablecer borrador">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </button>
+            </div>
+        </div>
+    </header>
 
-<div class="box">
-<p><strong>Simulación en tiempo real 👇</strong></p>
-<p id="demo">Este error está haciendo que no consigas clientes</p>
-</div>
+    <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- ==================== COLUMNA IZQUIERDA: CONTROLES DE EDICIÓN ==================== -->
+        <div class="lg:col-span-7 space-y-6">
+            
+            <!-- Barra de Pestañas de Navegación del Editor -->
+            <div class="flex border-b border-purple-900/40 space-x-2 overflow-x-auto pb-1">
+                <button onclick="switchEditorTab('content')" id="tab-btn-content" class="px-4 py-2 rounded-t-xl font-bold text-xs flex items-center gap-2 border-b-2 border-amber-400 text-amber-300 bg-purple-950/60 transition">
+                    <i class="fa-solid fa-pen-nib"></i> 1. Contenido Slide
+                </button>
+                <button onclick="switchEditorTab('ai')" id="tab-btn-ai" class="px-4 py-2 rounded-t-xl font-bold text-xs flex items-center gap-2 text-purple-300 hover:text-white transition">
+                    <i class="fa-solid fa-robot text-amber-400"></i> 2. Generador IA (Claude / ChatGPT)
+                </button>
+                <button onclick="switchEditorTab('style')" id="tab-btn-style" class="px-4 py-2 rounded-t-xl font-bold text-xs flex items-center gap-2 text-purple-300 hover:text-white transition">
+                    <i class="fa-solid fa-palette"></i> 3. Estilos & Fondo
+                </button>
+                <button onclick="switchEditorTab('hooks')" id="tab-btn-hooks" class="px-4 py-2 rounded-t-xl font-bold text-xs flex items-center gap-2 text-purple-300 hover:text-white transition">
+                    <i class="fa-solid fa-fire text-amber-400"></i> 4. Hooks Virales
+                </button>
+                <button onclick="switchEditorTab('caption')" id="tab-btn-caption" class="px-4 py-2 rounded-t-xl font-bold text-xs flex items-center gap-2 text-purple-300 hover:text-white transition">
+                    <i class="fa-solid fa-align-left"></i> 5. Caption & Copys
+                </button>
+            </div>
 
-<div class="box">
-<input id="nicho" placeholder="Tu nicho (ej: fitness)">
-<input id="producto" placeholder="Qué vendes (ej: coaching)">
-<input id="precio" placeholder="Precio ($)">
-<button onclick="generate()">⚡ Generar clientes potenciales</button>
-</div>
+            <!-- PESTAÑA 1: CONTENIDO DEL SLIDE -->
+            <div id="tab-section-content" class="space-y-6">
+                
+                <!-- Selector Horizontal de Slides -->
+                <div class="glass-panel-vip p-4 rounded-2xl">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-purple-200 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-layer-group text-amber-400"></i> Diapositivas Activas (<span id="slide-count-badge">5</span>)
+                        </span>
+                        <button onclick="addNewSlide()" class="px-3.5 py-1.5 rounded-xl purple-gold-btn text-white font-bold text-xs transition flex items-center gap-1.5 shadow-lg">
+                            <i class="fa-solid fa-plus text-amber-300"></i> Añadir Slide
+                        </button>
+                    </div>
 
-<div class="box" id="output"></div>
+                    <div id="slides-tabs-container" class="flex gap-2.5 overflow-x-auto pb-2 scrollbar-thin">
+                        <!-- Generado por JS -->
+                    </div>
+                </div>
 
-<button onclick="goCheckout()">🔥 Activar sistema completo — $9</button>
+                <!-- Formulario Principal del Slide Actual -->
+                <div class="glass-panel-vip p-5 rounded-2xl space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-purple-900/40 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center justify-center font-extrabold text-xs" id="current-slide-num">1</span>
+                            <h3 class="text-sm font-bold text-white">Editar Diapositiva</h3>
+                        </div>
+                        
+                        <!-- Acciones Rápidas sobre el Slide -->
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="moveSlide(-1)" class="p-1.5 rounded-lg bg-purple-950 hover:bg-purple-900 text-purple-200 text-xs border border-purple-800" title="Mover a la izquierda"><i class="fa-solid fa-arrow-left"></i></button>
+                            <button onclick="moveSlide(1)" class="p-1.5 rounded-lg bg-purple-950 hover:bg-purple-900 text-purple-200 text-xs border border-purple-800" title="Mover a la derecha"><i class="fa-solid fa-arrow-right"></i></button>
+                            <button onclick="duplicateCurrentSlide()" class="px-2.5 py-1.5 rounded-lg bg-purple-900/60 hover:bg-purple-800 text-amber-300 text-xs font-semibold border border-purple-700/50 flex items-center gap-1"><i class="fa-solid fa-copy"></i> Duplicar</button>
+                            <button onclick="deleteCurrentSlide()" class="px-2.5 py-1.5 rounded-lg bg-red-950/60 hover:bg-red-900 text-red-300 text-xs font-semibold border border-red-800/40 flex items-center gap-1"><i class="fa-solid fa-trash-can"></i> Borrar</button>
+                        </div>
+                    </div>
 
-</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Plantilla de Disposición -->
+                        <div>
+                            <label class="block text-xs font-semibold text-purple-300 mb-1">Estructura / Enfoque</label>
+                            <select id="editor-layout" onchange="updateSlideData('layout', this.value)" class="w-full bg-purple-950/80 border border-purple-800/80 rounded-xl px-3 py-2 text-xs text-gray-100 focus:outline-none focus:border-amber-400">
+                                <option value="cover">Portada / Hook Magnético (Entrada)</option>
+                                <option value="standard">Explicación Estándar / Concepto</option>
+                                <option value="quote">Frase Impacto / Cita Viral</option>
+                                <option value="list">Puntos Clave / Lista Faceless</option>
+                                <option value="cta">Llamado a la Acción / Cierre (CTA)</option>
+                            </select>
+                        </div>
 
-<!-- PAYWALL -->
-<div class="paywall" id="paywall">
-  <div class="paywall-box">
-    <h2>Estás perdiendo clientes ⚠️</h2>
+                        <!-- Insignia Superior (Badge) -->
+                        <div>
+                            <label class="block text-xs font-semibold text-purple-300 mb-1">Insignia Superior (Badge Header)</label>
+                            <input type="text" id="editor-badge" oninput="updateSlideData('badge', this.value)" placeholder="Ej: DESLIZA ➡️ o SECRETOS 💡" class="w-full bg-purple-950/80 border border-purple-800/80 rounded-xl px-3 py-2 text-xs text-gray-100 focus:outline-none focus:border-amber-400">
+                        </div>
+                    </div>
 
-    <p>Esto no es una herramienta.<br>Es un sistema de captación.</p>
+                    <!-- Titular con Hint de Resaltado Dorado -->
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="block text-xs font-semibold text-purple-300">Titular Principal Magnético</label>
+                            <span class="text-[10px] text-amber-400 font-medium">Usa <code class="bg-purple-900 px-1 rounded">{palabra}</code> para resaltar en Oro</span>
+                        </div>
+                        <textarea id="editor-title" oninput="updateSlideData('title', this.value)" rows="2" placeholder="Ej: Cómo generar {ingresos} con una cuenta Faceless..." class="w-full bg-purple-950/80 border border-purple-800/80 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400 resize-none font-bold text-sm"></textarea>
+                    </div>
 
-    <p class="highlight">Si consigues 1 cliente → recuperas la inversión</p>
+                    <!-- Cuerpo de Texto -->
+                    <div>
+                        <label class="block text-xs font-semibold text-purple-300 mb-1">Descripción / Valor del Slide</label>
+                        <textarea id="editor-body" oninput="updateSlideData('body', this.value)" rows="3" placeholder="Detalla la lección o los pasos. Usa {palabras} para destacar en dorado." class="w-full bg-purple-950/80 border border-purple-800/80 rounded-xl px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-amber-400 resize-none leading-relaxed"></textarea>
+                    </div>
 
-    <p>🔥 163 usuarios desbloquearon esto esta semana</p>
+                    <!-- Botón CTA & Icono -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-purple-300 mb-1">Texto Botón Acción (CTA)</label>
+                            <input type="text" id="editor-ctaText" oninput="updateSlideData('ctaText', this.value)" placeholder="Ej: GUARDA ESTE CARRUSEL 📌" class="w-full bg-purple-950/80 border border-purple-800/80 rounded-xl px-3 py-2 text-xs text-gray-100 focus:outline-none focus:border-amber-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-purple-300 mb-1">Icono de Cabecera</label>
+                            <select id="editor-icon" onchange="updateSlideData('icon', this.value)" class="w-full bg-purple-950/80 border border-purple-800/80 rounded-xl px-3 py-2 text-xs text-gray-100 focus:outline-none focus:border-amber-400">
+                                <option value="fa-crown">👑 Corona VIP (La Capitana)</option>
+                                <option value="fa-fire">🔥 Fuego / Tendencia Viral</option>
+                                <option value="fa-rocket">🚀 Cohete / Escalabilidad</option>
+                                <option value="fa-gem">💎 Gema de Alto Valor</option>
+                                <option value="fa-bolt">⚡ Rayo / Acción Rápida</option>
+                                <option value="fa-lock">🔒 Secreto Exclusivo</option>
+                                <option value="fa-coins">💰 Monetización Faceless</option>
+                                <option value="fa-brain">🧠 Mentalidad Millonaria</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <p class="highlight">Precio hoy: $9</p>
-    <p class="small">Sube a $19 mañana</p>
+            <!-- PESTAÑA IA: GENERADOR DE PROMPTS & IMPORTADOR CLAUDE / CHATGPT -->
+            <div id="tab-section-ai" class="space-y-6 hidden">
+                <div class="glass-panel-vip p-5 rounded-2xl space-y-5">
+                    
+                    <!-- Aclaración Especial App Sin API -->
+                    <div class="p-4 rounded-xl bg-purple-950/90 border border-amber-500/40 flex items-start gap-3 shadow-lg">
+                        <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center flex-shrink-0 border border-amber-500/30">
+                            <i class="fa-solid fa-shield-halved text-lg text-amber-400"></i>
+                        </div>
+                        <div class="text-xs space-y-1.5">
+                            <div class="flex items-center gap-2">
+                                <h4 class="font-extrabold text-white text-sm">
+                                    App 100% Gratuita (Sin necesidad de API Key)
+                                </h4>
+                                <span class="bg-emerald-500/20 text-emerald-300 text-[10px] px-2 py-0.5 rounded-full border border-emerald-500/30 font-bold">
+                                    NO REQUIERE CLAVE API
+                                </span>
+                            </div>
+                            <p class="text-purple-200 leading-relaxed">
+                                Esta app no requiere que pagues ni configures claves de API de ChatGPT o Claude. Funciona mediante un <strong>Prompt Maestro inteligente</strong>: sólo copias el texto generado, lo pegas en cualquier IA (gratuita o de pago) y luego pegas aquí la respuesta para importar tu carrusel en 1 segundo.
+                            </p>
+                        </div>
+                    </div>
 
-    <button onclick="goCheckout()">🔓 Desbloquear ahora</button>
-    <button onclick="closePaywall()">Seguir perdiendo clientes</button>
-  </div>
-</div>
+                    <!-- Paso 1: Configurar Prompt -->
+                    <div class="space-y-3">
+                        <label class="block text-xs font-extrabold text-amber-300 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-code text-amber-400"></i> Paso 1: Tema de tu Carrusel para la IA
+                        </label>
+                        <input type="text" id="ai-topic-input" placeholder="Ej: 5 errores graves que te impiden vender productos digitales faceless" value="5 secretos para monetizar una cuenta faceless sin mostrar tu cara" class="w-full bg-purple-950/80 border border-purple-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400 font-medium">
 
-<script>
-let used = false;
-let isPro = false;
+                        <div class="flex items-center justify-between gap-3">
+                            <button onclick="copyAIMasterPrompt()" class="flex-1 py-3 rounded-xl purple-gold-btn text-white font-extrabold text-xs uppercase tracking-wider shadow-xl transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-copy text-amber-300"></i> Copiar Prompt para ChatGPT / Claude (Sin API)
+                            </button>
+                        </div>
+                    </div>
 
-// CHECK PRO
-function checkPro(){
-  const params = new URLSearchParams(window.location.search);
+                    <!-- Paso 2: Importar Respuesta JSON / Texto -->
+                    <div class="space-y-3 pt-2 border-t border-purple-900/40">
+                        <div class="flex justify-between items-center">
+                            <label class="block text-xs font-extrabold text-amber-300 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-file-import text-amber-400"></i> Paso 2: Pega aquí la respuesta de Claude / ChatGPT
+                            </label>
+                            <span class="text-[10px] text-purple-300">Acepta JSON o texto en formato lista</span>
+                        </div>
+                        <textarea id="ai-import-json" rows="5" placeholder='Pega la respuesta de la IA aquí. Ejemplo:
+[
+  {"badge": "PASO 01", "title": "Define tu {Nicho}", "body": "Enfócate en un solo problema.", "ctaText": "DESLIZA ➡️"},
+  {"badge": "PASO 02", "title": "Crea {Contenido Alto Valor}", "body": "Usa formatos faceless.", "ctaText": "GUARDA ESTE POST"}
+]' class="w-full bg-purple-950/90 border border-purple-800 rounded-xl p-3 text-xs text-gray-200 font-mono focus:outline-none focus:border-amber-400 resize-none leading-relaxed"></textarea>
 
-  if(params.get("success") === "true"){
-    localStorage.setItem("pro","yes");
-    window.history.replaceState({}, document.title, window.location.pathname);
+                        <button onclick="importAISlides()" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-purple-950 font-black text-xs uppercase tracking-wider shadow-xl hover:opacity-95 transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-bolt text-sm"></i> ✨ Importar Diapositivas al Editor
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PESTAÑA 3: ESTILOS & FONDO -->
+                            <div class="flex items-center gap-2 bg-purple-950 border border-purple-800 rounded-xl p-1.5">
+                                <input type="color" id="secondary-color-picker" value="#eab308" onchange="updateBrandConfig('secondaryColor', this.value)" class="w-7 h-7 rounded border-0 cursor-pointer bg-transparent">
+                                <input type="text" id="secondary-color-text" value="#eab308" onchange="updateBrandConfig('secondaryColor', this.value)" class="w-full bg-transparent text-xs text-gray-200 uppercase font-mono">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-purple-300 mb-1.5">Tipografía Titulares</label>
+                            <select id="font-family-select" onchange="updateBrandConfig('fontFamily', this.value)" class="w-full bg-purple-950 border border-purple-800 rounded-xl px-3 py-2 text-xs text-gray-200 focus:outline-none">
+                                <option value="font-display">Outfit (Moderna & Impacto)</option>
+                                <option value="font-serif-luxury">Playfair (Lujo & Alta Elegancia)</option>
+                                <option value="font-cinzel">Cinzel (Imperial & Premium)</option>
+                                <option value="font-montserrat">Montserrat (Limpia & Bold)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Ajustes de Firma de Marca -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-purple-900/40">
+                        <div>
+                            <label class="block text-xs font-semibold text-purple-300 mb-1">Handle Superior</label>
+                            <input type="text" id="brand-handle-input" value="ig @lacapitanafaceless" oninput="updateBrandConfig('handle', this.value)" class="w-full bg-purple-950 border border-purple-800 rounded-xl px-3 py-2 text-xs text-gray-100">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-purple-300 mb-1">Firma Inferior del Slide</label>
+                            <input type="text" id="brand-author-input" value="by lacapitanafaceless ig @lacapitanafaceless" oninput="updateBrandConfig('author', this.value)" class="w-full bg-purple-950 border border-purple-800 rounded-xl px-3 py-2 text-xs text-gray-100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PESTAÑA 3: BIBLIOTECA DE HOOKS VIRALES (FOMO & CONVERSIÓN) -->
+            <div id="tab-section-hooks" class="space-y-6 hidden">
+                <div class="glass-panel-vip p-5 rounded-2xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-purple-900/40 pb-3">
+                        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-fire text-amber-400"></i> Biblioteca de Titulares Virales Faceless
+                        </h3>
+                        <span class="text-[11px] text-amber-300 font-bold">1-Click Insert</span>
+                    </div>
+                    <p class="text-xs text-purple-300">Haz clic en cualquier hook para insertarlo de inmediato en el slide actual:</p>
+
+                    <div class="space-y-2.5 max-h-96 overflow-y-auto pr-1">
+                        <button onclick="applyHookTemplate('3 Errores que están destruyendo las ventas de tu cuenta {Faceless}')" class="w-full p-3 rounded-xl bg-purple-950/60 hover:bg-purple-900/80 border border-purple-800/60 hover:border-amber-400 text-left transition group">
+                            <span class="text-xs font-bold text-white group-hover:text-amber-300 block">3 Errores que están destruyendo las ventas de tu cuenta {Faceless}</span>
+                            <span class="text-[10px] text-purple-300">Formato Hook FOMO / Alerta</span>
+                        </button>
+
+                        <button onclick="applyHookTemplate('Cómo construir un negocio de {$1,000/mes} sin mostrar tu cara')" class="w-full p-3 rounded-xl bg-purple-950/60 hover:bg-purple-900/80 border border-purple-800/60 hover:border-amber-400 text-left transition group">
+                            <span class="text-xs font-bold text-white group-hover:text-amber-300 block">Cómo construir un negocio de {$1,000/mes} sin mostrar tu cara</span>
+                            <span class="text-[10px] text-purple-300">Formato Tutorial de Alto Valor</span>
+                        </button>
+
+                        <button onclick="applyHookTemplate('La estrategia secreta de contenido que los {grandes creadores} no te cuentan')" class="w-full p-3 rounded-xl bg-purple-950/60 hover:bg-purple-900/80 border border-purple-800/60 hover:border-amber-400 text-left transition group">
+                            <span class="text-xs font-bold text-white group-hover:text-amber-300 block">La estrategia secreta de contenido que los {grandes creadores} no te cuentan</span>
+                            <span class="text-[10px] text-purple-300">Formato Curiosidad y Exclusividad</span>
+                        </button>
+
+                        <button onclick="applyHookTemplate('Si tuviera que empezar mi marca {Faceless} desde cero hoy, haría esto...')" class="w-full p-3 rounded-xl bg-purple-950/60 hover:bg-purple-900/80 border border-purple-800/60 hover:border-amber-400 text-left transition group">
+                            <span class="text-xs font-bold text-white group-hover:text-amber-300 block">Si tuviera que empezar mi marca {Faceless} desde cero hoy, haría esto...</span>
+                            <span class="text-[10px] text-purple-300">Formato Autoridad & Roadmap</span>
+                        </button>
+
+                        <button onclick="applyHookTemplate('Deja de crear contenido para todos. Enfócate en tu {Cliente Ideal}')" class="w-full p-3 rounded-xl bg-purple-950/60 hover:bg-purple-900/80 border border-purple-800/60 hover:border-amber-400 text-left transition group">
+                            <span class="text-xs font-bold text-white group-hover:text-amber-300 block">Deja de crear contenido para todos. Enfócate en tu {Cliente Ideal}</span>
+                            <span class="text-[10px] text-purple-300">Formato Cambio de Mentalidad</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PESTAÑA 4: CAPTION GENERATOR -->
+            <div id="tab-section-caption" class="space-y-6 hidden">
+                <div class="glass-panel-vip p-5 rounded-2xl space-y-3">
+                    <div class="flex items-center justify-between border-b border-purple-900/40 pb-3">
+                        <h3 class="text-xs font-bold text-purple-200 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-align-left text-amber-400"></i> Pie de Foto Generado (Caption Instagram)
+                        </h3>
+                        <button onclick="copyCaptionToClipboard()" class="px-3 py-1.5 rounded-xl purple-gold-btn text-white text-xs font-extrabold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-copy text-amber-300"></i> Copiar Copy
+                        </button>
+                    </div>
+                    <textarea id="generated-caption" rows="8" readonly class="w-full bg-purple-950/90 border border-purple-800/80 rounded-xl p-3.5 text-xs text-gray-200 font-mono resize-none focus:outline-none leading-relaxed"></textarea>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== COLUMNA DERECHA: PREVISUALIZADOR Y EXPORTACIÓN HD ==================== -->
+        <div class="lg:col-span-5 space-y-6">
+            <div class="sticky top-20 space-y-5">
+                
+                <div class="glass-panel-vip p-5 rounded-2xl shadow-2xl space-y-4 gold-badge-border">
+                    <div class="flex items-center justify-between border-b border-purple-900/40 pb-3">
+                        <span class="text-xs font-extrabold text-amber-300 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-mobile-screen-button text-amber-400"></i> Previsualización en Vivo
+                        </span>
+                        
+                        <span class="text-xs text-purple-300 font-semibold">
+                            Slide <span id="preview-current-idx" class="text-amber-400 font-bold">1</span> de <span id="preview-total-idx">5</span>
+                        </span>
+                    </div>
+
+                    <!-- Slide Stage Box Container -->
+                    <div class="relative w-full flex justify-center items-center p-3 bg-gray-950 rounded-2xl border border-purple-900/60 shadow-inner overflow-hidden">
+                        
+                        <!-- Main Card Slide Render Canvas -->
+                        <div id="slide-preview-card" class="ratio-4-5 w-full rounded-2xl p-6 sm:p-7 flex flex-col justify-between relative overflow-hidden transition-all duration-300 shadow-2xl" style="background: linear-gradient(135deg, #120624 0%, #06020c 100%); border: 1px solid rgba(234, 179, 8, 0.3);">
+                            
+                            <!-- Ambient Lighting Orbs -->
+                            <div id="preview-glow-1" class="absolute -top-24 -right-24 w-60 h-60 rounded-full blur-3xl opacity-40 pointer-events-none" style="background: #581c87;"></div>
+                            <div id="preview-glow-2" class="absolute -bottom-24 -left-24 w-60 h-60 rounded-full blur-3xl opacity-35 pointer-events-none" style="background: #eab308;"></div>
+
+                            <!-- Header Slide -->
+                            <div class="relative z-10 flex items-center justify-between">
+                                <div id="preview-badge" class="px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase bg-purple-950/90 text-amber-300 border border-amber-500/50 shadow-md">
+                                    DESLIZA ➡️
+                                </div>
+                                <div class="text-[11px] font-bold text-gray-200 flex items-center gap-1.5 opacity-90">
+                                    <i class="fa-solid fa-crown text-amber-400 text-[10px]"></i>
+                                    <span id="preview-top-handle">ig @lacapitanafaceless</span>
+                                </div>
+                            </div>
+
+                            <!-- Center Slide Content -->
+                            <div id="preview-content-box" class="relative z-10 my-auto py-2 space-y-3.5">
+                                <div class="flex items-center gap-2 text-amber-400 text-2xl" id="preview-icon-wrapper">
+                                    <i id="preview-icon" class="fa-solid fa-crown"></i>
+                                </div>
+                                <h2 id="preview-title" class="text-2xl sm:text-3xl font-black text-white leading-tight font-display tracking-tight">
+                                    Cómo crear un negocio digital sin mostrar tu rostro
+                                </h2>
+                                <p id="preview-body" class="text-xs sm:text-sm text-gray-300 leading-relaxed font-normal">
+                                    Descubre el paso a paso estratégico para monetizar tu cuenta usando contenido faceless de alto impacto.
+                                </p>
+                                <div id="preview-cta-box" class="pt-2">
+                                    <div id="preview-cta-text" class="inline-block px-4 py-2 rounded-xl text-gray-950 font-black text-xs shadow-xl">
+                                        GUARDA ESTE POST 📌
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Footer Slide Signatures -->
+                            <div class="relative z-10 flex items-center justify-between pt-3 border-t border-white/10 text-[11px]">
+                                <div class="text-gray-200 font-semibold flex items-center gap-1.5">
+                                    <span id="preview-bottom-author" class="gold-gradient-text font-black">by lacapitanafaceless ig @lacapitanafaceless</span>
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <span id="preview-pagination-badge" class="font-extrabold text-white bg-purple-950/90 px-2.5 py-0.5 rounded-md border border-purple-800 text-[10px]">
+                                        1/5
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Slide Navigation Controls -->
+                    <div class="flex items-center justify-between gap-3 pt-1">
+                        <button onclick="navigateSlide(-1)" class="flex-1 py-2.5 rounded-xl bg-purple-950/80 hover:bg-purple-900 border border-purple-800 text-purple-200 font-bold text-xs transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-chevron-left text-amber-400"></i> Anterior
+                        </button>
+                        <button onclick="navigateSlide(1)" class="flex-1 py-2.5 rounded-xl bg-purple-950/80 hover:bg-purple-900 border border-purple-800 text-purple-200 font-bold text-xs transition flex items-center justify-center gap-2">
+                            Siguiente <i class="fa-solid fa-chevron-right text-amber-400"></i>
+                        </button>
+                    </div>
+
+                    <!-- Botones de Exportación PNG HD -->
+                    <div class="pt-3 border-t border-purple-900/40 space-y-2.5">
+                        <button onclick="exportCurrentSlidePNG()" class="w-full py-3.5 rounded-xl purple-gold-btn hover:opacity-95 text-white font-black text-xs uppercase tracking-wider shadow-2xl transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-download text-sm text-amber-300"></i> Descargar Slide Actual (HD PNG)
+                        </button>
+
+                        <button onclick="exportAllSlidesPNG()" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 border border-amber-500/40 text-amber-300 font-bold text-xs transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-images"></i> Exportar Carrusel Completo (Todos los Slides)
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Info Status Badge VIP -->
+                <div class="glass-panel-vip p-3.5 rounded-xl flex items-center justify-between text-xs text-purple-300">
+                    <span class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+                        Marca: <strong class="text-white font-extrabold">lacapitanafaceless</strong>
+                    </span>
+                    <span class="text-amber-400 font-bold">1080x1350px HD</span>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER DE MARCA -->
+    <footer class="border-t border-purple-900/40 bg-gray-950 py-5 mt-10">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-purple-300/80 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex items-center gap-2 flex-wrap">
+                <span class="font-medium">Carousel Lab VIP &copy; 2026. Edición Especial Faceless.</span>
+                <span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/30 text-[10px] font-bold">App Sin API • 100% Gratis</span>
+            </div>
+            <div class="flex items-center gap-1.5 text-gray-300">
+                <span>Desarrollado exclusivamente para</span>
+                <a href="https://instagram.com/lacapitanafaceless" target="_blank" rel="noopener noreferrer" class="gold-gradient-text font-black hover:underline transition flex items-center gap-1">
+                    <i class="fa-brands fa-instagram"></i> by lacapitanafaceless (ig @lacapitanafaceless)
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Renderizador Oculto HD para Exportación Canvas 1080x1350 -->
+    <div id="export-render-container" class="export-render-target"></div>
+
+    <!-- Toast Notification Box -->
+    <div id="toast-notification" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="glass-panel-vip bg-purple-950 border border-amber-400 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+            <i id="toast-icon" class="fa-solid fa-circle-check text-amber-400 text-base"></i>
+            <span id="toast-message" class="text-xs font-bold">Acción realizada con éxito</span>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE FUNCIONALIDAD -->
+    <script>
+        let slides = [
+            {
+                id: 1,
+                layout: 'cover',
+                badge: 'DESLIZA ➡️',
+                title: 'Cómo crear un negocio digital sin {mostrar tu rostro}',
+                body: 'Descubre la estrategia exacta paso a paso para monetizar tu contenido {faceless} en Instagram en 2026.',
+                ctaText: 'GUARDA ESTE POST 📌',
+                icon: 'fa-crown'
+            },
+            {
+                id: 2,
+                layout: 'standard',
+                badge: 'PASO 01 💡',
+                title: 'Define tu Nicho de {Alto Valor}',
+                body: 'No intentes hablarle a todos. Elige una temática clara: finanzas, productividad, marketing digital o {crecimiento personal}.',
+                ctaText: 'SIGUIENTE SLIDE ➡️',
+                icon: 'fa-rocket'
+            },
+            {
+                id: 3,
+                layout: 'quote',
+                badge: 'MENTALIDAD 🧠',
+                title: '"El contenido de valor constante supera cualquier algoritmo."',
+                body: 'No necesitas ser famosa ni mostrar tu cara, solo necesitas resolver un {problema real} de tu audiencia.',
+                ctaText: 'COMPARTE ESTO 📲',
+                icon: 'fa-brain'
+            },
+            {
+                id: 4,
+                layout: 'list',
+                badge: 'ESTRATEGIA 🚀',
+                title: '3 Pilares para Automatizar {Ventas 24/7}',
+                body: '1. Embudo directo por DM con Manychat\n2. Guía Digital o Ebook Magnético\n3. Contenido Faceless enfocado en {Dolores del Cliente}',
+                ctaText: 'DESLIZA AL FINAL 🏁',
+                icon: 'fa-coins'
+            },
+            {
+                id: 5,
+                layout: 'cta',
+                badge: 'ÚNETE HOY 🔥',
+                title: '¿Lista para escalar tu {marca faceless}?',
+                body: 'Comenta la palabra {"EMPEZAR"} abajo y te envío la guía paso a paso directamente a tus mensajes privados.',
+                ctaText: 'SÍGUEME @lacapitanafaceless 👑',
+                icon: 'fa-crown'
+            }
+        ];
+
+        let currentSlideIndex = 0;
+        let currentAspectRatio = '4-5';
+        let currentBgTheme = 'obsidian';
+
+        // Configuración de Marca (Morado Imperial y Amarillo Gold)
+        let brandConfig = {
+            primaryColor: '#581c87',
+            secondaryColor: '#eab308',
+            fontFamily: 'font-display',
+            handle: 'ig @lacapitanafaceless',
+            author: 'by lacapitanafaceless ig @lacapitanafaceless'
+        };
+
+        window.onload = function() {
+            renderTabs();
+            loadSlideToEditor();
+            updatePreview();
+            generateCaptionText();
+        };
+
+        function switchEditorTab(tabName) {
+            ['content', 'ai', 'style', 'hooks', 'caption'].forEach(t => {
+                const sec = document.getElementById(`tab-section-${t}`);
+                const btn = document.getElementById(`tab-btn-${t}`);
+                if (!sec || !btn) return;
+                if (t === tabName) {
+                    sec.classList.remove('hidden');
+                    btn.classList.add('border-b-2', 'border-amber-400', 'text-amber-300', 'bg-purple-950/60');
+                    btn.classList.remove('text-purple-300');
+                } else {
+                    sec.classList.add('hidden');
+                    btn.classList.remove('border-b-2', 'border-amber-400', 'text-amber-300', 'bg-purple-950/60');
+                    btn.classList.add('text-purple-300');
+                }
+            });
+        }
+
+        function copyAIMasterPrompt() {
+            const topic = document.getElementById('ai-topic-input').value.trim() || 'Monetización de cuentas faceless en Instagram';
+            
+            const promptText = `Actúa como un experto estratega de contenido Faceless y copywriting de alto impacto para Instagram (@lacapitanafaceless).
+Crea un carrusel de 5 diapositivas sobre el siguiente tema: "${topic}".
+
+Reglas estrictas de formato:
+1. Responde ÚNICAMENTE con un array de JSON válido en formato de código raw.
+2. Cada objeto debe tener estas claves: "badge", "title", "body", "ctaText", "icon".
+3. En los campos "title" y "body", encierra entre llaves {palabras} las 1 o 2 palabras clave más potentes que deban resaltarse en color Oro.
+4. "icon" debe ser un icono de FontAwesome válido (ej: "fa-crown", "fa-fire", "fa-rocket", "fa-brain", "fa-gem").
+
+Ejemplo de estructura JSON esperada:
+[
+  {
+    "badge": "DESLIZA ➡️",
+    "title": "Cómo generar {$1,000/mes} sin mostrar tu cara",
+    "body": "Estrategia probada para crear una marca {faceless} rentable en 2026.",
+    "ctaText": "GUARDA ESTE POST 📌",
+    "icon": "fa-crown"
+  },
+  {
+    "badge": "PASO 01 💡",
+    "title": "Especialízate en un {Nicho de Alto Valor}",
+    "body": "Elige temas como finanzas, marketing digital o crecimiento personal.",
+    "ctaText": "SIGUIENTE SLIDE ➡️",
+    "icon": "fa-rocket"
   }
+]`;
 
-  if(localStorage.getItem("pro")==="yes"){
-    isPro = true;
-    document.getElementById("proBadge").innerText = "🟣 PRO ACTIVADO";
-  }
-}
+            const dummyArea = document.createElement('textarea');
+            dummyArea.value = promptText;
+            document.body.appendChild(dummyArea);
+            dummyArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummyArea);
 
-// GENERATE
-function generate(){
+            showToast('¡Prompt copiado! Pásalo a Claude o ChatGPT.');
+        }
 
-  if(!isPro && used){
-    showPaywall();
-    return;
-  }
+        function importAISlides() {
+            const raw = document.getElementById('ai-import-json').value.trim();
+            if (!raw) {
+                showToast('Por favor pega la respuesta de Claude o ChatGPT.');
+                return;
+            }
 
-  used = true;
+            try {
+                let parsed = null;
+                // Intento de extracción de JSON
+                const jsonMatch = raw.match(/\[\s*\{[\s\S]*\}\s*\]/);
+                if (jsonMatch) {
+                    parsed = JSON.parse(jsonMatch[0]);
+                } else {
+                    parsed = JSON.parse(raw);
+                }
 
-  const precio = parseInt(document.getElementById("precio").value) || 100;
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    slides = parsed.map((item, idx) => ({
+                        id: Date.now() + idx,
+                        layout: idx === 0 ? 'cover' : (idx === parsed.length - 1 ? 'cta' : 'standard'),
+                        badge: item.badge || `SLIDE 0${idx + 1}`,
+                        title: item.title || `Diapositiva ${idx + 1}`,
+                        body: item.body || '',
+                        ctaText: item.ctaText || 'DESLIZA ➡️',
+                        icon: item.icon || 'fa-crown'
+                    }));
 
-  const alcance = Math.floor(Math.random()*5000)+1000;
-  const leads = Math.floor(alcance*0.02);
-  const ventas = Math.floor(leads*0.1);
+                    currentSlideIndex = 0;
+                    renderTabs();
+                    loadSlideToEditor();
+                    updatePreview();
+                    generateCaptionText();
+                    switchEditorTab('content');
+                    showToast(`¡Exito! Se importaron ${slides.length} diapositivas.`);
+                } else {
+                    throw new Error('El formato no es una lista de diapositivas válida.');
+                }
+            } catch (err) {
+                console.error(err);
+                showToast('Error al procesar el JSON. Asegúrate de copiar la lista devuelta por la IA.');
+            }
+        }
 
-  const ingresoMin = ventas * precio;
-  const ingresoMax = ingresoMin * 2;
+        function addNewSlide() {
+            const newId = slides.length + 1;
+            slides.push({
+                id: newId,
+                layout: 'standard',
+                badge: `PASO 0${newId} ✨`,
+                title: `Nuevo Titular {Slide ${newId}}`,
+                body: 'Escribe aquí tu estrategia o lección con {palabras en oro}.',
+                ctaText: 'DESLIZA ➡️',
+                icon: 'fa-gem'
+            });
+            selectSlide(slides.length - 1);
+            showToast('Nueva diapositiva añadida');
+        }
 
-  // 🟣 PRO VERSION
-  if(isPro){
+        function duplicateCurrentSlide() {
+            const current = slides[currentSlideIndex];
+            const clone = JSON.parse(JSON.stringify(current));
+            clone.id = Date.now();
+            slides.splice(currentSlideIndex + 1, 0, clone);
+            selectSlide(currentSlideIndex + 1);
+            showToast('Diapositiva duplicada');
+        }
 
-    document.getElementById("output").innerHTML = `
-    <p>🔥 Hooks optimizados:</p>
-    <p>1. Este error está bloqueando tus resultados</p>
-    <p>2. Nadie te cuenta esto sobre tu nicho</p>
-    <p>3. Así consigues clientes sin esfuerzo</p>
+        function deleteCurrentSlide() {
+            if (slides.length <= 1) {
+                showToast('Debes conservar al menos 1 diapositiva.');
+                return;
+            }
+            slides.splice(currentSlideIndex, 1);
+            if (currentSlideIndex >= slides.length) {
+                currentSlideIndex = slides.length - 1;
+            }
+            selectSlide(currentSlideIndex);
+            showToast('Diapositiva eliminada');
+        }
 
-    <hr>
+        function resetCarousel() {
+            currentSlideIndex = 0;
+            slides = [
+                {
+                    id: 1,
+                    layout: 'cover',
+                    badge: 'DESLIZA ➡️',
+                    title: 'Cómo crear un negocio digital sin {mostrar tu rostro}',
+                    body: 'Descubre la estrategia exacta paso a paso para monetizar tu contenido {faceless} en Instagram en 2026.',
+                    ctaText: 'GUARDA ESTE POST 📌',
+                    icon: 'fa-crown'
+                },
+                {
+                    id: 2,
+                    layout: 'standard',
+                    badge: 'PASO 01 💡',
+                    title: 'Define tu Nicho de {Alto Valor}',
+                    body: 'No intentes hablarle a todos. Elige una temática clara: finanzas, productividad, marketing digital o {crecimiento personal}.',
+                    ctaText: 'SIGUIENTE SLIDE ➡️',
+                    icon: 'fa-rocket'
+                },
+                {
+                    id: 3,
+                    layout: 'cta',
+                    badge: 'ÚNETE HOY 🔥',
+                    title: '¿Lista para escalar tu {marca faceless}?',
+                    body: 'Comenta la palabra {"EMPEZAR"} abajo y te envío la guía paso a paso directamente a tus mensajes privados.',
+                    ctaText: 'SÍGUEME @lacapitanafaceless 👑',
+                    icon: 'fa-crown'
+                }
+            ];
+            renderTabs();
+            loadSlideToEditor();
+            updatePreview();
+            generateCaptionText();
+            showToast('Carrusel restaurado exitosamente');
+        }
 
-    <p>💬 Mensaje DM listo:</p>
-    <p>"Hey! He visto tu perfil y creo que esto puede ayudarte a conseguir clientes rápido. ¿Te interesa que te explique?"</p>
+        function loadViralTemplatePrompt() {
+            applyHookTemplate('El Secreto Faceless que te hará generar {$1,000} este mes');
+        }
 
-    <hr>
+        function generateCaptionText() {
+            let cleanTitle = (slides[0]?.title || 'Nuevo Carrusel').replace(/\{([^}]+)\}/g, '$1');
+            let cleanBody = (slides[0]?.body || '').replace(/\{([^}]+)\}/g, '$1');
 
-    <p>📈 Plan de acción:</p>
-    <p>1. Publica hoy este contenido</p>
-    <p>2. Responde TODOS los comentarios</p>
-    <p>3. Usa el mensaje DM</p>
+            let caption = `👑 ${cleanTitle}\n\n`;
+            caption += `${cleanBody}\n\n`;
+            caption += `👇 DESGLOSE PASO A PASO:\n\n`;
 
-    <hr>
+            slides.forEach((s, idx) => {
+                if (idx > 0 && idx < slides.length - 1) {
+                    let t = s.title.replace(/\{([^}]+)\}/g, '$1');
+                    let b = s.body.replace(/\{([^}]+)\}/g, '$1');
+                    caption += `🔹 Slide ${idx + 1} | ${t}: ${b}\n\n`;
+                }
+            });
 
-    <p class="highlight">
-    💰 Ingresos estimados: $${ingresoMin*2} - $${ingresoMax*2}
-    </p>
+            caption += `📌 Guarda este carrusel para consultarlo cuando vayas a crear contenido.\n`;
+            caption += `💬 Déjame tu palabra clave en comentarios para enviarte el recurso VIP por DM.\n\n`;
+            caption += `Sígueme para más estrategias Faceless de Alto Nivel 👉 ${brandConfig.handle}\n\n`;
+            caption += `#faceless #negociosdigitales #lacapitanafaceless #carruselesinstagram #marcapersonal #mindsetfaceless`;
 
-    <p class="small">
-    🚀 Esto es lo que puedes generar aplicándolo hoy
-    </p>
-    `;
+            document.getElementById('generated-caption').value = caption;
+        }
 
-  } else {
+        function copyCaptionToClipboard() {
+            const textarea = document.getElementById('generated-caption');
+            textarea.select();
+            document.execCommand('copy');
+            showToast('¡Caption copiado con éxito!');
+        }
 
-  // 🟡 FREE VERSION
+        function exportCurrentSlidePNG() {
+            showToast('Generando imagen HD 1080x1350...');
 
-    document.getElementById("output").innerHTML = `
-    <p>📊 <strong>Simulación realista:</strong></p>
+            const container = document.getElementById('export-render-container');
+            const slide = slides[currentSlideIndex];
 
-    <p>→ Alcance: ${alcance}</p>
-    <p>→ Leads: ${leads}</p>
-    <p>→ Ventas: ${ventas}</p>
+            const titleFormatted = formatGoldHighlights(slide.title);
+            const bodyFormatted = formatGoldHighlights(slide.body);
 
-    <hr>
+            container.innerHTML = `
+                <div style="width: 1080px; height: 1350px; background: linear-gradient(135deg, #120624 0%, #06020c 100%); padding: 80px 70px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; overflow: hidden;">
+                    <!-- Ambient Glow Orbs -->
+                    <div style="position: absolute; top: -150px; right: -150px; width: 600px; height: 600px; border-radius: 50%; background: ${brandConfig.primaryColor}; filter: blur(120px); opacity: 0.45;"></div>
+                    <div style="position: absolute; bottom: -150px; left: -150px; width: 600px; height: 600px; border-radius: 50%; background: ${brandConfig.secondaryColor}; filter: blur(120px); opacity: 0.35;"></div>
 
-    <p class="highlight">
-    💰 Ingresos estimados: $${ingresoMin} - $${ingresoMax}
-    </p>
+                    <!-- Header Bar -->
+                    <div style="position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="background: rgba(88, 28, 135, 0.6); border: 2px solid ${brandConfig.secondaryColor}; color: #fde047; font-size: 26px; font-weight: 800; text-transform: uppercase; padding: 12px 28px; border-radius: 9999px; letter-spacing: 2px;">
+                            ${slide.badge || 'SLIDE'}
+                        </span>
+                        <span style="color: #f3e8ff; font-size: 26px; font-weight: 700;">
+                            ${brandConfig.handle}
+                        </span>
+                    </div>
 
-    <p class="small">
-    ⚠️ Esto es lo que estás perdiendo cada día sin contenido optimizado
-    </p>
+                    <!-- Content -->
+                    <div style="position: relative; z-index: 10; margin: auto 0; padding: 40px 0;">
+                        <h2 style="color: #ffffff; font-size: 62px; font-weight: 900; line-height: 1.18; margin-bottom: 30px;">
+                            ${titleFormatted}
+                        </h2>
+                        <p style="color: #e9d5ff; font-size: 32px; line-height: 1.5; font-weight: 400; margin-bottom: 40px; white-space: pre-line;">
+                            ${bodyFormatted}
+                        </p>
+                        ${slide.ctaText ? `
+                            <div style="display: inline-block; background: linear-gradient(135deg, ${brandConfig.secondaryColor}, #fde047); color: #07030d; padding: 22px 44px; border-radius: 20px; font-size: 28px; font-weight: 900; box-shadow: 0 12px 35px rgba(0,0,0,0.7);">
+                                ${slide.ctaText}
+                            </div>
+                        ` : ''}
+                    </div>
 
-    <hr>
+                    <!-- Footer -->
+                    <div style="position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid rgba(255,255,255,0.15); padding-top: 35px;">
+                        <span style="color: #fde047; font-size: 26px; font-weight: 800;">
+                            ${brandConfig.author}
+                        </span>
+                        <span style="background: rgba(26, 5, 43, 0.9); color: #ffffff; padding: 8px 26px; border-radius: 12px; font-size: 24px; font-weight: 800; border: 1px solid rgba(255,255,255,0.2);">
+                            ${currentSlideIndex + 1}/${slides.length}
+                        </span>
+                    </div>
+                </div>
+            `;
 
-    <p class="small">
-    ⛔ Has desbloqueado solo el 10% del sistema
-    </p>
+            setTimeout(() => {
+                html2canvas(container.firstElementChild, { scale: 1.5 }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `slide-${currentSlideIndex + 1}-lacapitanafaceless.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    showToast('¡Slide descargado en HD!');
+                }).catch(err => {
+                    console.error(err);
+                    showToast('Error al exportar la imagen.');
+                });
+            }, 200);
+        }
 
-    <p style="color:#FACC15; font-weight:bold;">
-    🔥 23 personas han desbloqueado PRO hoy
-    </p>
-    `;
-  }
-}
+        async function exportAllSlidesPNG() {
+            showToast('Descargando todos los slides en secuencia...');
+            const originalIndex = currentSlideIndex;
 
-// PAYWALL
-function showPaywall(){
-  document.getElementById("paywall").style.display="flex";
-}
+            for (let i = 0; i < slides.length; i++) {
+                selectSlide(i);
+                await new Promise(r => setTimeout(r, 350));
+                exportCurrentSlidePNG();
+                await new Promise(r => setTimeout(r, 700));
+            }
 
-function closePaywall(){
-  document.getElementById("paywall").style.display="none";
-}
+            selectSlide(originalIndex);
+            showToast('¡Descarga completa finalizada!');
+        }
 
-// CHECKOUT
-function goCheckout(){
-  window.location.href="https://www.lacapitanafaceless.com/cf82f970";
-}
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            const msgEl = document.getElementById('toast-message');
+            msgEl.textContent = message;
 
-// INIT
-checkPro();
-</script>
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
 
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
