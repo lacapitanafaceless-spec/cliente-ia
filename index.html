@@ -1,1051 +1,558 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carousel Lab VIP | Calendario & Sistema</title>
-
-    <!-- Tailwind CSS CDN -->
+    <title>30 Carruseles de Autoridad Faceless | La Capitana</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        imperial: { 50: '#f5f3ff', 100: '#ede9fe', 200: '#ddd6fe', 300: '#c4b5fd', 400: '#a78bfa', 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9', 800: '#5b21b6', 900: '#3b0764', 950: '#1a052b', },
-                        gold: { 300: '#fde047', 400: '#facc15', 500: '#eab308', 600: '#ca8a04', 700: '#a16207', }
+                        gold: {
+                            300: '#FFE899',
+                            400: '#F3E5AB',
+                            500: '#D4AF37',
+                            600: '#AA7C11',
+                            700: '#8B6508'
+                        },
+                        imperial: {
+                            300: '#D8B4FE',
+                            400: '#C084FC',
+                            500: '#A855F7',
+                            600: '#9333EA',
+                            700: '#7E22CE',
+                            800: '#581C87',
+                            900: '#3B0764',
+                            950: '#1A0333'
+                        },
+                        darkBg: '#09070D',
+                        darkCard: '#130E1C',
+                        darkBorder: '#281C38'
                     }
                 }
             }
         }
     </script>
-    
-    <!-- FontAwesome & Google Fonts -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Montserrat:wght@400;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Exportación HD -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root { --brand-primary: #581c87; --brand-secondary: #eab308; --brand-bg: #07030d; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--brand-bg); color: #f3f4f6; overflow-x: hidden;
-            background-image: radial-gradient(circle at 15% 15%, rgba(88, 28, 135, 0.28) 0%, transparent 50%), radial-gradient(circle at 85% 85%, rgba(234, 179, 8, 0.15) 0%, transparent 45%);
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
-        .font-display { font-family: 'Outfit', sans-serif; }
-        .font-serif-luxury { font-family: 'Playfair Display', serif; }
-        
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #0c0517; }
-        ::-webkit-scrollbar-thumb { background: #4c1d95; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #eab308; }
-
-        .glass-panel-vip {
-            background: rgba(15, 7, 28, 0.88); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(234, 179, 8, 0.22); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFF099 0%, #D4AF37 50%, #997A15 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        .ratio-4-5 { aspect-ratio: 4 / 5; max-height: 530px; }
-        .ratio-1-1 { aspect-ratio: 1 / 1; max-height: 480px; }
-        .ratio-1-91 { aspect-ratio: 1.91 / 1; max-height: 300px; }
-        .export-render-target { position: fixed; left: -9999px; top: -9999px; z-index: -100; }
-
-        .gold-gradient-text { background: linear-gradient(135deg, #fffbeb 0%, #fde047 30%, #eab308 70%, #ca8a04 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .purple-gold-btn { background: linear-gradient(135deg, #4c1d95 0%, #6b21a8 50%, #ca8a04 100%); box-shadow: 0 8px 25px rgba(107, 33, 168, 0.4); }
-        .purple-gold-btn:hover { background: linear-gradient(135deg, #3b0764 0%, #581c87 50%, #eab308 100%); box-shadow: 0 12px 30px rgba(234, 179, 8, 0.35); }
-        .highlight-gold { color: #fde047; font-weight: 900; text-shadow: 0 0 12px rgba(234, 179, 8, 0.4); }
-
-        .format-tab-active { background: rgba(88, 28, 135, 0.9); border-color: #facc15; color: #fde047; }
-        .format-tab-inactive { background: rgba(15, 7, 28, 0.6); border-color: rgba(88, 28, 135, 0.6); color: #c4b5fd; }
+        .purple-gold-text {
+            background: linear-gradient(135deg, #E9D5FF 0%, #C084FC 40%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-gradient-bg {
+            background: linear-gradient(135deg, #ECC94B 0%, #D4AF37 50%, #B7791F 100%);
+        }
+        .imperial-gradient-bg {
+            background: linear-gradient(135deg, #9333EA 0%, #7E22CE 50%, #3B0764 100%);
+        }
+        .royal-glow {
+            box-shadow: 0 0 40px -5px rgba(126, 34, 206, 0.4), 0 0 20px -5px rgba(212, 175, 55, 0.2);
+        }
+        .gold-glow {
+            box-shadow: 0 0 35px -5px rgba(212, 175, 55, 0.35);
+        }
+        .royal-border-glow {
+            border: 1px solid rgba(192, 132, 252, 0.3);
+        }
+        .royal-border-glow:hover {
+            border: 1px solid rgba(212, 175, 55, 0.6);
+        }
+        #social-proof-toast {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #social-proof-toast.toast-hidden {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            pointer-events: none;
+        }
+        #social-proof-toast.toast-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.08); }
+        }
+        .pulse-halo {
+            animation: pulseGlow 4s infinite ease-in-out;
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-black">
+<body class="bg-darkBg text-gray-200 antialiased selection:bg-imperial-700 selection:text-white relative pb-20 md:pb-0">
 
-    <header class="border-b border-amber-500/20 bg-gray-950/90 backdrop-blur-xl sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-center space-x-3.5">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-900 via-amber-500 to-yellow-200 p-0.5 shadow-xl shadow-purple-950/80">
-                    <div class="w-full h-full bg-gray-950 rounded-[14px] flex items-center justify-center">
-                        <i class="fa-solid fa-crown gold-gradient-text text-xl"></i>
+    <!-- URGENCY TOP BAR -->
+    <div class="bg-gradient-to-r from-imperial-950 via-imperial-900 to-imperial-950 border-b border-gold-500/30 text-white text-xs py-2.5 px-4 text-center font-medium flex items-center justify-center gap-2 md:gap-3 shadow-2xl backdrop-blur-md">
+        <span class="inline-flex items-center gap-1.5 font-extrabold text-gold-400 uppercase tracking-widest text-[11px]">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <i class="fa-solid fa-crown text-gold-500"></i> ACCESO VIP RESERVADO
+        </span>
+        <span class="text-imperial-600 hidden sm:inline">•</span>
+        <span class="hidden md:inline text-gray-300 font-normal">Licencia Vitalicia de Autoridad Faceless</span>
+        <span class="text-imperial-600 hidden sm:inline">•</span>
+        <span class="bg-gradient-to-r from-gold-500/20 to-gold-600/20 text-gold-300 border border-gold-500/50 px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider shadow-inner flex items-center gap-1">
+            <i class="fa-solid fa-bolt text-gold-400 text-[9px]"></i> TARIFA DE LANZAMIENTO LIMITADA
+        </span>
+    </div>
+
+    <!-- HEADER / BRANDING -->
+    <header class="py-4 px-4 border-b border-imperial-900/80 bg-darkBg/90 backdrop-blur-xl sticky top-0 z-40 transition-all">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="relative group">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-imperial-600 via-gold-500 to-imperial-400 p-[1.5px] flex items-center justify-center shadow-lg">
+                        <div class="w-full h-full bg-darkBg rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-crown text-gold-500 text-base"></i>
+                        </div>
                     </div>
                 </div>
                 <div>
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <h1 class="font-display font-extrabold text-2xl tracking-tight text-white">
-                            Carousel<span class="gold-gradient-text font-black">Lab VIP</span>
-                        </h1>
-                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-amber-500/10 text-amber-300 border border-amber-500/30">
-                            EL SISTEMA + CALENDARIO
-                        </span>
-                    </div>
+                    <span class="font-black text-base md:text-lg tracking-wider text-white block leading-none">LA CAPITANA</span>
+                    <span class="text-[9px] md:text-[10px] text-gold-400 font-extrabold tracking-widest uppercase">FACELESS AUTHORITY</span>
                 </div>
             </div>
-            <div class="flex items-center gap-2.5 flex-wrap">
-                <div class="text-xs font-semibold text-gray-400 bg-purple-950/50 px-3 py-1.5 rounded-full border border-purple-800/50 flex items-center gap-2">
-                    <i class="fa-solid fa-shield-halved text-amber-400"></i> No API Key Required
+            
+            <div class="flex items-center gap-3 md:gap-5">
+                <div class="hidden lg:flex items-center gap-2 text-xs text-gray-300 bg-imperial-950/80 border border-imperial-800/80 px-3 py-1.5 rounded-full">
+                    <i class="fa-solid fa-shield-halved text-gold-500"></i>
+                    <span>Check-out Oficial La Capitana</span>
                 </div>
+                <a href="https://shop.beacons.ai/lacapitanafaceless/0901d3c0-f534-48fb-8cfa-f34a13c35b21" class="gold-gradient-bg text-black font-black px-4 md:px-5 py-2 md:py-2.5 rounded-xl text-xs md:text-sm hover:scale-[1.03] active:scale-[0.98] transition-all shadow-xl flex items-center gap-2">
+                    <span>OBTENER MIS 30 CARRUSELES</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </a>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        <!-- COLUMNA IZQUIERDA: CONTROLES -->
-        <div class="lg:col-span-7 space-y-6">
+    <!-- HERO SECTION -->
+    <section class="py-12 md:py-20 px-4 max-w-5xl mx-auto text-center relative overflow-hidden">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-imperial-700/20 blur-[140px] rounded-full pointer-events-none pulse-halo"></div>
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-gold-500/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-imperial-950/80 border border-imperial-600/50 text-imperial-300 text-xs md:text-sm font-semibold mb-6 shadow-xl">
+            <i class="fa-solid fa-infinity text-gold-500"></i>
+            <span class="text-white font-bold">Multiplicador Infinito de Contenido</span>
+            <span class="text-imperial-400">•</span>
+            <span class="text-gold-400 font-medium">Más Efectivo Que Cualquier IA</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-white leading-tight mb-6 tracking-tight">
+            ¡Ahórrate Horas de Pensar! La Capitana Ya Hizo Tus <span class="purple-gold-text">30 Días de Contenido (E Infinitos Más)</span> Por Ti
+        </h1>
+
+        <p class="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8 font-light leading-relaxed">
+            Accede a <strong class="text-white font-semibold">30 Plantillas de Carruseles de Alta Autoridad en Canva</strong>, pre-escritas por La Capitana con ganchos psicológicos de venta real. <span class="text-gold-400 font-semibold">Reutilízalas infinitas veces</span> cambiando el enfoque o producto para generar meses de contenido imparable.
+        </p>
+
+        <div class="max-w-md mx-auto mb-10">
+            <a href="https://shop.beacons.ai/lacapitanafaceless/0901d3c0-f534-48fb-8cfa-f34a13c35b21" class="block w-full gold-gradient-bg text-black font-black text-lg md:text-xl py-4 px-8 rounded-2xl shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all gold-glow flex items-center justify-center gap-3 group">
+                <i class="fa-solid fa-crown text-black group-hover:rotate-12 transition-transform"></i>
+                <span>¡QUIERO MIS 30 CARRUSELES AHORA!</span>
+            </a>
             
-            <!-- PESTAÑAS DE NAVEGACIÓN -->
-            <div class="flex border-b border-purple-900/40 space-x-1.5 overflow-x-auto pb-1 scrollbar-thin">
-                <button onclick="switchEditorTab('calendar')" id="tab-btn-calendar" class="px-3.5 py-2 rounded-t-xl font-bold text-xs flex items-center gap-2 border-b-2 border-amber-400 text-amber-300 bg-purple-950/60 transition flex-shrink-0">
-                    <i class="fa-solid fa-calendar-week text-amber-400"></i> 1. Calendario
-                </button>
-                <button onclick="switchEditorTab('system')" id="tab-btn-system" class="px-3.5 py-2 rounded-t-xl font-bold text-xs flex items-center gap-2 text-purple-300 hover:text-white transition flex-shrink-0">
-                    <i class="fa-solid fa-shapes"></i> 2. Formatos IA
-                </button>
-                <button onclick="switchEditorTab('quotes')" id="tab-btn-quotes" class="px-3.5 py-2 rounded-t-xl font-bold text-xs flex items-center gap-2 text-purple-300 hover:text-white transition flex-shrink-0">
-                    <i class="fa-solid fa-quote-right"></i> 3. Citas VIP
-                </button>
-                <button onclick="switchEditorTab('content')" id="tab-btn-content" class="px-3.5 py-2 rounded-t-xl font-bold text-xs flex items-center gap-2 text-purple-300 hover:text-white transition flex-shrink-0">
-                    <i class="fa-solid fa-layer-group"></i> 4. Editor Visual
-                </button>
-                <button onclick="switchEditorTab('style')" id="tab-btn-style" class="px-3.5 py-2 rounded-t-xl font-bold text-xs flex items-center gap-2 text-purple-300 hover:text-white transition flex-shrink-0">
-                    <i class="fa-solid fa-palette"></i> 5. Lienzo
-                </button>
+            <div class="flex items-center justify-center gap-4 mt-3 text-xs text-gray-400">
+                <span><i class="fa-solid fa-check text-gold-500 mr-1"></i> Gratis en Canva o Pro</span>
+                <span><i class="fa-solid fa-check text-gold-500 mr-1"></i> Contenido Infinito Reutilizable</span>
+            </div>
+        </div>
+
+        <!-- QUICK VALUE CARDS -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-left max-w-4xl mx-auto mt-12 pt-8 border-t border-imperial-800/60">
+            <div class="bg-darkCard p-4 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all">
+                <div class="w-8 h-8 rounded-lg bg-imperial-900 text-gold-400 flex items-center justify-center mb-2 text-sm">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h4 class="text-xs font-bold text-white">Listo en 5 Minutos</h4>
+                <p class="text-[11px] text-gray-400 mt-0.5">Abre en Canva, ajusta tu tema y publica sin estresarte.</p>
             </div>
 
-            <!-- TAB 1: CALENDARIO ESTRATÉGICO -->
-            <div id="tab-section-calendar" class="space-y-6">
-                <div class="glass-panel-vip p-6 rounded-2xl space-y-5">
-                    <div class="border-b border-purple-900/40 pb-4">
-                        <h2 class="text-xl font-black text-white tracking-tight">EL CALENDARIO DE CONTENIDO</h2>
-                        <h3 class="text-lg font-bold gold-gradient-text mt-1">Tu Semana Estratégica</h3>
-                        <p class="text-xs text-purple-200 mt-2 leading-relaxed">
-                            No publiques al azar. Este es el ritmo semanal probado para atraer, nutrir y convertir seguidores en clientes usando los 5 formatos de la metodología.
-                        </p>
+            <div class="bg-darkCard p-4 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all">
+                <div class="w-8 h-8 rounded-lg bg-imperial-900 text-gold-400 flex items-center justify-center mb-2 text-sm">
+                    <i class="fa-solid fa-infinity"></i>
+                </div>
+                <h4 class="text-xs font-bold text-white">Reutilizable Infinito</h4>
+                <p class="text-[11px] text-gray-400 mt-0.5">30 estructuras que alimentan todo tu año cambiando el ángulo.</p>
+            </div>
+
+            <div class="bg-darkCard p-4 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all">
+                <div class="w-8 h-8 rounded-lg bg-imperial-900 text-gold-400 flex items-center justify-center mb-2 text-sm">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <h4 class="text-xs font-bold text-white">Supera a la IA</h4>
+                <p class="text-[11px] text-gray-400 mt-0.5">Ganchos psicológicos humanos que sí detienen el scroll.</p>
+            </div>
+
+            <div class="bg-darkCard p-4 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all">
+                <div class="w-8 h-8 rounded-lg bg-imperial-900 text-gold-400 flex items-center justify-center mb-2 text-sm">
+                    <i class="fa-solid fa-chess-queen"></i>
+                </div>
+                <h4 class="text-xs font-bold text-white">Autoridad Instantánea</h4>
+                <p class="text-[11px] text-gray-400 mt-0.5">Pasa de cuenta aficionada a referente de tu nicho.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPARISON: POR QUÉ ESTO DESTRUYE A LA IA GENÉRICA -->
+    <section class="py-16 bg-imperial-950/60 border-y border-imperial-900/80 px-4 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-red-950/80 text-red-400 border border-red-800/60 text-[11px] font-black px-3.5 py-1 rounded-full uppercase tracking-widest mb-2">
+                    ⚠️ LA VERDAD SOBRE LA IA EN INSTAGRAM
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-black text-white mt-1">
+                    ¿Por qué los Carruseles creados con IA <span class="gold-gradient-text">NO están Vendiendo</span>?
+                </h2>
+                <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto mt-2 leading-relaxed">
+                    La Inteligencia Artificial redacta textos aburridos y genéricos que la gente identifica en 1 segundo y pasa de largo. Para vender necesitas <strong class="text-white font-semibold">psicología humana de atracción</strong>.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- COLUMNA IA GENÉRICA -->
+                <div class="bg-darkCard/80 p-6 rounded-2xl border border-red-900/40 relative">
+                    <div class="flex items-center gap-2 mb-4 text-red-400 font-extrabold text-sm uppercase tracking-wider">
+                        <i class="fa-solid fa-robot text-lg"></i>
+                        <span>Usar IA o Empezar de Cero</span>
                     </div>
+                    <ul class="space-y-3.5 text-xs md:text-sm text-gray-400">
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-xmark text-red-500 mt-0.5 text-sm flex-shrink-0"></i>
+                            <span><strong>Textos fríos y robóticos:</strong> Suenan igual a miles de cuentas que usan los mismos prompts de ChatGPT.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-xmark text-red-500 mt-0.5 text-sm flex-shrink-0"></i>
+                            <span><strong>Cero estructura de retención:</strong> La IA no entiende cómo mantener el interés diapositiva a diapositiva.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-xmark text-red-500 mt-0.5 text-sm flex-shrink-0"></i>
+                            <span><strong>Pierdes horas formateando:</strong> Tienes que pegar el texto y pelearte con Canva ajustando bloques a mano.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-xmark text-red-500 mt-0.5 text-sm flex-shrink-0"></i>
+                            <span><strong>Sin llamados a la acción reales:</strong> Cierres genéricos que no generan ni un solo mensaje directo (DM).</span>
+                        </li>
+                    </ul>
+                </div>
 
-                    <div class="grid grid-cols-1 gap-3">
-                        <!-- Lunes -->
-                        <div class="bg-gray-950/60 border border-purple-900/50 rounded-xl p-4 flex gap-4 items-start hover:border-amber-500/40 transition">
-                            <div class="bg-purple-900/80 text-amber-300 font-black text-sm px-3 py-2 rounded-lg text-center min-w-[70px]">LUN</div>
-                            <div>
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-bold text-white text-sm">Contraste</h4>
-                                    <span class="text-[9px] bg-red-900/50 text-red-300 px-2 py-0.5 rounded border border-red-800/50">Tensión</span>
-                                </div>
-                                <p class="text-xs text-gray-400 mt-1">Rompe el patrón. Muestra el error de lo que están haciendo vs la solución que ofreces. Ideal para captar atención a inicio de semana.</p>
-                                <button onclick="switchEditorTab('system'); renderSystemView('contraste');" class="mt-2 text-[10px] font-bold text-amber-400 hover:text-amber-300"><i class="fa-solid fa-wand-magic-sparkles"></i> Ir a plantillas de Contraste</button>
-                            </div>
-                        </div>
+                <!-- COLUMNA SISTEMA LA CAPITANA -->
+                <div class="bg-gradient-to-b from-imperial-900/90 to-darkCard p-6 rounded-2xl border border-gold-500/50 shadow-2xl relative royal-glow">
+                    <div class="flex items-center gap-2 mb-4 text-gold-400 font-extrabold text-sm uppercase tracking-wider">
+                        <i class="fa-solid fa-crown text-lg text-gold-500"></i>
+                        <span>30 Carruseles de La Capitana</span>
+                    </div>
+                    <ul class="space-y-3.5 text-xs md:text-sm text-gray-200">
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-check text-gold-500 mt-0.5 text-sm flex-shrink-0"></i>
+                            <span><strong>Ganchos Probadamente Efectivos:</strong> Redactados con la psicología que detiene el pulgar al instante.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-check text-gold-500 mt-0.5 text-sm flex-shrink-0"></i>
+                            <span><strong>Listos en Canva:</strong> Diseños pulidos donde solo sustituyes palabras en 5 minutos.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-check text-gold-500 mt-0.5 text-sm flex-shrink-0"></i>
+                            <span><strong>Multiplicador de Contenido Infinito:</strong> Cambia el producto o la foto y la plantilla te servirá para siempre.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-check text-gold-500 mt-0.5 text-sm flex-shrink-0"></i>
+                            <span><strong>Garantía de Autoridad:</strong> Diseñados para que luzcas como la referente indiscutible de tu sector.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <!-- Martes -->
-                        <div class="bg-gray-950/60 border border-purple-900/50 rounded-xl p-4 flex gap-4 items-start hover:border-amber-500/40 transition">
-                            <div class="bg-purple-900/80 text-amber-300 font-black text-sm px-3 py-2 rounded-lg text-center min-w-[70px]">MAR</div>
-                            <div>
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-bold text-white text-sm">Revelación</h4>
-                                    <span class="text-[9px] bg-blue-900/50 text-blue-300 px-2 py-0.5 rounded border border-blue-800/50">Curiosidad</span>
-                                </div>
-                                <p class="text-xs text-gray-400 mt-1">Desvela un "secreto" de la industria o un cambio de perspectiva. Posiciónate como un experto con información privilegiada.</p>
-                                <button onclick="switchEditorTab('system'); renderSystemView('revelacion');" class="mt-2 text-[10px] font-bold text-amber-400 hover:text-amber-300"><i class="fa-solid fa-wand-magic-sparkles"></i> Ir a plantillas de Revelación</button>
-                            </div>
-                        </div>
+    <!-- SECTION: EL MULTIPLICADOR DE CONTENIDO INFINITO -->
+    <section class="py-16 md:py-24 px-4 max-w-5xl mx-auto text-center">
+        <div class="max-w-3xl mx-auto mb-12">
+            <span class="text-imperial-400 font-extrabold uppercase tracking-widest text-xs">RECURSO REUTILIZABLE DE POR VIDA</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">
+                No Compras 30 Días... Compras un <span class="gold-gradient-text">Sistema de Contenido Infinito</span>
+            </h2>
+            <p class="text-gray-300 text-sm md:text-base mt-3 leading-relaxed">
+                La gran ventaja de estas 30 estructuras pre-escritas es su **versatilidad de reciclaje**. Una sola plantilla puede transformarse en decenas de publicaciones distintas a lo largo del año.
+            </p>
+        </div>
 
-                        <!-- Miércoles -->
-                        <div class="bg-gray-950/60 border border-purple-900/50 rounded-xl p-4 flex gap-4 items-start hover:border-amber-500/40 transition">
-                            <div class="bg-purple-900/80 text-amber-300 font-black text-sm px-3 py-2 rounded-lg text-center min-w-[70px]">MIE</div>
-                            <div>
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-bold text-white text-sm">Prueba</h4>
-                                    <span class="text-[9px] bg-green-900/50 text-green-300 px-2 py-0.5 rounded border border-green-800/50">Confianza</span>
-                                </div>
-                                <p class="text-xs text-gray-400 mt-1">Día de validación. Muestra un caso de estudio, métricas, testimonios o tu propia historia de transformación (Antes/Después).</p>
-                                <button onclick="switchEditorTab('system'); renderSystemView('prueba');" class="mt-2 text-[10px] font-bold text-amber-400 hover:text-amber-300"><i class="fa-solid fa-wand-magic-sparkles"></i> Ir a plantillas de Prueba</button>
-                            </div>
-                        </div>
+        <div class="grid md:grid-cols-3 gap-6 text-left">
+            <div class="bg-darkCard p-6 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all">
+                <div class="w-10 h-10 rounded-xl bg-imperial-900 border border-imperial-700/60 text-gold-400 flex items-center justify-center font-bold mb-4 text-lg">
+                    1
+                </div>
+                <h3 class="text-base font-bold text-white mb-2">Cambia el Ángulo de Encuadre</h3>
+                <p class="text-xs text-gray-400 leading-relaxed">Usa el carrusel hoy para hablar de *"Errores comunes"*, y el próximo mes usa la misma estructura para hablar de *"Mitos revelados"*. La retención será exactamente igual de alta.</p>
+            </div>
 
-                        <!-- Jueves -->
-                        <div class="bg-gray-950/60 border border-purple-900/50 rounded-xl p-4 flex gap-4 items-start hover:border-amber-500/40 transition">
-                            <div class="bg-purple-900/80 text-amber-300 font-black text-sm px-3 py-2 rounded-lg text-center min-w-[70px]">JUE</div>
-                            <div>
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-bold text-white text-sm">Enemigo</h4>
-                                    <span class="text-[9px] bg-orange-900/50 text-orange-300 px-2 py-0.5 rounded border border-orange-800/50">Empatía</span>
-                                </div>
-                                <p class="text-xs text-gray-400 mt-1">Identifica un enemigo común (la falta de tiempo, el algoritmo, falsos gurús). Únete a tu audiencia contra lo que les frena.</p>
-                                <button onclick="switchEditorTab('system'); renderSystemView('enemigo');" class="mt-2 text-[10px] font-bold text-amber-400 hover:text-amber-300"><i class="fa-solid fa-wand-magic-sparkles"></i> Ir a plantillas de Enemigo</button>
-                            </div>
-                        </div>
+            <div class="bg-darkCard p-6 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all">
+                <div class="w-10 h-10 rounded-xl bg-imperial-900 border border-imperial-700/60 text-gold-400 flex items-center justify-center font-bold mb-4 text-lg">
+                    2
+                </div>
+                <h3 class="text-base font-bold text-white mb-2">Adapta a Diferentes Ofertas</h3>
+                <p class="text-xs text-gray-400 leading-relaxed">Si lanzas un nuevo e-book, plantilla o servicio, simplemente reemplaza el llamado a la acción final y el producto mencionado. El motor de venta ya está construido.</p>
+            </div>
 
-                        <!-- Viernes -->
-                        <div class="bg-gray-950/60 border border-purple-900/50 rounded-xl p-4 flex gap-4 items-start hover:border-amber-500/40 transition">
-                            <div class="bg-purple-900/80 text-amber-300 font-black text-sm px-3 py-2 rounded-lg text-center min-w-[70px]">VIE</div>
-                            <div>
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-bold text-white text-sm">Proceso</h4>
-                                    <span class="text-[9px] bg-purple-600/50 text-purple-200 px-2 py-0.5 rounded border border-purple-500/50">Autoridad</span>
-                                </div>
-                                <p class="text-xs text-gray-400 mt-1">Guías paso a paso, tutoriales o checklists. Contenido altamente "guardable" para que lo estudien durante el fin de semana.</p>
-                                <button onclick="switchEditorTab('system'); renderSystemView('proceso');" class="mt-2 text-[10px] font-bold text-amber-400 hover:text-amber-300"><i class="fa-solid fa-wand-magic-sparkles"></i> Ir a plantillas de Proceso</button>
-                            </div>
-                        </div>
+            <div class="bg-darkCard p-6 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all">
+                <div class="w-10 h-10 rounded-xl bg-imperial-900 border border-imperial-700/60 text-gold-400 flex items-center justify-center font-bold mb-4 text-lg">
+                    3
+                </div>
+                <h3 class="text-base font-bold text-white mb-2">Nunca Vuelves a Empezar de Cero</h3>
+                <p class="text-xs text-gray-400 leading-relaxed">Olvídate del trauma del lienzo en blanco. Abres Canva, eliges 1 de las 30 estructuras, ajustas 3 frases y en menos de 5 minutos tienes tu post listo para publicar.</p>
+            </div>
+        </div>
+
+        <div class="mt-10 p-6 rounded-2xl bg-gradient-to-r from-imperial-950 via-darkCard to-imperial-950 border border-imperial-700/60 max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
+            <div class="space-y-1">
+                <h4 class="text-white font-bold text-sm">30 Plantillas × 12 Meses = +360 Publicaciones al Año</h4>
+                <p class="text-xs text-gray-400">Todo por un pago único de solo $27.00 USD hoy.</p>
+            </div>
+            <a href="https://shop.beacons.ai/lacapitanafaceless/0901d3c0-f534-48fb-8cfa-f34a13c35b21" class="gold-gradient-bg text-black font-extrabold text-xs py-3 px-5 rounded-xl flex-shrink-0 hover:scale-105 transition-transform">
+                OBTENER MI ACCESO VITALICIO
+            </a>
+        </div>
+    </section>
+
+    <!-- ESTO ES PARA TI SI... (TARGET AUDIENCE CHECKLIST) -->
+    <section class="py-16 bg-imperial-950/40 border-y border-imperial-900/80 px-4">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-center text-white mb-3">
+                ¿Este Pack de Carruseles es <span class="gold-gradient-text">Para Ti</span>?
+            </h2>
+            <p class="text-center text-gray-400 text-sm max-w-xl mx-auto mb-10">
+                Si te identificas con alguno de estos 4 escenarios cotidianos, La Capitana creó esta solución pensando exactamente en ti:
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-darkCard p-6 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-imperial-800/50 text-gold-400 flex items-center justify-center flex-shrink-0 mt-0.5 border border-imperial-700/50">
+                        <i class="fa-solid fa-clock text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white text-base">Si no tienes tiempo para diseñar</h3>
+                        <p class="text-sm text-gray-400 mt-1 leading-relaxed">Si no dispones de horas libres para estar inventando carruseles ni cuadrando elementos visuales desde cero en Canva.</p>
+                    </div>
+                </div>
+
+                <div class="bg-darkCard p-6 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-imperial-800/50 text-gold-400 flex items-center justify-center flex-shrink-0 mt-0.5 border border-imperial-700/50">
+                        <i class="fa-solid fa-bullseye text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white text-base">Si no estás segura de enganchar</h3>
+                        <p class="text-sm text-gray-400 mt-1 leading-relaxed">Si dudas sobre si la estructura de tus publicaciones realmente logrará retener a la audiencia y despertar ganas de comprar.</p>
+                    </div>
+                </div>
+
+                <div class="bg-darkCard p-6 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-imperial-800/50 text-gold-400 flex items-center justify-center flex-shrink-0 mt-0.5 border border-imperial-700/50">
+                        <i class="fa-solid fa-pen-slash text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white text-base">Si cuando vas a escribir te quedas en blanco</h3>
+                        <p class="text-sm text-gray-400 mt-1 leading-relaxed">Si te sientas frente a la pantalla vacía sin saber qué poner en cada diapositiva ni cómo cerrar con un llamado a la acción efectivo.</p>
+                    </div>
+                </div>
+
+                <div class="bg-darkCard p-6 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-imperial-800/50 text-gold-400 flex items-center justify-center flex-shrink-0 mt-0.5 border border-imperial-700/50">
+                        <i class="fa-solid fa-calendar-check text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white text-base">Si quieres el mes resuelto de una vez</h3>
+                        <p class="text-sm text-gray-400 mt-1 leading-relaxed">Si buscas tener 30 días enteros de contenido estructurado listo para publicar sin volver a estresarte durante todo el mes.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB 2: EL SISTEMA (FORMATOS IA) -->
-            <div id="tab-section-system" class="space-y-6 hidden">
+            <!-- COMPARISON CALLOUT BANNER -->
+            <div class="mt-8 p-6 md:p-8 rounded-2xl bg-gradient-to-r from-imperial-950 via-darkCard to-imperial-950 border border-gold-500/40 text-center relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-gold-500/10 rounded-full blur-2xl"></div>
+                <h4 class="text-lg md:text-xl font-extrabold text-white mb-2">¿Podrías hacerlo tú sola desde cero?</h4>
+                <p class="text-sm md:text-base text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                    <strong class="text-gold-400 font-bold">¡Claro que sí!</strong> Pero será infinitamente más fácil y rápido si ya tienes <span class="text-white font-semibold">30 estructuras de carruseles listas en Canva, pre-escritas con ganchos de venta</span>. Diseñadas para que las puedas reutilizar infinitas veces, mes tras mes. Solo abres, adaptas, publicas y activas ventas.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- HIGH-CONVERTING OFFER & CHECKOUT SECTION -->
+    <section id="checkout" class="py-16 md:py-24 bg-imperial-950/80 border-t border-imperial-800 px-4 relative">
+        <div class="max-w-4xl mx-auto">
+            
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center gap-2 bg-imperial-900/90 text-gold-400 border border-imperial-600/60 text-xs font-extrabold px-4 py-1.5 rounded-full uppercase tracking-widest mb-3 shadow-lg">
+                    <i class="fa-solid fa-lock text-gold-500"></i> PASARELA OFICIAL Y SEGURA DE LA CAPITANA
+                </div>
+                <h2 class="text-3xl md:text-5xl font-black text-white">Obtén Tu Acceso Inmediato</h2>
+                <p class="text-gray-300 text-sm mt-2">Haz clic abajo para asegurar tu pack con precio exclusivo de lanzamiento</p>
                 
-                <div class="glass-panel-vip p-6 rounded-2xl space-y-5">
-                    <div class="border-b border-purple-900/40 pb-4">
-                        <h2 class="text-xl font-black text-white tracking-tight">BASE DE DATOS DE FORMATOS</h2>
-                        <h3 class="text-sm font-bold gold-gradient-text mt-1">Selecciona, Copia o Genera con IA</h3>
-                    </div>
-
-                    <!-- Botonera de los 5 Formatos -->
-                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
-                        <button onclick="renderSystemView('contraste')" id="sys-btn-contraste" class="format-tab-active py-2 px-1 rounded-xl border text-[10px] font-bold uppercase transition flex flex-col items-center justify-center gap-1 shadow-md">
-                            <span class="text-[10px] opacity-70">01</span> CONTRASTE
-                        </button>
-                        <button onclick="renderSystemView('revelacion')" id="sys-btn-revelacion" class="format-tab-inactive py-2 px-1 rounded-xl border text-[10px] font-bold uppercase transition flex flex-col items-center justify-center gap-1 hover:border-amber-400/50">
-                            <span class="text-[10px] opacity-70">02</span> REVELACIÓN
-                        </button>
-                        <button onclick="renderSystemView('prueba')" id="sys-btn-prueba" class="format-tab-inactive py-2 px-1 rounded-xl border text-[10px] font-bold uppercase transition flex flex-col items-center justify-center gap-1 hover:border-amber-400/50">
-                            <span class="text-[10px] opacity-70">03</span> PRUEBA
-                        </button>
-                        <button onclick="renderSystemView('enemigo')" id="sys-btn-enemigo" class="format-tab-inactive py-2 px-1 rounded-xl border text-[10px] font-bold uppercase transition flex flex-col items-center justify-center gap-1 hover:border-amber-400/50">
-                            <span class="text-[10px] opacity-70">04</span> ENEMIGO
-                        </button>
-                        <button onclick="renderSystemView('proceso')" id="sys-btn-proceso" class="format-tab-inactive py-2 px-1 rounded-xl border text-[10px] font-bold uppercase transition flex flex-col items-center justify-center gap-1 hover:border-amber-400/50">
-                            <span class="text-[10px] opacity-70">05</span> PROCESO
-                        </button>
-                    </div>
-
-                    <!-- Contenedor Dinámico -->
-                    <div id="system-dynamic-content" class="bg-purple-950/40 rounded-xl border border-purple-800/40 p-4 space-y-5">
-                        <!-- Renderizado por JS -->
-                    </div>
+                <!-- Countdown Timer -->
+                <div class="mt-4 inline-flex items-center justify-center gap-3 bg-darkBg border border-gold-500/40 px-5 py-2 rounded-xl text-xs md:text-sm shadow-xl">
+                    <span class="text-gray-300 font-medium"><i class="fa-regular fa-clock text-gold-500 mr-1.5"></i> Esta oferta de lanzamiento expira en:</span>
+                    <span id="countdown" class="font-mono font-bold text-gold-400 text-base">14:59</span>
                 </div>
+            </div>
 
-                <!-- SECCIÓN IA -->
-                <div class="glass-panel-vip p-6 rounded-2xl space-y-4">
-                    <div class="border-b border-purple-900/40 pb-3 text-center">
-                        <h3 class="text-base font-black text-white">1. GENERADOR DE PROMPTS (IA)</h3>
-                        <p class="text-xs text-purple-200 mt-1">Llena tus datos y genera un prompt perfecto para ChatGPT.</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-[10px] font-bold text-amber-300 uppercase tracking-wider mb-1">Tu Nicho</label>
-                            <input type="text" id="sys-nicho" placeholder="Ej: Fitness para Empresarios" class="w-full bg-purple-950 border border-purple-800 rounded-lg px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-amber-300 uppercase tracking-wider mb-1">Tu Producto/Servicio</label>
-                            <input type="text" id="sys-producto" placeholder="Ej: Mentoría 1a1" class="w-full bg-purple-950 border border-purple-800 rounded-lg px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-amber-300 uppercase tracking-wider mb-1">Resultado que Prometes</label>
-                            <input type="text" id="sys-resultado" placeholder="Ej: Perder 10kg sin dietas" class="w-full bg-purple-950 border border-purple-800 rounded-lg px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-amber-300 uppercase tracking-wider mb-1">Tu Cliente Ideal</label>
-                            <input type="text" id="sys-cliente" placeholder="Ej: CEOs ocupados" class="w-full bg-purple-950 border border-purple-800 rounded-lg px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-amber-300 uppercase tracking-wider mb-1">Formato</label>
-                            <select id="sys-formato" onchange="updateSysStyleOptions()" class="w-full bg-purple-950 border border-purple-800 rounded-lg px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none">
-                                <option value="contraste">Contraste (Lunes)</option>
-                                <option value="revelacion">Revelación (Martes)</option>
-                                <option value="prueba">Prueba (Miércoles)</option>
-                                <option value="enemigo">Enemigo (Jueves)</option>
-                                <option value="proceso">Proceso (Viernes)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-amber-300 uppercase tracking-wider mb-1">Estilo Específico</label>
-                            <select id="sys-estilo" class="w-full bg-purple-950 border border-purple-800 rounded-lg px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none"></select>
-                        </div>
-                    </div>
-
-                    <div class="pt-2">
-                        <button onclick="generateCustomAIPrompt()" class="w-full py-3.5 rounded-xl purple-gold-btn text-white font-black text-xs uppercase tracking-widest shadow-xl transition flex flex-col items-center justify-center gap-1">
-                            <span>✦ COPIAR PROMPT PARA CHATGPT</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="glass-panel-vip p-6 rounded-2xl space-y-4">
-                    <div class="border-b border-purple-900/40 pb-3 text-center">
-                        <h3 class="text-base font-black text-white">2. IMPORTAR RESPUESTA AL EDITOR</h3>
-                        <p class="text-xs text-purple-200 mt-1">Pega el JSON que te devuelva la IA aquí.</p>
-                    </div>
-                    <textarea id="ai-import-json" rows="5" placeholder="[ { layout: 'cover'... } ]" class="w-full bg-purple-950/90 border border-purple-800 rounded-xl p-3.5 text-xs text-gray-200 font-mono resize-none focus:outline-none focus:border-amber-400"></textarea>
+            <!-- MAIN OFFER CARD -->
+            <div class="bg-darkCard rounded-3xl border border-imperial-600/60 p-6 md:p-10 shadow-2xl royal-glow relative">
+                
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                     
-                    <button onclick="importAISlides()" class="w-full py-3 rounded-xl bg-gray-200 text-gray-900 font-black text-xs uppercase tracking-wider hover:bg-white transition">
-                        ✨ Importar al Editor Visual
-                    </button>
-                </div>
-            </div>
-
-            <!-- TAB 3: CITAS VIP -->
-            <div id="tab-section-quotes" class="space-y-6 hidden">
-                <div class="glass-panel-vip p-6 rounded-2xl space-y-5">
-                    <div class="border-b border-purple-900/40 pb-4">
-                        <h2 class="text-xl font-black text-white tracking-tight">BIBLIOTECA DE CITAS</h2>
-                        <p class="text-xs text-purple-200 mt-2 leading-relaxed">
-                            Usa el formato de diapositiva "Cita VIP" e inserta uno de estos "ganchos mentales" para romper creencias o generar autoridad instantánea.
-                        </p>
-                    </div>
-
-                    <div class="flex gap-2 overflow-x-auto pb-2">
-                        <button onclick="filterQuotes('tension')" class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-bold whitespace-nowrap">Generar Tensión</button>
-                        <button onclick="filterQuotes('autoridad')" class="px-3 py-1.5 rounded-lg bg-purple-900 text-purple-200 border border-purple-700 text-[10px] font-bold whitespace-nowrap">Generar Autoridad</button>
-                        <button onclick="filterQuotes('cambio')" class="px-3 py-1.5 rounded-lg bg-purple-900 text-purple-200 border border-purple-700 text-[10px] font-bold whitespace-nowrap">Motivar al Cambio</button>
-                    </div>
-
-                    <div id="quotes-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <!-- Las citas se inyectan por JS -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 4: EDITOR VISUAL -->
-            <div id="tab-section-content" class="space-y-6 hidden">
-                <div class="glass-panel-vip p-4 rounded-2xl">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="text-xs font-bold text-purple-200 uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-layer-group text-amber-400"></i> Diapositivas (<span id="slide-count-badge">5</span>)
-                        </span>
-                        <button onclick="addNewSlide()" class="px-3 py-1 rounded-lg bg-amber-500 text-purple-950 font-black text-[10px] transition hover:bg-amber-400">
-                            + Añadir Slide
-                        </button>
-                    </div>
-                    <div id="slides-tabs-container" class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin"></div>
-                </div>
-
-                <div class="glass-panel-vip p-5 rounded-2xl space-y-4">
-                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-purple-900/40 pb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center justify-center font-extrabold text-xs" id="current-slide-num">1</span>
-                            <h3 class="text-sm font-bold text-white">Editar Diapositiva</h3>
+                    <!-- Left Side: Order Summary -->
+                    <div class="md:col-span-7 space-y-4">
+                        <div class="inline-block bg-imperial-900 text-gold-300 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider border border-imperial-700/60">
+                            👑 PAQUETE DE AUTORIDAD Y CONVERSIÓN
                         </div>
                         
-                        <div class="flex items-center gap-1.5">
-                            <button onclick="moveSlide(-1)" class="p-1.5 rounded bg-purple-950 text-purple-200 text-xs border border-purple-800"><i class="fa-solid fa-arrow-left"></i></button>
-                            <button onclick="moveSlide(1)" class="p-1.5 rounded bg-purple-950 text-purple-200 text-xs border border-purple-800"><i class="fa-solid fa-arrow-right"></i></button>
-                            <button onclick="duplicateCurrentSlide()" class="px-2 py-1 rounded bg-purple-900/60 text-amber-300 text-[10px] font-bold border border-purple-700/50"><i class="fa-solid fa-copy"></i> Duplicar</button>
-                            <button onclick="deleteCurrentSlide()" class="px-2 py-1 rounded bg-red-950/60 text-red-300 text-[10px] font-bold border border-red-800/40"><i class="fa-solid fa-trash-can"></i> Borrar</button>
-                        </div>
-                    </div>
+                        <h3 class="text-2xl font-black text-white leading-snug">
+                            30 Carruseles de Autoridad Pre-Escritos en Canva
+                        </h3>
 
-                    <!-- Layout Selector -->
-                    <div>
-                        <label class="block text-xs font-extrabold text-amber-300 uppercase tracking-wider mb-2">Diseño del Slide</label>
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            <button type="button" onclick="changeSlideLayout('cover')" id="layout-btn-cover" class="p-2 rounded-xl border border-purple-800 bg-purple-950/60 text-purple-300 text-[10px] font-bold text-left">Portada</button>
-                            <button type="button" onclick="changeSlideLayout('standard')" id="layout-btn-standard" class="p-2 rounded-xl border border-purple-800 bg-purple-950/60 text-purple-300 text-[10px] font-bold text-left">Texto Fuerte</button>
-                            <button type="button" onclick="changeSlideLayout('split')" id="layout-btn-split" class="p-2 rounded-xl border border-purple-800 bg-purple-950/60 text-purple-300 text-[10px] font-bold text-left">Split 50/50</button>
-                            <button type="button" onclick="changeSlideLayout('metric')" id="layout-btn-metric" class="p-2 rounded-xl border border-purple-800 bg-purple-950/60 text-purple-300 text-[10px] font-bold text-left">Métrica</button>
-                            <button type="button" onclick="changeSlideLayout('quote')" id="layout-btn-quote" class="p-2 rounded-xl border border-purple-800 bg-purple-950/60 text-purple-300 text-[10px] font-bold text-left">Cita VIP</button>
-                            <button type="button" onclick="changeSlideLayout('cta')" id="layout-btn-cta" class="p-2 rounded-xl border border-purple-800 bg-purple-950/60 text-purple-300 text-[10px] font-bold text-left">CTA / Cierre</button>
-                        </div>
-                    </div>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            Acceso inmediato a las 30 plantillas en Canva listas para personalizar con los colores, fuentes e imágenes de tu propia marca. Reutilizables de por vida para multiplicar tu contenido.
+                        </p>
 
-                    <!-- Campos de Edición -->
-                    <div class="grid grid-cols-2 gap-4 pt-2 border-t border-purple-900/40">
-                        <div>
-                            <label class="block text-[10px] font-bold text-purple-300 uppercase tracking-wider mb-1">Insignia Superior</label>
-                            <input type="text" id="editor-badge" oninput="updateSlideData('badge', this.value)" class="w-full bg-purple-950/80 border border-purple-800/80 rounded-lg px-3 py-2 text-xs text-white">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-purple-300 uppercase tracking-wider mb-1">Icono (FontAwesome)</label>
-                            <input type="text" id="editor-icon" oninput="updateSlideData('icon', this.value)" class="w-full bg-purple-950/80 border border-purple-800/80 rounded-lg px-3 py-2 text-xs text-white">
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <label class="block text-[10px] font-bold text-amber-300 uppercase tracking-wider">Titular</label>
-                            <span class="text-[9px] text-purple-300">Usa <code class="text-amber-400">{llaves}</code> para color</span>
-                        </div>
-                        <textarea id="editor-title" oninput="updateSlideData('title', this.value)" rows="2" class="w-full bg-purple-950 border border-purple-800 rounded-lg px-3 py-2 text-xs text-white font-bold"></textarea>
-                    </div>
-
-                    <div id="dynamic-fields-container" class="space-y-3">
-                        <div id="field-group-body">
-                            <label class="block text-[10px] font-bold text-purple-300 uppercase tracking-wider mb-1">Cuerpo de Texto</label>
-                            <textarea id="editor-body" oninput="updateSlideData('body', this.value)" rows="3" class="w-full bg-purple-950 border border-purple-800 rounded-lg px-3 py-2 text-xs text-gray-200"></textarea>
-                        </div>
-
-                        <div id="field-group-columns" class="grid grid-cols-1 sm:grid-cols-2 gap-3 hidden">
-                            <div>
-                                <label class="block text-[10px] font-bold text-amber-300 uppercase tracking-wider mb-1">Columna Izquierda</label>
-                                <textarea id="editor-col1" oninput="updateSlideData('col1Text', this.value)" rows="3" class="w-full bg-purple-950 border border-purple-800 rounded-lg px-3 py-2 text-xs text-gray-200"></textarea>
+                        <div class="space-y-2.5 text-xs text-gray-300 pt-3 border-t border-imperial-800/80">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-gold-500 text-sm"></i>
+                                <span>30 Estructuras de Carruseles Pre-Escritos</span>
                             </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-emerald-400 uppercase tracking-wider mb-1">Columna Derecha</label>
-                                <textarea id="editor-col2" oninput="updateSlideData('col2Text', this.value)" rows="3" class="w-full bg-purple-950 border border-purple-800 rounded-lg px-3 py-2 text-xs text-gray-200"></textarea>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-gold-500 text-sm"></i>
+                                <span>Ganchos Psicológicos Redactados para Vender</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-gold-500 text-sm"></i>
+                                <span>Compatibles con Canva Gratuito y Pro</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-gold-500 text-sm"></i>
+                                <span>Multiplicador Infinito de Contenido Reutilizable</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-gold-500 text-sm"></i>
+                                <span>Acceso de Por Vida e Inmediato</span>
                             </div>
                         </div>
 
-                        <div id="field-group-metric" class="grid grid-cols-1 sm:grid-cols-2 gap-3 hidden">
-                            <div>
-                                <label class="block text-[10px] font-bold text-amber-300 uppercase tracking-wider mb-1">Cifra (Ej: +300%)</label>
-                                <input type="text" id="editor-metricNum" oninput="updateSlideData('metricNum', this.value)" class="w-full bg-purple-950 border border-purple-800 rounded-lg px-3 py-2 text-xs text-white font-black">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-purple-300 uppercase tracking-wider mb-1">Etiqueta</label>
-                                <input type="text" id="editor-metricLabel" oninput="updateSlideData('metricLabel', this.value)" class="w-full bg-purple-950 border border-purple-800 rounded-lg px-3 py-2 text-xs text-gray-100">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-[10px] font-bold text-purple-300 uppercase tracking-wider mb-1">Botón Acción Inferior (Opcional)</label>
-                        <input type="text" id="editor-ctaText" oninput="updateSlideData('ctaText', this.value)" class="w-full bg-purple-950 border border-purple-800 rounded-lg px-3 py-2 text-xs text-gray-100">
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 5: ESTILO Y LIENZO -->
-            <div id="tab-section-style" class="space-y-6 hidden">
-                <div class="glass-panel-vip p-5 rounded-2xl space-y-5">
-                    <div>
-                        <label class="block text-xs font-extrabold text-amber-300 uppercase tracking-wider mb-3">Formato (Aspect Ratio)</label>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            <button onclick="setAspectRatio('4-5')" id="ratio-btn-4-5" class="p-3 rounded-xl border border-amber-400 bg-amber-500/20 text-amber-300 font-bold text-xs">
-                                4:5 (1080x1350)
-                            </button>
-                            <button onclick="setAspectRatio('1-1')" id="ratio-btn-1-1" class="p-3 rounded-xl border border-purple-800 bg-purple-950/60 text-purple-300 font-semibold text-xs">
-                                1:1 (1080x1080)
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="pt-4 border-t border-purple-900/40">
-                        <label class="block text-[10px] font-bold text-purple-300 uppercase tracking-wider mb-3">Colores y Marca</label>
-                        <div class="grid grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <label class="block text-[9px] text-gray-400 mb-1">Color Primario (Fondo)</label>
-                                <input type="color" id="primary-color-picker" value="#581c87" onchange="updateBrandConfig('primaryColor', this.value)" class="w-full h-10 rounded cursor-pointer border-0 p-0 bg-transparent">
-                            </div>
-                            <div>
-                                <label class="block text-[9px] text-gray-400 mb-1">Color Secundario (Acento)</label>
-                                <input type="color" id="secondary-color-picker" value="#eab308" onchange="updateBrandConfig('secondaryColor', this.value)" class="w-full h-10 rounded cursor-pointer border-0 p-0 bg-transparent">
-                            </div>
-                        </div>
-                        <div class="space-y-3">
-                            <div>
-                                <label class="block text-[9px] text-gray-400 mb-1">Nombre de Usuario (@)</label>
-                                <input type="text" id="brand-handle" value="ig @lacapitanafaceless" oninput="updateBrandConfig('handle', this.value)" class="w-full bg-purple-950 border border-purple-800 rounded-lg px-3 py-2 text-xs text-white">
-                            </div>
-                            <div>
-                                <label class="block text-[9px] text-gray-400 mb-1">Firma / Autor Inferior</label>
-                                <input type="text" id="brand-author" value="by lacapitanafaceless" oninput="updateBrandConfig('author', this.value)" class="w-full bg-purple-950 border border-purple-800 rounded-lg px-3 py-2 text-xs text-white">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- ==================== COLUMNA DERECHA: PREVISUALIZADOR & EXPORTACIÓN ==================== -->
-        <div class="lg:col-span-5 space-y-6">
-            <div class="sticky top-20 space-y-5">
-                
-                <div class="glass-panel-vip p-5 rounded-2xl shadow-2xl space-y-4 border border-amber-500/30">
-                    <div class="flex items-center justify-between border-b border-purple-900/40 pb-3">
-                        <span class="text-xs font-extrabold text-amber-300 uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-mobile-screen-button text-amber-400"></i> Previsualizador En Vivo
-                        </span>
-                    </div>
-
-                    <!-- LIENZO -->
-                    <div class="relative w-full flex justify-center items-center p-3 bg-gray-950 rounded-2xl border border-purple-900/60 shadow-inner overflow-hidden">
-                        <div id="preview-single-wrapper" class="w-full">
-                            
-                            <!-- Tarjeta Visual Principal -->
-                            <div id="slide-preview-card" class="ratio-4-5 w-full rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all duration-300 shadow-2xl" style="background-color: #120624; border: 1px solid rgba(234, 179, 8, 0.3);">
-                                
-                                <div id="preview-glow-1" class="absolute -top-24 -right-24 w-60 h-60 rounded-full blur-3xl opacity-40 pointer-events-none" style="background: #581c87;"></div>
-                                <div id="preview-glow-2" class="absolute -bottom-24 -left-24 w-60 h-60 rounded-full blur-3xl opacity-35 pointer-events-none" style="background: #eab308;"></div>
-
-                                <div class="relative z-10 flex items-center justify-between">
-                                    <div id="preview-badge" class="px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase bg-purple-950/90 text-amber-300 border border-amber-500/50 shadow-md">
-                                        SLIDE
-                                    </div>
-                                    <div class="text-[11px] font-bold text-gray-200 flex items-center gap-1.5 opacity-90">
-                                        <i class="fa-solid fa-crown text-amber-400 text-[10px]"></i>
-                                        <span id="preview-top-handle">ig @lacapitanafaceless</span>
-                                    </div>
+                        <!-- STORE UPSELLS INFO NOTICE (ORDER BUMP PREVIEW) -->
+                        <div class="p-4 rounded-2xl bg-gradient-to-r from-imperial-950 via-darkBg to-imperial-950 border border-gold-500/40 text-xs text-gray-300 mt-5 shadow-lg relative overflow-hidden">
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-imperial-900 border border-gold-500/40 text-gold-400 flex items-center justify-center flex-shrink-0 mt-0.5 shadow">
+                                    <i class="fa-solid fa-star text-sm"></i>
                                 </div>
-
-                                <div id="preview-content-box" class="relative z-10 my-auto py-2 space-y-3">
-                                    <!-- Contenido Inyectado -->
-                                </div>
-
-                                <div class="relative z-10 flex items-center justify-between pt-3 border-t border-white/10 text-[11px]">
-                                    <div class="text-gray-200 font-semibold flex items-center gap-1.5">
-                                        <span id="preview-bottom-author" class="gold-gradient-text font-black">by lacapitanafaceless</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <span id="preview-pagination-badge" class="font-extrabold text-white bg-purple-950/90 px-2.5 py-0.5 rounded-md border border-purple-800 text-[10px]">
-                                            1/5
+                                <div class="space-y-1 flex-1">
+                                    <div class="flex items-center justify-between flex-wrap gap-2">
+                                        <span class="text-gold-400 font-extrabold text-xs tracking-wider uppercase">
+                                            👑 COMPLEMENTO EXCLUSIVO EN TIENDA (OPCIONAL)
+                                        </span>
+                                        <span class="bg-gold-500/20 text-gold-300 border border-gold-500/40 text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider shadow-sm">
+                                            PRECIO ESPECIAL DE SESIÓN
                                         </span>
                                     </div>
+                                    <h4 class="text-white font-bold text-sm">60 Plantillas: "Vender por Historias en Canva"</h4>
+                                    <p class="text-xs text-gray-300 leading-relaxed">
+                                        Al avanzar a la tienda, podrás añadir en 1 solo clic estas 60 plantillas estratégicas en Canva para convertir las vistas de tus historias en ventas diarias, disponible con un <strong class="text-white font-semibold">descuento preferencial reservado únicamente para esta sesión</strong>.
+                                    </p>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
-                    <!-- Navegación -->
-                    <div id="single-nav-controls" class="flex items-center justify-between gap-3 pt-1">
-                        <button onclick="navigateSlide(-1)" class="flex-1 py-2 rounded-xl bg-purple-950/80 hover:bg-purple-900 border border-purple-800 text-purple-200 font-bold text-xs transition">
-                            <i class="fa-solid fa-chevron-left text-amber-400"></i> Anterior
-                        </button>
-                        <span class="text-xs font-extrabold text-amber-300">
-                            Slide <span id="preview-current-idx">1</span> / <span id="preview-total-idx">5</span>
+                    <!-- Right Side: Pricing & CTA -->
+                    <div class="md:col-span-5 bg-darkBg p-6 rounded-2xl border border-imperial-800 text-center flex flex-col justify-center items-center shadow-inner">
+                        
+                        <span class="text-xs text-gray-400 font-bold uppercase tracking-wider">Precio Normal: <span class="line-through text-gray-500">$97 USD</span></span>
+                        
+                        <div class="my-3">
+                            <span class="text-xs text-gold-400 font-extrabold uppercase tracking-widest block">HOY PAGA SOLO</span>
+                            <span class="text-4xl md:text-5xl font-black gold-gradient-text">$27<span class="text-lg text-white font-bold">.00 USD</span></span>
+                        </div>
+
+                        <span class="text-[11px] bg-imperial-900/90 text-gold-300 border border-imperial-700/60 px-3 py-1 rounded-full font-bold mb-6">
+                            72% DE DESCUENTO APLICADO
                         </span>
-                        <button onclick="navigateSlide(1)" class="flex-1 py-2 rounded-xl bg-purple-950/80 hover:bg-purple-900 border border-purple-800 text-purple-200 font-bold text-xs transition">
-                            Siguiente <i class="fa-solid fa-chevron-right text-amber-400"></i>
-                        </button>
+
+                        <!-- DIRECT CHECKOUT BUTTON -->
+                        <a id="checkout-btn" href="https://shop.beacons.ai/lacapitanafaceless/0901d3c0-f534-48fb-8cfa-f34a13c35b21" onclick="handleCheckout(event)" class="w-full gold-gradient-bg text-black font-black text-base md:text-lg py-4 px-6 rounded-xl shadow-2xl hover:scale-[1.03] active:scale-[0.98] transition-all gold-glow flex flex-col items-center justify-center gap-1 group">
+                            <span class="flex items-center gap-2">
+                                <span>¡QUIERO MI ACCESO INMEDIATO!</span>
+                                <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </span>
+                            <span class="text-[10px] font-bold opacity-80 uppercase tracking-wider">Pago Seguro • Acceso Inmediato</span>
+                        </a>
+
+                        <div class="mt-4 flex items-center justify-center gap-3 text-gray-400 text-[11px]">
+                            <span class="flex items-center gap-1"><i class="fa-solid fa-shield-halved text-gold-500"></i> Cifrado SSL 256-bit</span>
+                            <span>•</span>
+                            <span class="flex items-center gap-1"><i class="fa-solid fa-bolt text-gold-500"></i> Entrega Digital</span>
+                        </div>
+
+                        <!-- LEGAL DIGITAL REFUND DISCLAIMER -->
+                        <p class="mt-3.5 text-[10px] text-gray-400/80 leading-snug border-t border-imperial-800/80 pt-2.5 px-2">
+                            <i class="fa-solid fa-scale-balanced text-gold-500/80 mr-1"></i>
+                            <strong class="text-gray-300 font-semibold">Aviso de Producto Digital:</strong> Debido a la naturaleza descargable y de acceso inmediato de las plantillas, la compra es final y no se admiten reembolsos conforme a la normativa de contenidos digitales.
+                        </p>
+
                     </div>
 
-                    <!-- Botones de Exportación HD -->
-                    <div class="pt-3 border-t border-purple-900/40 space-y-2">
-                        <button onclick="exportCurrentSlidePNG()" class="w-full py-3 rounded-xl purple-gold-btn hover:opacity-95 text-white font-black text-xs uppercase tracking-wider shadow-2xl transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-download text-sm text-amber-300"></i> Descargar Slide Actual
-                        </button>
+                </div>
 
-                        <button onclick="exportAllSlidesPNG()" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 border border-amber-500/40 text-amber-300 font-bold text-[11px] transition">
-                            <i class="fa-solid fa-images"></i> Exportar Todo el Carrusel (PNG)
-                        </button>
-                        <p class="text-[9px] text-center text-gray-400 mt-1">Exportación local. No requiere API ni conexión a servidor externo.</p>
-                    </div>
+            </div>
 
+        </div>
+    </section>
+
+    <!-- FAQ SECTION WITH INTERACTIVE ACCORDIONS -->
+    <section class="py-16 px-4 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-extrabold text-center text-white mb-8">Preguntas Frecuentes</h2>
+
+        <div class="space-y-3">
+            <div class="bg-darkCard rounded-xl border border-imperial-800/80 overflow-hidden">
+                <button onclick="toggleFaq(1)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors">
+                    <span>¿Por qué estas 30 plantillas son mejores que generar contenido con IA?</span>
+                    <i id="faq-icon-1" class="fa-solid fa-chevron-down text-gold-500 transition-transform"></i>
+                </button>
+                <div id="faq-ans-1" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3">
+                    La IA escribe textos genéricos que carecen de psicología de retención visual y ganchos emocionales reales. Estas 30 plantillas están construidas con estructuras probadas de conversión humana que detienen el pulgar del usuario y disparan la interacción de tus DMs.
                 </div>
             </div>
-        </div>
-    </main>
 
-    <!-- Renderizador Oculto HD -->
-    <div id="export-render-container" class="export-render-target"></div>
-
-    <!-- Toast -->
-    <div id="toast-notification" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
-        <div class="glass-panel-vip bg-purple-950 border border-amber-400 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
-            <i class="fa-solid fa-circle-check text-amber-400 text-base"></i>
-            <span id="toast-message" class="text-xs font-bold">Acción realizada</span>
-        </div>
-    </div>
-
-    <script>
-        // BASE DE DATOS ESTRUCTURAL COMPLETADA
-        const SYSTEM_FORMATS = {
-            'contraste': {
-                name: 'Contraste', trigger: 'Genera tensión', day: 'Lunes', audience: 'Frío + tibio',
-                descActivate: 'Muestra dos realidades opuestas. La incomodidad productiva activa el deseo de compra.',
-                styles: [
-                    { id: 'contrast_resultado', name: 'Esfuerzo vs Resultado', subtitle: 'Mismo esfuerzo, resultados distintos', slides: [
-                        { layout: 'cover', badge: 'EL PROBLEMA', title: 'Dos personas. El mismo esfuerzo. Resultados opuestos. La diferencia es {esto}.', body: '', ctaText: '', icon: 'fa-right-left' },
-                        { layout: 'standard', badge: 'LO COMÚN', title: 'Trabajas más, ganas lo mismo.', body: 'Haces todo lo que "se supone" que debes hacer, pero la rueda no gira.', ctaText: '', icon: 'fa-bolt' },
-                        { layout: 'standard', badge: 'LA REALIDAD', title: 'El sistema correcto trabaja por ti.', body: 'Cuando implementas la pieza que te falta, el esfuerzo se reduce y el impacto se multiplica.', ctaText: '', icon: 'fa-gem' },
-                        { layout: 'split', badge: 'EL CAMBIO', title: 'El Cambio de Paradigma', col1Text: '❌ ANTES:\nHacer más cosas esperando que alguna funcione.', col2Text: '✅ AHORA:\nHacer menos cosas, pero con intención estratégica.', ctaText: '', icon: 'fa-brain' },
-                        { layout: 'cta', badge: 'ÚNETE', title: '¿Quieres el sistema completo?', body: 'Comenta [KEYWORD] y te mando el acceso.', ctaText: 'GUARDA ESTE POST 📌', icon: 'fa-crown' }
-                    ]},
-                    { id: 'contrast_creencia', name: 'Destrucción de Creencia', subtitle: 'Ataca un mito de la industria', slides: [
-                        { layout: 'cover', badge: 'MITO VS REALIDAD', title: 'Deja de creer que necesitas {años de experiencia}.', body: 'Lo que te dijeron vs Lo que funciona hoy.', ctaText: '', icon: 'fa-fire' },
-                        { layout: 'quote', badge: 'LA MENTIRA', title: '"Tienes que sufrir el proceso para ser digno del resultado."', body: 'Una mentira vendida por quienes no saben optimizar.', ctaText: '', icon: 'fa-quote-left' },
-                        { layout: 'standard', badge: 'EL ATAJO', title: 'La experiencia está sobrevalorada.', body: 'Lo que realmente necesitas son frameworks probados que eliminen las variables de error.', ctaText: '', icon: 'fa-bolt' },
-                        { layout: 'cta', badge: 'SISTEMA', title: 'Descarga mi framework de [X].', body: 'Comenta [KEYWORD] y te lo envío por DM.', ctaText: 'SÍGUEME 👑', icon: 'fa-rocket' }
-                    ]}
-                ]
-            },
-            'revelacion': {
-                name: 'Revelación', trigger: 'Genera curiosidad', day: 'Martes', audience: 'Tibio + Caliente',
-                descActivate: 'Desvela información que no sabían que necesitaban. Una perspectiva única que te posiciona como experto.',
-                styles: [
-                    { id: 'rev_secreto', name: 'El Secreto Oculto', subtitle: 'Lo que los líderes de tu nicho no dicen', slides: [
-                        { layout: 'cover', badge: 'HOOK', title: 'El 1% de tu sector no quiere que sepas {este secreto}.', body: '', ctaText: '', icon: 'fa-lock' },
-                        { layout: 'standard', badge: 'EL MITO', title: 'Te han hecho creer que es difícil.', body: 'Te venden herramientas caras para ocultar que el proceso base es ridículamente simple.', ctaText: '', icon: 'fa-eye-slash' },
-                        { layout: 'standard', badge: 'LA REVELACIÓN', title: 'El verdadero atajo es un sistema simple.', body: 'Solo necesitas 3 pilares. Si dominas estos 3, superas al 90% de tu competencia.', ctaText: '', icon: 'fa-key' },
-                        { layout: 'cta', badge: 'ACCESO', title: 'Comenta [KEYWORD]', body: 'Y te paso el mapa exacto para aplicar esto hoy mismo.', ctaText: 'GUARDA ESTE POST 📌', icon: 'fa-crown' }
-                    ]},
-                    { id: 'rev_herramienta', name: 'La Herramienta Definitiva', subtitle: 'El recurso exacto que usas', slides: [
-                        { layout: 'cover', badge: 'MI SECRETO', title: 'El sistema exacto que uso para {lograr X resultado}.', body: 'Sin guardarme nada.', ctaText: '', icon: 'fa-toolbox' },
-                        { layout: 'columns', badge: 'LOS PILARES', title: 'El Stack Tecnológico/Mental', col1Text: 'Herramienta A:\nMe ahorra 5 horas a la semana automatizando el inicio.', col2Text: 'Herramienta B:\nCierra el proceso y garantiza calidad sin esfuerzo.', ctaText: '', icon: 'fa-layer-group' },
-                        { layout: 'standard', badge: 'POR QUÉ FUNCIONA', title: 'No es la herramienta, es la secuencia.', body: 'Muchos las usan mal. El secreto está en cómo se conectan entre sí para crear un flujo imparable.', ctaText: '', icon: 'fa-gears' },
-                        { layout: 'cta', badge: 'REGALO', title: 'Descarga mi plantilla.', body: 'Comenta [KEYWORD] y clónala en un clic.', ctaText: 'COMPÁRTELO ✈️', icon: 'fa-gift' }
-                    ]}
-                ]
-            },
-            'prueba': {
-                name: 'Prueba', trigger: 'Genera confianza', day: 'Miércoles', audience: 'Caliente',
-                descActivate: 'Destruye objeciones con resultados innegables. Casos de estudio y datos.',
-                styles: [
-                    { id: 'prueba_caso', name: 'Caso de Éxito Numérico', subtitle: 'Muestra una métrica irrefutable', slides: [
-                        { layout: 'cover', badge: 'CASO DE ESTUDIO', title: 'Cómo pasamos del Punto A al {Punto B} en solo 30 días.', body: 'Pura estrategia aplicada.', ctaText: '', icon: 'fa-chart-line' },
-                        { layout: 'metric', badge: 'RESULTADO', title: 'El Impacto Medible', metricNum: '+300%', metricLabel: 'Crecimiento', body: 'Este fue el salto exacto tras aplicar el método.', ctaText: '', icon: 'fa-bolt' },
-                        { layout: 'split', badge: 'ANTES Y DESPUÉS', title: 'El Cambio Radical', col1Text: '❌ ANTES:\nInseguridad y estancamiento.', col2Text: '✅ DESPUÉS:\nClaridad y crecimiento constante.', ctaText: '', icon: 'fa-gem' },
-                        { layout: 'cta', badge: 'TU TURNO', title: '¿Quieres ser el próximo caso?', body: 'Comenta [KEYWORD] para empezar.', ctaText: 'SÍGUEME 👑', icon: 'fa-crown' }
-                    ]},
-                    { id: 'prueba_transformacion', name: 'Mi Transformación', subtitle: 'Tu historia de origen (Autoridad)', slides: [
-                        { layout: 'cover', badge: 'HISTORIA REAL', title: 'Hace 2 años estaba {exactamente donde tú estás hoy}.', body: 'Así fue como escapé.', ctaText: '', icon: 'fa-road' },
-                        { layout: 'standard', badge: 'EL FONDO', title: 'Probé de todo y nada funcionaba.', body: 'Me frustraba ver a otros avanzar mientras yo seguía atascado en el mismo nivel, cometiendo los mismos errores.', ctaText: '', icon: 'fa-battery-quarter' },
-                        { layout: 'standard', badge: 'EL CLICK', title: 'Un cambio de enfoque lo cambió todo.', body: 'Dejé de buscar hacks rápidos y me enfoqué en construir sistemas sólidos e inquebrantables.', ctaText: '', icon: 'fa-lightbulb' },
-                        { layout: 'cta', badge: 'MENTORÍA', title: 'He empaquetado todo el proceso.', body: 'Comenta [KEYWORD] y te cuento cómo trabajar conmigo.', ctaText: 'GUARDA ESTO 📌', icon: 'fa-handshake' }
-                    ]}
-                ]
-            },
-            'enemigo': {
-                name: 'Enemigo', trigger: 'Genera empatía', day: 'Jueves', audience: 'Frío + Tibio',
-                descActivate: 'Une a tu audiencia contra un enemigo común. Valida sus frustraciones.',
-                styles: [
-                    { id: 'enemigo_invisible', name: 'El Sistema Roto', subtitle: 'La culpa no es tuya, es del modelo', slides: [
-                        { layout: 'cover', badge: 'LA VERDAD', title: 'El verdadero culpable de que no consigas {resultados}.', body: 'No eres tú. Es el mapa que te dieron.', ctaText: '', icon: 'fa-fire' },
-                        { layout: 'quote', badge: 'TRAMPA', title: '"Si sigues reglas rotas, obtendrás resultados rotos."', body: 'Te están enseñando tácticas del 2018.', ctaText: '', icon: 'fa-brain' },
-                        { layout: 'standard', badge: 'SOLUCIÓN', title: 'Es hora de romper las reglas.', body: 'El nuevo mercado premia la autenticidad, la simplificación y los procesos eficientes. No el volumen.', ctaText: '', icon: 'fa-gavel' },
-                        { layout: 'cta', badge: 'CAMBIO', title: 'Cámbiate al nuevo modelo.', body: 'Comenta [KEYWORD] para acceder a mi entrenamiento.', ctaText: 'GUARDA ESTE POST 📌', icon: 'fa-crown' }
-                    ]}
-                ]
-            },
-            'proceso': {
-                name: 'Proceso', trigger: 'Genera autoridad', day: 'Viernes', audience: 'Tibio + Caliente',
-                descActivate: 'Desglosa tu solución en pasos lógicos. Contenido ultra-guardable.',
-                styles: [
-                    { id: 'proceso_pasos', name: 'Guía Paso a Paso', subtitle: 'Tutorial directo (1, 2, 3)', slides: [
-                        { layout: 'cover', badge: 'TUTORIAL VIP', title: 'La Hoja de Ruta Exacta para lograr {ese Resultado}.', body: 'Guarda este post para tu sesión de trabajo.', ctaText: 'VER PASOS ➡️', icon: 'fa-rocket' },
-                        { layout: 'columns', badge: 'FASES 1 Y 2', title: 'Los Cimientos', col1Text: '1. Diagnóstico:\nEncuentra el cuello de botella exacto.', col2Text: '2. Limpieza:\nElimina el 80% de lo que no sirve.', ctaText: '', icon: 'fa-layer-group' },
-                        { layout: 'standard', badge: 'FASE 3', title: 'Acelera el Motor.', body: 'Con los cimientos listos, implementas el sistema de conversión automático. Cero fricción.', ctaText: '', icon: 'fa-gauge-high' },
-                        { layout: 'cta', badge: 'DESCARGA', title: 'Consigue la guía completa en PDF.', body: 'Comenta [KEYWORD] y te la envío por DM.', ctaText: 'GUARDA ESTE POST 📌', icon: 'fa-file-pdf' }
-                    ]}
-                ]
-            }
-        };
-
-        const QUOTES_DB = {
-            'tension': [
-                { author: 'Naval Ravikant', text: 'Juega a juegos a largo plazo con personas a largo plazo. Todo lo demás es una distracción.' },
-                { author: 'Anónimo', text: 'Estás a una decisión valiente de tener una vida completamente diferente.' },
-                { author: 'Alex Hormozi', text: 'El trabajo que estás evitando es probablemente el trabajo que necesitas hacer.' }
-            ],
-            'autoridad': [
-                { author: 'Seth Godin', text: 'No encuentres clientes para tus productos, encuentra productos para tus clientes.' },
-                { author: 'Steve Jobs', text: 'Lo simple puede ser más difícil que lo complejo: Tienes que trabajar duro para limpiar tu pensamiento y hacerlo simple.' },
-                { author: 'Dan Koe', text: 'La especificidad es el lenguaje de la experiencia.' }
-            ],
-            'cambio': [
-                { author: 'James Clear', text: 'No te elevas al nivel de tus metas, caes al nivel de tus sistemas.' },
-                { author: 'Anónimo', text: 'Tu futuro es creado por lo que haces hoy, no mañana.' },
-                { author: 'Tony Robbins', text: 'El cambio ocurre cuando el dolor de mantenerse igual es mayor que el dolor de cambiar.' }
-            ]
-        };
-
-        // VARIABLES DE ESTADO
-        let currentSystemFormat = 'contraste';
-        let currentSystemStyle = 'contrast_resultado';
-        let currentSlideIndex = 0;
-        let slides = [];
-        let currentAspectRatio = '4-5';
-        let brandConfig = { primaryColor: '#581c87', secondaryColor: '#eab308', handle: 'ig @lacapitanafaceless', author: 'by lacapitanafaceless' };
-
-        window.onload = function() {
-            renderSystemView('contraste');
-            updateSysStyleOptions();
-            filterQuotes('autoridad');
-            
-            // Si las slides están vacías, cargar un ejemplo rápido para que no se vea roto
-            if(slides.length === 0) {
-                slides = JSON.parse(JSON.stringify(SYSTEM_FORMATS['contraste'].styles[0].slides));
-                renderTabs();
-                loadSlideToEditor();
-                updatePreview();
-            }
-        };
-
-        function switchEditorTab(tabName) {
-            ['calendar', 'system', 'quotes', 'content', 'style'].forEach(t => {
-                const sec = document.getElementById(`tab-section-${t}`);
-                const btn = document.getElementById(`tab-btn-${t}`);
-                if (!sec || !btn) return;
-                if (t === tabName) {
-                    sec.classList.remove('hidden');
-                    btn.classList.add('border-b-2', 'border-amber-400', 'text-amber-300', 'bg-purple-950/60');
-                    btn.classList.remove('text-purple-300');
-                } else {
-                    sec.classList.add('hidden');
-                    btn.classList.remove('border-b-2', 'border-amber-400', 'text-amber-300', 'bg-purple-950/60');
-                    btn.classList.add('text-purple-300');
-                }
-            });
-        }
-
-        // --- LÓGICA SISTEMA / FORMATOS ---
-        function renderSystemView(formatId) {
-            currentSystemFormat = formatId;
-            const formatData = SYSTEM_FORMATS[formatId];
-            
-            ['contraste', 'revelacion', 'prueba', 'enemigo', 'proceso'].forEach(f => {
-                const btn = document.getElementById(`sys-btn-${f}`);
-                if(!btn) return;
-                if(f === formatId) btn.className = 'format-tab-active py-2 px-1 rounded-xl border text-[10px] font-bold uppercase transition flex flex-col items-center justify-center gap-1 shadow-md';
-                else btn.className = 'format-tab-inactive py-2 px-1 rounded-xl border text-[10px] font-bold uppercase transition flex flex-col items-center justify-center gap-1 hover:border-amber-400/50';
-            });
-
-            currentSystemStyle = formatData.styles[0].id;
-            renderSystemStyleContent();
-        }
-
-        function renderSystemStyleContent() {
-            const container = document.getElementById('system-dynamic-content');
-            const formatData = SYSTEM_FORMATS[currentSystemFormat];
-            
-            let html = `
-                <div class="flex flex-wrap gap-2 border-b border-purple-800/50 pb-2 mb-4">
-            `;
-            formatData.styles.forEach((style, idx) => {
-                const isActive = style.id === currentSystemStyle;
-                html += `
-                    <button onclick="changeSystemStyle('${style.id}')" class="px-3 py-1.5 rounded-lg text-[10px] font-bold transition border ${isActive ? 'bg-amber-500/20 text-amber-300 border-amber-400' : 'bg-transparent text-purple-300 border-purple-800 hover:text-white'}">
-                        ${style.name}
-                    </button>
-                `;
-            });
-            html += `</div>`;
-
-            const activeStyle = formatData.styles.find(s => s.id === currentSystemStyle);
-            html += `
-                <div class="mb-4">
-                    <h4 class="text-base font-black text-white">${activeStyle.name}</h4>
-                    <p class="text-[11px] text-amber-400 font-medium">${activeStyle.subtitle}</p>
+            <div class="bg-darkCard rounded-xl border border-imperial-800/80 overflow-hidden">
+                <button onclick="toggleFaq(2)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors">
+                    <span>¿Necesito Canva Pro para usar estas plantillas?</span>
+                    <i id="faq-icon-2" class="fa-solid fa-chevron-down text-gold-500 transition-transform"></i>
+                </button>
+                <div id="faq-ans-2" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3">
+                    No. Todas las tipografías, elementos visuales y marcos utilizados son 100% compatibles tanto con la versión gratuita de Canva como con Canva Pro.
                 </div>
-                <div class="space-y-3 max-h-60 overflow-y-auto pr-2 scrollbar-thin">
-            `;
+            </div>
 
-            activeStyle.slides.forEach((slide, idx) => {
-                html += `
-                    <div class="bg-gray-950/60 rounded-xl p-3 border border-purple-900/60 hover:border-amber-500/30 transition">
-                        <span class="text-[9px] font-black text-amber-300 mb-1 block">SLIDE ${idx+1} · ${slide.layout.toUpperCase()}</span>
-                        <p class="text-xs font-bold text-white leading-relaxed">${slide.title}</p>
-                    </div>
-                `;
-            });
-
-            html += `</div>
-                <div class="pt-4 mt-2 border-t border-purple-800/50">
-                    <button onclick="loadDirectToEditor()" class="w-full py-3 rounded-xl purple-gold-btn text-white text-[11px] font-black tracking-widest transition flex justify-center items-center gap-2">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> EDITAR ESTA PLANTILLA AHORA
-                    </button>
+            <div class="bg-darkCard rounded-xl border border-imperial-800/80 overflow-hidden">
+                <button onclick="toggleFaq(3)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors">
+                    <span>¿Puedo reutilizar las plantillas mes tras mes?</span>
+                    <i id="faq-icon-3" class="fa-solid fa-chevron-down text-gold-500 transition-transform"></i>
+                </button>
+                <div id="faq-ans-3" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3">
+                    ¡Sí! Esa es su mayor fortaleza. Tienes acceso de por vida a las 30 estructuras. Puedes usarlas cambiando el enfoque, las imágenes o la oferta tantas veces como quieras para alimentar todo tu año de contenido.
                 </div>
-            `;
-            container.innerHTML = html;
-            
-            // Sync IA dropdowns
-            const sf = document.getElementById('sys-formato');
-            if(sf) { sf.value = currentSystemFormat; updateSysStyleOptions(); document.getElementById('sys-estilo').value = currentSystemStyle; }
-        }
+            </div>
 
-        function changeSystemStyle(styleId) { currentSystemStyle = styleId; renderSystemStyleContent(); }
-
-        function loadDirectToEditor() {
-            const formatData = SYSTEM_FORMATS[currentSystemFormat];
-            const activeStyle = formatData.styles.find(s => s.id === currentSystemStyle);
-            if(activeStyle && activeStyle.slides) {
-                slides = JSON.parse(JSON.stringify(activeStyle.slides));
-                currentSlideIndex = 0;
-                renderTabs();
-                loadSlideToEditor();
-                updatePreview();
-                showToast('Plantilla cargada en el Editor Visual');
-                switchEditorTab('content');
-            }
-        }
-
-        // --- IA PROMPT ---
-        function updateSysStyleOptions() {
-            const formatSelected = document.getElementById('sys-formato').value;
-            const selectEstilo = document.getElementById('sys-estilo');
-            selectEstilo.innerHTML = '';
-            SYSTEM_FORMATS[formatSelected].styles.forEach(s => {
-                const opt = document.createElement('option'); opt.value = s.id; opt.textContent = s.name; selectEstilo.appendChild(opt);
-            });
-        }
-
-        function generateCustomAIPrompt() {
-            const nicho = document.getElementById('sys-nicho').value.trim() || '[Nicho]';
-            const producto = document.getElementById('sys-producto').value.trim() || '[Servicio]';
-            const resultado = document.getElementById('sys-resultado').value.trim() || '[Resultado]';
-            const cliente = document.getElementById('sys-cliente').value.trim() || '[Cliente Ideal]';
-            
-            const formatId = document.getElementById('sys-formato').value;
-            const styleId = document.getElementById('sys-estilo').value;
-            const formatData = SYSTEM_FORMATS[formatId];
-            const styleData = formatData.styles.find(s => s.id === styleId);
-
-            const promptText = `Eres un Copywriter Experto. Crea un Carrusel de Instagram (5 slides) usando la estructura "${formatData.name}" (${styleData.name}).
-Contexto: Nicho: ${nicho}. Vendo: ${producto}. Ayudo a: ${cliente} a lograr: ${resultado}.
-Intención del post: ${formatData.descActivate}.
-
-Responde SOLO con un array JSON válido, donde cada slide tenga esta estructura:
-{
-  "layout": "cover" | "standard" | "split" | "metric" | "quote" | "cta",
-  "badge": "texto super corto superior",
-  "title": "Titular potente. Usa {palabras clave} entre llaves para dar color dorado",
-  "body": "texto secundario de apoyo corto",
-  "col1Text": "solo para layout split (izq)",
-  "col2Text": "solo para layout split (der)",
-  "metricNum": "solo para layout metric (ej: +300%)",
-  "metricLabel": "solo para layout metric",
-  "ctaText": "Texto de boton corto (ej: DESLIZA ➡️)",
-  "icon": "clase fontawesome ej: fa-fire"
-}`;
-            
-            const dummy = document.createElement('textarea'); dummy.value = promptText; document.body.appendChild(dummy);
-            dummy.select(); document.execCommand('copy'); document.body.removeChild(dummy);
-            showToast('Prompt Copiado. ¡Ábre ChatGPT y pégalo!');
-        }
-
-        function importAISlides() {
-            const raw = document.getElementById('ai-import-json').value.trim();
-            if (!raw) { showToast('Pega el JSON primero.'); return; }
-            try {
-                let parsed = null;
-                const match = raw.match(/\[\s*\{[\s\S]*\}\s*\]/);
-                if (match) parsed = JSON.parse(match[0]); else parsed = JSON.parse(raw);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                    slides = parsed; currentSlideIndex = 0;
-                    renderTabs(); loadSlideToEditor(); updatePreview();
-                    switchEditorTab('content');
-                    showToast('¡Importación Exitosa!');
-                }
-            } catch (err) { showToast('Error en el formato JSON.'); }
-        }
-
-        // --- CITAS VIP ---
-        function filterQuotes(category) {
-            const container = document.getElementById('quotes-container');
-            container.innerHTML = '';
-            
-            // Update button styles
-            const btns = container.parentElement.querySelectorAll('button');
-            btns.forEach(b => {
-                if(b.textContent.toLowerCase().includes(category === 'tension' ? 'tensión' : category)) {
-                    b.className = 'px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-bold whitespace-nowrap';
-                } else {
-                    b.className = 'px-3 py-1.5 rounded-lg bg-purple-900 text-purple-200 border border-purple-700 text-[10px] font-bold whitespace-nowrap';
-                }
-            });
-
-            QUOTES_DB[category].forEach(q => {
-                const quoteText = `"${q.text}"\n— ${q.author}`;
-                container.innerHTML += `
-                    <div class="bg-gray-950/80 border border-purple-800/50 p-4 rounded-xl relative group">
-                        <i class="fa-solid fa-quote-left text-amber-500/30 text-2xl absolute top-3 left-3"></i>
-                        <div class="relative z-10 pl-6">
-                            <p class="text-sm text-gray-200 italic mb-2 font-serif-luxury">${q.text}</p>
-                            <p class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">— ${q.author}</p>
-                        </div>
-                        <button onclick="copyQuote(\`${quoteText.replace(/"/g, '&quot;')}\`)" class="absolute bottom-3 right-3 text-[10px] bg-purple-900 hover:bg-amber-500 hover:text-black text-white px-2 py-1 rounded transition opacity-0 group-hover:opacity-100">Copiar</button>
-                    </div>
-                `;
-            });
-        }
-        function copyQuote(text) {
-            const dummy = document.createElement('textarea'); dummy.value = text; document.body.appendChild(dummy);
-            dummy.select(); document.execCommand('copy'); document.body.removeChild(dummy);
-            showToast('Cita copiada al portapapeles');
-        }
-
-        // --- EDITOR VISUAL BASE ---
-        function renderTabs() {
-            const container = document.getElementById('slides-tabs-container');
-            if (!container) return;
-            document.getElementById('slide-count-badge').textContent = slides.length;
-            container.innerHTML = '';
-            slides.forEach((slide, idx) => {
-                const btn = document.createElement('button'); btn.onclick = () => selectSlide(idx);
-                const isAct = idx === currentSlideIndex;
-                btn.className = `flex-shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition border ${isAct ? 'bg-amber-500/20 text-amber-300 border-amber-400' : 'bg-purple-950/50 text-purple-300 border-purple-800 hover:text-white'}`;
-                btn.textContent = `Slide ${idx + 1}`;
-                container.appendChild(btn);
-            });
-        }
-        function selectSlide(idx) { if (idx >= 0 && idx < slides.length) { currentSlideIndex = idx; renderTabs(); loadSlideToEditor(); updatePreview(); } }
-        
-        function loadSlideToEditor() {
-            const slide = slides[currentSlideIndex]; if (!slide) return;
-            document.getElementById('current-slide-num').textContent = currentSlideIndex + 1;
-            document.getElementById('editor-badge').value = slide.badge || '';
-            document.getElementById('editor-title').value = slide.title || '';
-            document.getElementById('editor-body').value = slide.body || '';
-            document.getElementById('editor-ctaText').value = slide.ctaText || '';
-            document.getElementById('editor-icon').value = slide.icon || 'fa-crown';
-            
-            if(document.getElementById('editor-col1')) document.getElementById('editor-col1').value = slide.col1Text || '';
-            if(document.getElementById('editor-col2')) document.getElementById('editor-col2').value = slide.col2Text || '';
-            if(document.getElementById('editor-metricNum')) document.getElementById('editor-metricNum').value = slide.metricNum || '';
-            if(document.getElementById('editor-metricLabel')) document.getElementById('editor-metricLabel').value = slide.metricLabel || '';
-
-            changeSlideLayout(slide.layout || 'standard', false);
-        }
-
-        function changeSlideLayout(layoutType, updateData = true) {
-            if (updateData && slides[currentSlideIndex]) slides[currentSlideIndex].layout = layoutType;
-            ['cover', 'standard', 'split', 'metric', 'quote', 'cta'].forEach(l => {
-                const btn = document.getElementById(`layout-btn-${l}`); if (!btn) return;
-                btn.className = l === layoutType ? 'p-2 rounded-xl border border-amber-400/80 bg-amber-500/20 text-amber-300 text-[10px] font-bold text-left shadow-md' : 'p-2 rounded-xl border border-purple-800 bg-purple-950/60 text-purple-300 text-[10px] font-bold text-left';
-            });
-            const col = document.getElementById('field-group-columns'); const met = document.getElementById('field-group-metric'); const bod = document.getElementById('field-group-body');
-            if(col) col.classList.add('hidden'); if(met) met.classList.add('hidden'); if(bod) bod.classList.remove('hidden');
-            if (layoutType === 'split') { if(col) col.classList.remove('hidden'); if(bod) bod.classList.add('hidden'); } 
-            else if (layoutType === 'metric') { if(met) met.classList.remove('hidden'); }
-            updatePreview();
-        }
-
-        function updateSlideData(key, value) { if (slides[currentSlideIndex]) { slides[currentSlideIndex][key] = value; updatePreview(); } }
-        function moveSlide(dir) { let t = currentSlideIndex + dir; if (t >= 0 && t < slides.length) { const temp = slides[currentSlideIndex]; slides[currentSlideIndex] = slides[t]; slides[t] = temp; selectSlide(t); } }
-        function addNewSlide() { slides.push({ layout: 'standard', badge: 'NUEVO', title: 'Tu {Titular}', body: 'Texto', icon: 'fa-star' }); selectSlide(slides.length - 1); }
-        function duplicateCurrentSlide() { const clone = JSON.parse(JSON.stringify(slides[currentSlideIndex])); slides.splice(currentSlideIndex + 1, 0, clone); selectSlide(currentSlideIndex + 1); }
-        function deleteCurrentSlide() { if (slides.length > 1) { slides.splice(currentSlideIndex, 1); selectSlide(Math.min(currentSlideIndex, slides.length - 1)); } }
-
-        // --- PREVIEW Y MARCA ---
-        function setAspectRatio(ratio) {
-            currentAspectRatio = ratio;
-            ['4-5', '1-1'].forEach(r => {
-                const btn = document.getElementById(`ratio-btn-${r}`); if (!btn) return;
-                btn.className = r === ratio ? 'p-3 rounded-xl border border-amber-400 bg-amber-500/20 text-amber-300 font-bold text-xs shadow-md' : 'p-3 rounded-xl border border-purple-800 bg-purple-950/60 text-purple-300 font-semibold text-xs';
-            });
-            const card = document.getElementById('slide-preview-card');
-            if (card) { card.classList.remove('ratio-4-5', 'ratio-1-1'); card.classList.add(`ratio-${ratio}`); }
-        }
-
-        function updateBrandConfig(key, value) { brandConfig[key] = value; updatePreview(); }
-        function navigateSlide(dir) { let t = currentSlideIndex + dir; if(t >= 0 && t < slides.length) selectSlide(t); }
-        function formatGold(text) { return text ? text.replace(/\{([^}]+)\}/g, '<span class="highlight-gold">$1</span>').replace(/\n/g, '<br>') : ''; }
-
-        function updatePreview() {
-            const slide = slides[currentSlideIndex]; if (!slide) return;
-            document.getElementById('preview-current-idx').textContent = currentSlideIndex + 1;
-            document.getElementById('preview-total-idx').textContent = slides.length;
-            document.getElementById('preview-badge').textContent = slide.badge || 'SLIDE';
-            document.getElementById('preview-top-handle').textContent = brandConfig.handle;
-            document.getElementById('preview-bottom-author').textContent = brandConfig.author;
-            document.getElementById('preview-pagination-badge').textContent = `${currentSlideIndex + 1}/${slides.length}`;
-
-            // Actualizar variables CSS dinámicas para previsualizador (colores de marca)
-            document.getElementById('preview-glow-1').style.background = brandConfig.primaryColor;
-            document.getElementById('preview-glow-2').style.background = brandConfig.secondaryColor;
-
-            const contentBox = document.getElementById('preview-content-box');
-            let t = formatGold(slide.title); let b = formatGold(slide.body); let lay = slide.layout || 'standard';
-            let html = `<div class="flex items-center gap-2 text-amber-400 text-xl"><i class="fa-solid ${slide.icon || 'fa-crown'}"></i></div>`;
-
-            if (lay === 'split') {
-                html += `<h3 class="text-lg font-extrabold text-white leading-tight font-display">${t}</h3>
-                    <div class="grid grid-cols-2 gap-2 text-[10px] sm:text-xs">
-                        <div class="p-3 rounded-xl bg-purple-950/70 border border-purple-800 text-purple-200 leading-snug">${formatGold(slide.col1Text)}</div>
-                        <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-200 leading-snug">${formatGold(slide.col2Text)}</div>
-                    </div>`;
-            } else if (lay === 'metric') {
-                html += `<h3 class="text-base font-bold text-purple-200">${t}</h3>
-                    <div class="my-2 p-3 rounded-2xl bg-gradient-to-r from-purple-950 to-amber-950/80 border border-amber-500/40 text-center">
-                        <span class="text-3xl font-black gold-gradient-text block tracking-tight">${slide.metricNum || ''}</span>
-                        <span class="text-[11px] font-bold text-gray-200 uppercase tracking-wider">${slide.metricLabel || ''}</span>
-                    </div><p class="text-xs text-gray-300 leading-snug">${b}</p>`;
-            } else if (lay === 'quote') {
-                html += `<div class="text-amber-400 text-3xl opacity-80"><i class="fa-solid fa-quote-left"></i></div>
-                    <h2 class="text-xl font-black italic text-white leading-snug font-serif-luxury">${t}</h2>
-                    <p class="text-xs text-purple-200 font-semibold">— ${brandConfig.handle}</p>`;
-            } else {
-                html += `<h2 class="text-xl sm:text-2xl font-black text-white leading-tight font-display">${t}</h2>
-                    ${b ? `<p class="text-xs sm:text-sm text-gray-300 leading-relaxed">${b}</p>` : ''}`;
-            }
-
-            if (slide.ctaText) {
-                html += `<div class="pt-2"><div class="inline-block px-3.5 py-1.5 rounded-xl text-gray-950 font-black text-[11px] shadow-xl" style="background: linear-gradient(135deg, #fde047, #eab308);">${slide.ctaText}</div></div>`;
-            }
-            contentBox.innerHTML = html;
-        }
-
-        // --- EXPORTACIÓN (Sin APIs, puramente local) ---
-        function getDims() { return currentAspectRatio === '1-1' ? { w: 1080, h: 1080 } : { w: 1080, h: 1350 }; }
-
-        function exportCurrentSlidePNG(idx = currentSlideIndex) {
-            return new Promise((resolve) => {
-                showToast('Generando imagen HD...');
-                const cont = document.getElementById('export-render-container');
-                const slide = slides[idx]; if (!slide) return resolve(null);
-                const { w, h } = getDims(); cont.style.width = `${w}px`; cont.style.height = `${h}px`;
-
-                let t = formatGold(slide.title); let b = formatGold(slide.body); let cH = '';
-                
-                if (slide.layout === 'split') {
-                    cH = `<h3 style="font-size: 58px; font-weight: 900; line-height: 1.2; margin-bottom: 30px; color: #fff;">${t}</h3>
-                        <div style="display:flex; gap: 20px;">
-                            <div style="flex:1; background: rgba(88,28,135,0.4); border: 2px solid #581c87; border-radius: 20px; padding: 30px; font-size: 26px; color: #e9d5ff; white-space: pre-line;">${formatGold(slide.col1Text || '')}</div>
-                            <div style="flex:1; background: rgba(234,179,8,0.1); border: 2px solid rgba(234,179,8,0.4); border-radius: 20px; padding: 30px; font-size: 26px; color: #fde047; white-space: pre-line;">${formatGold(slide.col2Text || '')}</div>
-                        </div>`;
-                } else if (slide.layout === 'metric') {
-                    cH = `<h3 style="font-size: 40px; font-weight: 700; color: #e9d5ff; margin-bottom: 20px;">${t}</h3>
-                        <div style="background: linear-gradient(135deg, rgba(88,28,135,0.8), rgba(161,98,7,0.8)); border: 2px solid rgba(234,179,8,0.5); border-radius: 30px; padding: 40px; text-align: center; margin-bottom: 30px;">
-                            <span style="display: block; font-size: 90px; font-weight: 900; color: #fde047; margin-bottom: 10px;">${slide.metricNum || ''}</span>
-                            <span style="font-size: 24px; font-weight: 800; color: #fff; text-transform: uppercase;">${slide.metricLabel || ''}</span>
-                        </div><p style="font-size: 30px; color: #e9d5ff;">${b}</p>`;
-                } else if (slide.layout === 'quote') {
-                    cH = `<div style="font-size: 60px; color: #facc15; margin-bottom: 20px;">"</div>
-                        <h2 style="font-size: 65px; font-weight: 900; font-style: italic; color: #fff; line-height: 1.3; margin-bottom: 30px; font-family: 'Playfair Display', serif;">${t}</h2>
-                        <p style="font-size: 30px; color: #e9d5ff; font-weight: 600;">— ${brandConfig.handle}</p>`;
-                } else {
-                    cH = `<h2 style="font-size: 65px; font-weight: 900; line-height: 1.2; margin-bottom: 30px; color: #fff;">${t}</h2>
-                        <p style="font-size: 32px; line-height: 1.5; font-weight: 400; color: #e9d5ff;">${b}</p>`;
-                }
-
-                if (slide.ctaText) {
-                    cH += `<div style="margin-top: 40px; display: inline-block; background: linear-gradient(135deg, #fde047, #eab308); color: #07030d; padding: 22px 44px; border-radius: 20px; font-size: 28px; font-weight: 900;">${slide.ctaText}</div>`;
-                }
-
-                cont.innerHTML = `
-                    <div style="width: ${w}px; height: ${h}px; background-color: #120624; padding: 70px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; overflow: hidden;">
-                        <div style="position: absolute; top: -150px; right: -150px; width: 600px; height: 600px; border-radius: 50%; background: ${brandConfig.primaryColor}; filter: blur(120px); opacity: 0.45;"></div>
-                        <div style="position: absolute; bottom: -150px; left: -150px; width: 600px; height: 600px; border-radius: 50%; background: ${brandConfig.secondaryColor}; filter: blur(120px); opacity: 0.35;"></div>
-                        <div style="position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center;">
-                            <span style="background: rgba(88, 28, 135, 0.7); border: 2px solid ${brandConfig.secondaryColor}; color: #fde047; font-size: 24px; font-weight: 800; text-transform: uppercase; padding: 10px 24px; border-radius: 9999px;">${slide.badge || 'SLIDE'}</span>
-                            <span style="color: #f3e8ff; font-size: 24px; font-weight: 700;">${brandConfig.handle}</span>
-                        </div>
-                        <div style="position: relative; z-index: 10; margin: auto 0; padding: 20px 0;">${cH}</div>
-                        <div style="position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid rgba(255,255,255,0.15); padding-top: 25px;">
-                            <span style="color: #fde047; font-size: 24px; font-weight: 800;">${brandConfig.author}</span>
-                            <span style="background: rgba(26, 5, 43, 0.9); color: #ffffff; padding: 6px 22px; border-radius: 12px; font-size: 22px; font-weight: 800; border: 1px solid rgba(255,255,255,0.2);">${idx + 1}/${slides.length}</span>
-                        </div>
-                    </div>
-                `;
-
-                setTimeout(() => {
-                    html2canvas(cont.firstElementChild, { scale: 2, useCORS: true, logging: false }).then(canvas => {
-                        const link = document.createElement('a'); link.download = `slide-${idx + 1}-vip.png`; link.href = canvas.toDataURL('image/png'); link.click();
-                        showToast(`¡Slide ${idx + 1} exportado!`); resolve(true);
-                    }).catch(() => resolve(false));
-                }, 300);
-            });
-        }
-
-        async function exportAllSlidesPNG() {
-            showToast('Iniciando exportación secuencial...');
-            for (let i = 0; i < slides.length; i++) { await exportCurrentSlidePNG(i); await new Promise(r => setTimeout(r, 600)); }
-            showToast('¡Carrusel completo descargado!');
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById('toast-notification'); document.getElementById('toast-message').textContent = msg;
-            toast.classList.remove('translate-y-20', 'opacity-0'); toast.classList.add('translate-y-0', 'opacity-100');
-            setTimeout(() => { toast.classList.remove('translate-y-0', 'opacity-100'); toast.classList.add('translate-y-20', 'opacity-0'); }, 3000);
-        }
-    </script>
-</body>
-</html>
+            <div class="bg-darkCard rounded-xl border border-imperial-800/80 overflow-hidden">
+                <button onclick="toggleFaq(4)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors">
+                    <span>¿Existe política de reembolso o devolución?</span>
+                    <i id="faq-icon-4" class="fa-solid fa-chevron-down text-gold-500 transition-transform"></i>
+                </button>
