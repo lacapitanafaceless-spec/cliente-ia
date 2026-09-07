@@ -73,14 +73,16 @@
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
         #social-proof-toast.toast-hidden {
-            opacity: 0;
-            transform: translateY(30px) scale(0.95);
-            pointer-events: none;
+            opacity: 0 !important;
+            transform: translateY(30px) scale(0.95) !important;
+            pointer-events: none !important;
+            visibility: hidden;
         }
         #social-proof-toast.toast-visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            pointer-events: auto;
+            opacity: 1 !important;
+            transform: translateY(0) scale(1) !important;
+            pointer-events: auto !important;
+            visibility: visible;
         }
         @keyframes pulseGlow {
             0%, 100% { opacity: 0.4; transform: scale(1); }
@@ -522,37 +524,229 @@
 
         <div class="space-y-3">
             <div class="bg-darkCard rounded-xl border border-imperial-800/80 overflow-hidden">
-                <button onclick="toggleFaq(1)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors">
+                <button type="button" onclick="toggleFaq(1)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors cursor-pointer select-none">
                     <span>¿Por qué estas 30 plantillas son mejores que generar contenido con IA?</span>
-                    <i id="faq-icon-1" class="fa-solid fa-chevron-down text-gold-500 transition-transform"></i>
+                    <i id="faq-icon-1" class="fa-solid fa-chevron-down text-gold-500 transition-transform duration-300 transform"></i>
                 </button>
-                <div id="faq-ans-1" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3">
+                <div id="faq-ans-1" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3 leading-relaxed">
                     La IA escribe textos genéricos que carecen de psicología de retención visual y ganchos emocionales reales. Estas 30 plantillas están construidas con estructuras probadas de conversión humana que detienen el pulgar del usuario y disparan la interacción de tus DMs.
                 </div>
             </div>
 
             <div class="bg-darkCard rounded-xl border border-imperial-800/80 overflow-hidden">
-                <button onclick="toggleFaq(2)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors">
+                <button type="button" onclick="toggleFaq(2)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors cursor-pointer select-none">
                     <span>¿Necesito Canva Pro para usar estas plantillas?</span>
-                    <i id="faq-icon-2" class="fa-solid fa-chevron-down text-gold-500 transition-transform"></i>
+                    <i id="faq-icon-2" class="fa-solid fa-chevron-down text-gold-500 transition-transform duration-300 transform"></i>
                 </button>
-                <div id="faq-ans-2" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3">
+                <div id="faq-ans-2" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3 leading-relaxed">
                     No. Todas las tipografías, elementos visuales y marcos utilizados son 100% compatibles tanto con la versión gratuita de Canva como con Canva Pro.
                 </div>
             </div>
 
             <div class="bg-darkCard rounded-xl border border-imperial-800/80 overflow-hidden">
-                <button onclick="toggleFaq(3)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors">
+                <button type="button" onclick="toggleFaq(3)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors cursor-pointer select-none">
                     <span>¿Puedo reutilizar las plantillas mes tras mes?</span>
-                    <i id="faq-icon-3" class="fa-solid fa-chevron-down text-gold-500 transition-transform"></i>
+                    <i id="faq-icon-3" class="fa-solid fa-chevron-down text-gold-500 transition-transform duration-300 transform"></i>
                 </button>
-                <div id="faq-ans-3" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3">
+                <div id="faq-ans-3" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3 leading-relaxed">
                     ¡Sí! Esa es su mayor fortaleza. Tienes acceso de por vida a las 30 estructuras. Puedes usarlas cambiando el enfoque, las imágenes o la oferta tantas veces como quieras para alimentar todo tu año de contenido.
                 </div>
             </div>
 
             <div class="bg-darkCard rounded-xl border border-imperial-800/80 overflow-hidden">
-                <button onclick="toggleFaq(4)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors">
+                <button type="button" onclick="toggleFaq(4)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors cursor-pointer select-none">
                     <span>¿Existe política de reembolso o devolución?</span>
-                    <i id="faq-icon-4" class="fa-solid fa-chevron-down text-gold-500 transition-transform"></i>
+                    <i id="faq-icon-4" class="fa-solid fa-chevron-down text-gold-500 transition-transform duration-300 transform"></i>
                 </button>
+                <div id="faq-ans-4" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3 leading-relaxed">
+                    Al tratarse de un producto digital con acceso instantáneo y de propiedad intelectual descargable (plantillas de Canva), no se admiten devoluciones ni reembolsos una vez realizada la compra.
+                </div>
+            </div>
+
+            <div class="bg-darkCard rounded-xl border border-imperial-800/80 overflow-hidden">
+                <button type="button" onclick="toggleFaq(5)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors cursor-pointer select-none">
+                    <span>¿Qué es el kit de 60 Plantillas para Vender por Historias en Canva?</span>
+                    <i id="faq-icon-5" class="fa-solid fa-chevron-down text-gold-500 transition-transform duration-300 transform"></i>
+                </button>
+                <div id="faq-ans-5" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3 leading-relaxed">
+                    Es un complemento estratégico opcional con un precio de oferta especial que verás habilitado en la tienda. Te entrega 60 plantillas en Canva diseñadas exclusivamente para interactuar, conectar y cerrar ventas diarias directamente desde tus Historias de Instagram.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-8 border-t border-imperial-800/80 text-center text-xs text-gray-500">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-crown text-gold-500"></i>
+                <span class="font-bold text-white">La Capitana Faceless</span>
+            </div>
+            <p>© 2026 La Capitana Faceless. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- MOBILE STICKY FLOATING CTA BAR -->
+    <div id="mobile-sticky-bar" class="fixed bottom-0 left-0 right-0 z-40 bg-darkCard/95 backdrop-blur-lg border-t border-gold-500/40 p-3 flex items-center justify-between gap-3 md:hidden shadow-2xl transition-transform duration-300 translate-y-full">
+        <div>
+            <span class="text-[10px] text-imperial-300 uppercase tracking-wider block font-bold">30 Carruseles Canva</span>
+            <span class="text-lg font-black gold-gradient-text leading-none">$27.00 <span class="text-xs text-gray-400 font-normal">USD</span></span>
+        </div>
+        <a href="https://shop.beacons.ai/lacapitanafaceless/0901d3c0-f534-48fb-8cfa-f34a13c35b21" class="gold-gradient-bg text-black font-extrabold text-xs py-3 px-5 rounded-xl shadow-lg flex items-center gap-1.5">
+            <span>OBTENER AHORA</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </a>
+    </div>
+
+    <!-- POPUP DE PRUEBA SOCIAL / COMPRAS EN VIVO -->
+    <div id="social-proof-toast" class="toast-hidden fixed bottom-20 md:bottom-6 left-4 right-4 sm:right-auto sm:max-w-sm z-[100] bg-darkCard/95 backdrop-blur-md border border-imperial-600/60 p-3.5 rounded-2xl shadow-2xl royal-glow flex items-center gap-3">
+        <div class="relative flex-shrink-0">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-imperial-600 via-gold-500 to-imperial-400 p-[1px] flex items-center justify-center shadow-md">
+                <div class="w-full h-full bg-darkBg rounded-full flex items-center justify-center text-gold-400 font-bold text-sm" id="toast-avatar">
+                    MG
+                </div>
+            </div>
+            <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-darkCard flex items-center justify-center text-[8px] text-black font-extrabold">
+                <i class="fa-solid fa-check"></i>
+            </div>
+        </div>
+
+        <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between gap-1 mb-0.5">
+                <span class="text-xs font-bold text-white truncate" id="toast-name">María G.</span>
+                <span class="text-[10px] text-gray-400 flex-shrink-0" id="toast-time">Hace 2 min</span>
+            </div>
+            <p class="text-[11px] text-gold-400 font-medium leading-tight truncate">
+                Adquirió los <strong class="text-white font-semibold">30 Carruseles 👑</strong>
+            </p>
+            <span class="text-[9px] text-imperial-300 block mt-0.5" id="toast-location">Madrid, España • Compra verificada</span>
+        </div>
+
+        <button type="button" onclick="closeSocialProof()" class="text-gray-500 hover:text-white p-1 transition-colors flex-shrink-0 cursor-pointer">
+            <i class="fa-solid fa-xmark text-xs"></i>
+        </button>
+    </div>
+
+    <!-- INTERACTIVE SCRIPTS -->
+    <script>
+        // Official Beacons product link
+        const CHECKOUT_URL = "https://shop.beacons.ai/lacapitanafaceless/0901d3c0-f534-48fb-8cfa-f34a13c35b21"; 
+
+        function handleCheckout(event) {
+            if (CHECKOUT_URL && CHECKOUT_URL !== "#") {
+                event.preventDefault();
+                window.location.href = CHECKOUT_URL;
+            }
+        }
+
+        function toggleFaq(id) {
+            const ans = document.getElementById(`faq-ans-${id}`);
+            const icon = document.getElementById(`faq-icon-${id}`);
+            if (!ans) return;
+
+            if (ans.classList.contains('hidden')) {
+                ans.classList.remove('hidden');
+                if (icon) {
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            } else {
+                ans.classList.add('hidden');
+                if (icon) {
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            }
+        }
+
+        // Countdown timer implementation (15 minutes)
+        let timeInSeconds = 15 * 60;
+        const countdownEl = document.getElementById('countdown');
+        setInterval(() => {
+            if (timeInSeconds <= 0) timeInSeconds = 15 * 60;
+            timeInSeconds--;
+            const mins = Math.floor(timeInSeconds / 60);
+            const secs = timeInSeconds % 60;
+            if (countdownEl) {
+                countdownEl.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+        }, 1000);
+
+        // Mobile Sticky Bar Trigger on Scroll
+        const mobileStickyBar = document.getElementById('mobile-sticky-bar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 450) {
+                if (mobileStickyBar) mobileStickyBar.classList.remove('translate-y-full');
+            } else {
+                if (mobileStickyBar) mobileStickyBar.classList.add('translate-y-full');
+            }
+        });
+
+        // Dynamic Social Proof Toast Sales Generator
+        const buyerData = [
+            { name: "María G.", initials: "MG", location: "Madrid, España", time: "Hace 2 min" },
+            { name: "Sofía P.", initials: "SP", location: "Barcelona, España", time: "Hace 4 min" },
+            { name: "Valentina R.", initials: "VR", location: "Ciudad de México", time: "Hace 1 min" },
+            { name: "Camila T.", initials: "CT", location: "Bogotá, Colombia", time: "Hace 7 min" },
+            { name: "Elena M.", initials: "EM", location: "Buenos Aires, Argentina", time: "Hace 3 min" },
+            { name: "Lucía F.", initials: "LF", location: "Santiago, Chile", time: "Hace 5 min" },
+            { name: "Andrea B.", initials: "AB", location: "Miami, EE. UU.", time: "Hace 6 min" },
+            { name: "Daniela K.", initials: "DK", location: "Valencia, España", time: "Hace 8 min" }
+        ];
+
+        let toastIndex = 0;
+        let isToastDismissed = false;
+
+        function showNextNotification() {
+            if (isToastDismissed) return;
+            const toastEl = document.getElementById('social-proof-toast');
+            if (!toastEl) return;
+
+            const current = buyerData[toastIndex];
+            const avatarEl = document.getElementById('toast-avatar');
+            const nameEl = document.getElementById('toast-name');
+            const timeEl = document.getElementById('toast-time');
+            const locEl = document.getElementById('toast-location');
+
+            if (avatarEl) avatarEl.innerText = current.initials;
+            if (nameEl) nameEl.innerText = current.name;
+            if (timeEl) timeEl.innerText = current.time;
+            if (locEl) locEl.innerText = `${current.location} • Compra verificada`;
+
+            toastEl.classList.remove('toast-hidden');
+            toastEl.classList.add('toast-visible');
+
+            setTimeout(() => {
+                if (toastEl && !isToastDismissed) {
+                    toastEl.classList.remove('toast-visible');
+                    toastEl.classList.add('toast-hidden');
+                }
+            }, 4500);
+
+            toastIndex = (toastIndex + 1) % buyerData.length;
+        }
+
+        function closeSocialProof() {
+            isToastDismissed = true;
+            const toastEl = document.getElementById('social-proof-toast');
+            if (toastEl) {
+                toastEl.classList.remove('toast-visible');
+                toastEl.classList.add('toast-hidden');
+            }
+        }
+
+        // Guaranteed initialization even within iFrames or delayed DOM loads
+        function initSocialProof() {
+            setTimeout(() => {
+                showNextNotification();
+                setInterval(showNextNotification, 10000);
+            }, 1800);
+        }
+
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            initSocialProof();
+        } else {
+            document.addEventListener('DOMContentLoaded', initSocialProof);
+        }
+    </script>
+
+</body>
+</html>
