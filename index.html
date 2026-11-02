@@ -3,274 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>30 Carruseles de Autoridad Faceless | La Capitana</title>
+    <title>La Capitana Faceless® — El Sistema de Ventas Digitales Sin Rostro</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Playfair Display / Cinzel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        gold: {
-                            300: '#FFE899',
-                            400: '#F3E5AB',
-                            500: '#D4AF37',
-                            600: '#AA7C11',
-                            700: '#8B6508'
-                        },
-                        imperial: {
-                            300: '#D8B4FE',
-                            400: '#C084FC',
-                            500: '#A855F7',
-                            600: '#9333EA',
-                            700: '#7E22CE',
-                            800: '#581C87',
-                            900: '#3B0764',
-                            950: '#1A0333'
-                        },
-                        darkBg: '#09070D',
-                        darkCard: '#130E1C',
-                        darkBorder: '#281C38'
+                        capitana: {
+                            purpleDeep: '#1c0030',
+                            purple: '#2A0047',
+                            purpleRoyal: '#3B0066',
+                            purpleLight: '#F3ECF8',
+                            gold: '#DAA520',
+                            goldHover: '#B8860B',
+                            goldLight: '#FFFDF5',
+                            cream: '#FAF8F5',
+                            blackVelvet: '#111111',
+                            cardBorder: 'rgba(218, 165, 32, 0.25)',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        cinzel: ['Cinzel', 'serif']
                     }
                 }
             }
         }
     </script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
         .gold-gradient-text {
-            background: linear-gradient(135deg, #FFF099 0%, #D4AF37 50%, #997A15 100%);
+            background: linear-gradient(135deg, #FFF099 0%, #DAA520 50%, #B8860B 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .purple-gold-text {
-            background: linear-gradient(135deg, #E9D5FF 0%, #C084FC 40%, #D4AF37 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .gold-gradient-btn {
+            background: linear-gradient(135deg, #F0C431 0%, #DAA520 50%, #B8860B 100%);
+            box-shadow: 0 4px 20px rgba(218, 165, 32, 0.3);
         }
-        .gold-gradient-bg {
-            background: linear-gradient(135deg, #ECC94B 0%, #D4AF37 50%, #B7791F 100%);
+        .gold-gradient-btn:hover {
+            background: linear-gradient(135deg, #FFE17D 0%, #E5B427 50%, #9E7200 100%);
+            box-shadow: 0 6px 28px rgba(218, 165, 32, 0.5);
         }
-        .imperial-gradient-bg {
-            background: linear-gradient(135deg, #9333EA 0%, #7E22CE 50%, #3B0764 100%);
+        .purple-gradient-card {
+            background: linear-gradient(145deg, #2A0047 0%, #150024 100%);
         }
-        .royal-glow {
-            box-shadow: 0 0 40px -5px rgba(126, 34, 206, 0.4), 0 0 20px -5px rgba(212, 175, 55, 0.2);
-        }
-        .gold-glow {
-            box-shadow: 0 0 35px -5px rgba(212, 175, 55, 0.35);
-        }
-        .royal-border-glow {
-            border: 1px solid rgba(192, 132, 252, 0.3);
-        }
-        .royal-border-glow:hover {
-            border: 1px solid rgba(212, 175, 55, 0.6);
-        }
-        #social-proof-toast {
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        #social-proof-toast.toast-hidden {
-            opacity: 0 !important;
-            transform: translateY(30px) scale(0.95) !important;
-            pointer-events: none !important;
-            visibility: hidden;
-        }
-        #social-proof-toast.toast-visible {
-            opacity: 1 !important;
-            transform: translateY(0) scale(1) !important;
-            pointer-events: auto !important;
-            visibility: visible;
-        }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.4; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.08); }
-        }
-        .pulse-halo {
-            animation: pulseGlow 4s infinite ease-in-out;
+        .luxury-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(218, 165, 32, 0.3);
         }
     </style>
 </head>
-<body class="bg-darkBg text-gray-200 antialiased selection:bg-imperial-700 selection:text-white relative pb-20 md:pb-0">
+<body class="bg-capitana-cream text-gray-900 font-sans antialiased selection:bg-capitana-gold selection:text-black">
 
-    <!-- URGENCY TOP BAR -->
-    <div class="bg-gradient-to-r from-imperial-950 via-imperial-900 to-imperial-950 border-b border-gold-500/30 text-white text-xs py-2.5 px-4 text-center font-medium flex items-center justify-center gap-2 md:gap-3 shadow-2xl backdrop-blur-md">
-        <span class="inline-flex items-center gap-1.5 font-extrabold text-gold-400 uppercase tracking-widest text-[11px]">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <i class="fa-solid fa-crown text-gold-500"></i> ACCESO VIP RESERVADO
-        </span>
-        <span class="text-imperial-600 hidden sm:inline">•</span>
-        <span class="hidden md:inline text-gray-300 font-normal">Licencia Vitalicia de Autoridad Faceless</span>
-        <span class="text-imperial-600 hidden sm:inline">•</span>
-        <span class="bg-gradient-to-r from-gold-500/20 to-gold-600/20 text-gold-300 border border-gold-500/50 px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider shadow-inner flex items-center gap-1">
-            <i class="fa-solid fa-bolt text-gold-400 text-[9px]"></i> TARIFA DE LANZAMIENTO LIMITADA
-        </span>
+    <!-- BARRA SUPERIOR DE ANUNCIO ÉTICO -->
+    <div class="bg-capitana-purpleDeep text-capitana-gold text-xs font-semibold uppercase tracking-widest text-center py-2 px-4 border-b border-capitana-gold/30">
+        <span>👑 La Capitana Faceless® — Sistema Oficial de Monetización Digital Sin Rostro</span>
     </div>
 
-    <!-- HEADER / BRANDING -->
-    <header class="py-4 px-4 border-b border-imperial-900/80 bg-darkBg/90 backdrop-blur-xl sticky top-0 z-40 transition-all">
+    <!-- NAVEGACIÓN SIMPLE & ELEGANTE -->
+    <nav class="sticky top-0 z-50 bg-capitana-purpleDeep/90 backdrop-blur-md border-b border-capitana-gold/20 py-4 px-6 md:px-12">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="relative group">
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-imperial-600 via-gold-500 to-imperial-400 p-[1.5px] flex items-center justify-center shadow-lg">
-                        <div class="w-full h-full bg-darkBg rounded-full flex items-center justify-center">
-                            <i class="fa-solid fa-crown text-gold-500 text-base"></i>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <span class="font-black text-base md:text-lg tracking-wider text-white block leading-none">LA CAPITANA</span>
-                    <span class="text-[9px] md:text-[10px] text-gold-400 font-extrabold tracking-widest uppercase">FACELESS AUTHORITY</span>
-                </div>
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl text-capitana-gold">👑</span>
+                <span class="font-cinzel text-lg md:text-xl font-bold tracking-wider text-white">LA CAPITANA <span class="gold-gradient-text">FACELESS®</span></span>
             </div>
-            
-            <div class="flex items-center gap-3 md:gap-5">
-                <div class="hidden lg:flex items-center gap-2 text-xs text-gray-300 bg-imperial-950/80 border border-imperial-800/80 px-3 py-1.5 rounded-full">
-                    <i class="fa-solid fa-shield-halved text-gold-500"></i>
-                    <span>Check-out Oficial La Capitana</span>
-                </div>
-                <a href="https://shop.beacons.ai/lacapitanafaceless/0901d3c0-f534-48fb-8cfa-f34a13c35b21" class="gold-gradient-bg text-black font-black px-4 md:px-5 py-2 md:py-2.5 rounded-xl text-xs md:text-sm hover:scale-[1.03] active:scale-[0.98] transition-all shadow-xl flex items-center gap-2">
-                    <span>OBTENER MIS 30 CARRUSELES</span>
-                    <i class="fa-solid fa-arrow-right text-xs"></i>
+            <a href="#ofertas" class="hidden sm:inline-flex items-center text-xs font-bold text-black bg-capitana-gold hover:bg-capitana-goldHover px-4 py-2 rounded-full uppercase tracking-wider transition-all duration-300">
+                Ver Opciones de Acceso <i class="fa-solid fa-arrow-down ml-2 text-xs"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION DE ALTA CONVERSIÓN -->
+    <header class="relative bg-gradient-to-b from-capitana-purpleDeep via-capitana-purple to-capitana-purpleDeep text-white py-16 md:py-24 px-6 border-b border-capitana-gold/30 overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-capitana-gold/10 via-transparent to-transparent opacity-60"></div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <!-- Badge -->
+            <div class="inline-flex items-center space-x-2 bg-capitana-gold/10 border border-capitana-gold/40 px-4 py-1.5 rounded-full mb-6">
+                <span class="text-capitana-gold text-sm"><i class="fa-solid fa-crown"></i></span>
+                <span class="text-xs uppercase font-bold tracking-widest text-capitana-goldLight">Ecosistema de Conversión Directa sin Exposición Privada</span>
+            </div>
+
+            <!-- Titular Principal -->
+            <h1 class="font-cinzel text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-white mb-6">
+                De Publicar por Inercia a Recibir Ventas <span class="gold-gradient-text block mt-2">Sin Mostrar Tu Rostro</span>
+            </h1>
+
+            <!-- Subtítulo -->
+            <p class="text-base sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed mb-8">
+                Construye una marca digital con postura, autoridad y automatización. Estructuras de contenido verificadas para monetizar en Instagram sin exponer tu privacidad.
+            </p>
+
+            <!-- Botón CTA Hero -->
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-10">
+                <a href="#ofertas" class="w-full sm:w-auto gold-gradient-btn text-black font-extrabold text-sm md:text-base px-8 py-4 rounded-xl uppercase tracking-wider transition-all transform hover:-translate-y-0.5 flex items-center justify-center space-x-3">
+                    <span>👑 OBTENER ACCESO AL SISTEMA</span>
+                    <i class="fa-solid fa-arrow-right"></i>
                 </a>
+            </div>
+
+            <!-- Tira de Garantía / Transparencia -->
+            <div class="flex flex-wrap justify-center items-center gap-6 text-xs text-gray-300 border-t border-white/10 pt-6">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-bolt text-capitana-gold"></i>
+                    <span>Entrega Inmediata al Correo</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-lock text-capitana-gold"></i>
+                    <span>Pago Único y Seguro en Dólares (USD)</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-sliders text-capitana-gold"></i>
+                    <span>Estructuras Editables en Canva</span>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="py-12 md:py-20 px-4 max-w-5xl mx-auto text-center relative overflow-hidden">
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-imperial-700/20 blur-[140px] rounded-full pointer-events-none pulse-halo"></div>
-        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-gold-500/10 blur-[100px] rounded-full pointer-events-none"></div>
-
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-imperial-950/80 border border-imperial-600/50 text-imperial-300 text-xs md:text-sm font-semibold mb-6 shadow-xl">
-            <i class="fa-solid fa-infinity text-gold-500"></i>
-            <span class="text-white font-bold">Multiplicador Infinito de Contenido</span>
-            <span class="text-imperial-400">•</span>
-            <span class="text-gold-400 font-medium">Más Efectivo Que Cualquier IA</span>
+    <!-- MOCKUP VISUAL TRANSPARENTE Y FIDELIDAD A LOS ENTREGABLES REALES -->
+    <section class="py-16 md:py-20 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-14">
+            <span class="text-capitana-gold font-bold text-xs uppercase tracking-widest block mb-2 font-cinzel">Fidelidad y Transparencia Total</span>
+            <h2 class="font-cinzel text-2xl md:text-4xl font-bold text-capitana-purple">Mira Exactamente Cómo Recibes Tus Activos</h2>
+            <div class="w-24 h-1 bg-capitana-gold mx-auto mt-4 rounded-full"></div>
+            <p class="text-sm md:text-base text-gray-600 mt-4 max-w-2xl mx-auto">
+                Accedes a un panel interactivo central en Canva donde cada carrusel y story tiene su enlace directo dedicado para generar tu propia copia en un clic.
+            </p>
         </div>
 
-        <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-white leading-tight mb-6 tracking-tight">
-            ¡Ahórrate Horas de Pensar! La Capitana Ya Hizo Tus <span class="purple-gold-text">30 Días de Contenido (E Infinitos Más)</span> Por Ti
-        </h1>
-
-        <p class="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8 font-light leading-relaxed">
-            Accede a <strong class="text-white font-semibold">30 Plantillas de Carruseles de Alta Autoridad en Canva</strong>, pre-escritas por La Capitana con ganchos psicológicos de venta real. <span class="text-gold-400 font-semibold">Reutilízalas infinitas veces</span> cambiando el enfoque o producto para generar meses de contenido imparable.
-        </p>
-
-        <div class="max-w-md mx-auto mb-10">
-            <a href="https://shop.beacons.ai/lacapitanafaceless/0901d3c0-f534-48fb-8cfa-f34a13c35b21" class="block w-full gold-gradient-bg text-black font-black text-lg md:text-xl py-4 px-8 rounded-2xl shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all gold-glow flex items-center justify-center gap-3 group">
-                <i class="fa-solid fa-crown text-black group-hover:rotate-12 transition-transform"></i>
-                <span>¡QUIERO MIS 30 CARRUSELES AHORA!</span>
-            </a>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            <div class="flex items-center justify-center gap-4 mt-3 text-xs text-gray-400">
-                <span><i class="fa-solid fa-check text-gold-500 mr-1"></i> Gratis en Canva o Pro</span>
-                <span><i class="fa-solid fa-check text-gold-500 mr-1"></i> Contenido Infinito Reutilizable</span>
-            </div>
-        </div>
-
-        <!-- QUICK VALUE CARDS -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-left max-w-4xl mx-auto mt-12 pt-8 border-t border-imperial-800/60">
-            <div class="bg-darkCard p-4 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all">
-                <div class="w-8 h-8 rounded-lg bg-imperial-900 text-gold-400 flex items-center justify-center mb-2 text-sm">
-                    <i class="fa-solid fa-bolt"></i>
+            <!-- MOCKUP 1: THE FACELESS SALES BLUEPRINT (PDF) -->
+            <div class="bg-white rounded-2xl p-6 border border-capitana-gold/30 shadow-lg flex flex-col justify-between hover:border-capitana-gold transition-all duration-300">
+                <div>
+                    <!-- Visual Mockup PDF Cover -->
+                    <div class="bg-gradient-to-br from-capitana-purpleDeep to-capitana-purple p-6 rounded-xl border-2 border-capitana-gold shadow-md text-white mb-6 relative overflow-hidden">
+                        <div class="absolute -right-6 -bottom-6 text-capitana-gold/10 text-9xl font-cinzel select-none">👑</div>
+                        <span class="bg-capitana-gold text-black font-extrabold text-[10px] uppercase px-2.5 py-1 rounded tracking-wider">Manual PDF Descargable</span>
+                        <h3 class="font-cinzel text-xl font-bold mt-4 mb-2 text-white">THE FACELESS SALES BLUEPRINT™</h3>
+                        <p class="text-xs text-gray-300">Diagnóstico de Posicionamiento, Pilares y Plan Semanal</p>
+                        <div class="mt-8 pt-4 border-t border-white/10 flex justify-between items-center text-[11px] text-capitana-gold">
+                            <span>Documento PDF Principal</span>
+                            <span>Acceso Inmediato</span>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-base text-capitana-purple mb-2">The Faceless Sales Blueprint™ (PDF)</h4>
+                    <ul class="text-xs text-gray-600 space-y-2 mb-4">
+                        <li class="flex items-start"><i class="fa-solid fa-check text-capitana-gold mr-2 mt-0.5"></i> <span>Manual estratégico sobre el diagnóstico y posicionamiento de marca Faceless.</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check text-capitana-gold mr-2 mt-0.5"></i> <span>Incluye la hoja de ruta semanal de publicación (Lunes a Domingo).</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check text-capitana-gold mr-2 mt-0.5"></i> <span>Acompañado por el Banco de 40 Ganchos (Hooks) en documento independiente.</span></li>
+                    </ul>
                 </div>
-                <h4 class="text-xs font-bold text-white">Listo en 5 Minutos</h4>
-                <p class="text-[11px] text-gray-400 mt-0.5">Abre en Canva, ajusta tu tema y publica sin estresarte.</p>
-            </div>
-
-            <div class="bg-darkCard p-4 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all">
-                <div class="w-8 h-8 rounded-lg bg-imperial-900 text-gold-400 flex items-center justify-center mb-2 text-sm">
-                    <i class="fa-solid fa-infinity"></i>
+                <div class="pt-4 border-t border-gray-100 flex justify-between items-center text-xs font-semibold text-capitana-purple">
+                    <span>Incluido en Starter y Bundle Gold</span>
+                    <i class="fa-solid fa-circle-check text-green-600"></i>
                 </div>
-                <h4 class="text-xs font-bold text-white">Reutilizable Infinito</h4>
-                <p class="text-[11px] text-gray-400 mt-0.5">30 estructuras que alimentan todo tu año cambiando el ángulo.</p>
-            </div>
-
-            <div class="bg-darkCard p-4 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all">
-                <div class="w-8 h-8 rounded-lg bg-imperial-900 text-gold-400 flex items-center justify-center mb-2 text-sm">
-                    <i class="fa-solid fa-brain"></i>
-                </div>
-                <h4 class="text-xs font-bold text-white">Supera a la IA</h4>
-                <p class="text-[11px] text-gray-400 mt-0.5">Ganchos psicológicos humanos que sí detienen el scroll.</p>
             </div>
 
-            <div class="bg-darkCard p-4 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all">
-                <div class="w-8 h-8 rounded-lg bg-imperial-900 text-gold-400 flex items-center justify-center mb-2 text-sm">
-                    <i class="fa-solid fa-chess-queen"></i>
+            <!-- MOCKUP 2: DASHBOARD DE 30 CARRUSELES CANVA -->
+            <div class="bg-white rounded-2xl p-6 border border-capitana-gold/30 shadow-lg flex flex-col justify-between hover:border-capitana-gold transition-all duration-300">
+                <div>
+                    <!-- Visual Mockup exacto al panel de Canva -->
+                    <div class="bg-black p-4 rounded-xl border border-capitana-gold/50 shadow-md mb-6 relative text-white">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="bg-capitana-gold text-black text-[10px] font-bold px-2 py-0.5 rounded">Dashboard Canva</span>
+                            <span class="text-xs font-bold text-capitana-goldLight">30 Carruseles</span>
+                        </div>
+                        
+                        <div class="bg-neutral-900 border border-neutral-800 p-3 rounded-lg text-[9px] space-y-1.5">
+                            <div class="text-center font-bold text-capitana-gold tracking-widest text-[8px] uppercase border-b border-neutral-800 pb-1">Tus Plantillas de Carruseles</div>
+                            <div class="flex items-center space-x-2 bg-neutral-800 p-1.5 rounded border border-neutral-700">
+                                <span class="bg-gray-300 text-black font-bold px-1.5 py-0.5 rounded text-[7px]">Link 01</span>
+                                <span class="text-gray-300 font-medium">Plantilla Carrusel 1 (Haz tu copia)</span>
+                            </div>
+                            <div class="flex items-center space-x-2 bg-neutral-800 p-1.5 rounded border border-neutral-700">
+                                <span class="bg-gray-300 text-black font-bold px-1.5 py-0.5 rounded text-[7px]">Link 02</span>
+                                <span class="text-gray-300 font-medium">Plantilla Carrusel 2 (Haz tu copia)</span>
+                            </div>
+                            <div class="text-[7px] text-center text-gray-500 pt-1">...y así hasta completar las 30 plantillas</div>
+                        </div>
+                        <p class="text-[9px] text-gray-400 text-center mt-2.5">Acceso Organizado por Enlaces Directos</p>
+                    </div>
+                    <h4 class="font-bold text-base text-capitana-purple mb-2">30 Carruseles Editables (Canva)</h4>
+                    <ul class="text-xs text-gray-600 space-y-2 mb-4">
+                        <li class="flex items-start"><i class="fa-solid fa-check text-capitana-gold mr-2 mt-0.5"></i> <span>Dashboard central en Canva organizado con botones directos para cada plantilla.</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check text-capitana-gold mr-2 mt-0.5"></i> <span>Generas una copia propia en Canva con un solo clic de forma segura.</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check text-capitana-gold mr-2 mt-0.5"></i> <span>Personalizas textos, fuentes e imágenes según el estilo de tu marca.</span></li>
+                    </ul>
                 </div>
-                <h4 class="text-xs font-bold text-white">Autoridad Instantánea</h4>
-                <p class="text-[11px] text-gray-400 mt-0.5">Pasa de cuenta aficionada a referente de tu nicho.</p>
+                <div class="pt-4 border-t border-gray-100 flex justify-between items-center text-xs font-semibold text-capitana-purple">
+                    <span>Incluido en Bundle Imperial Gold</span>
+                    <i class="fa-solid fa-crown text-capitana-gold"></i>
+                </div>
             </div>
+
+            <!-- MOCKUP 3: PACK DE 60 STORIES DE ALTA CONVERSIÓN -->
+            <div class="bg-white rounded-2xl p-6 border border-capitana-gold/30 shadow-lg flex flex-col justify-between hover:border-capitana-gold transition-all duration-300">
+                <div>
+                    <!-- Visual Mockup Instagram Stories -->
+                    <div class="bg-gradient-to-b from-capitana-purple to-capitana-purpleDeep p-4 rounded-xl border border-capitana-gold/50 shadow-md mb-6 relative text-white">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="bg-capitana-gold text-black text-[10px] font-bold px-2 py-0.5 rounded">Plantillas Canva</span>
+                            <span class="text-xs font-bold text-capitana-goldLight">60 Stories</span>
+                        </div>
+                        <div class="flex justify-center space-x-3">
+                            <div class="w-20 h-32 bg-black rounded-lg border border-capitana-gold/60 p-2 flex flex-col justify-between text-[8px] overflow-hidden shadow text-center">
+                                <div class="text-capitana-gold text-right">👑</div>
+                                <div class="font-bold text-white my-auto">Story Individual de Venta / Recurso</div>
+                                <div class="bg-capitana-gold text-black py-0.5 rounded font-bold">Responde o Enlace</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-base text-capitana-purple mb-2">60 Stories de Venta y Recurso</h4>
+                    <ul class="text-xs text-gray-600 space-y-2 mb-4">
+                        <li class="flex items-start"><i class="fa-solid fa-check text-capitana-gold mr-2 mt-0.5"></i> <span>Plantillas individuales para historias enfáticas de venta directa o entrega de recursos.</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check text-capitana-gold mr-2 mt-0.5"></i> <span>Diseños limpios para colocar tu texto de llamado a la acción y enlaces.</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check text-capitana-gold mr-2 mt-0.5"></i> <span>Disponible en el Bundle Imperial Gold o como Order Bump (+$17 USD).</span></li>
+                    </ul>
+                </div>
+                <div class="pt-4 border-t border-gray-100 flex justify-between items-center text-xs font-semibold text-capitana-purple">
+                    <span>Order Bump / Bundle Imperial</span>
+                    <i class="fa-solid fa-fire text-amber-500"></i>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <!-- COMPARISON: POR QUÉ ESTO DESTRUYE A LA IA GENÉRICA -->
-    <section class="py-16 bg-imperial-950/60 border-y border-imperial-900/80 px-4 relative overflow-hidden">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-10">
-                <span class="inline-block bg-red-950/80 text-red-400 border border-red-800/60 text-[11px] font-black px-3.5 py-1 rounded-full uppercase tracking-widest mb-2">
-                    ⚠️ LA VERDAD SOBRE LA IA EN INSTAGRAM
-                </span>
-                <h2 class="text-2xl sm:text-4xl font-black text-white mt-1">
-                    ¿Por qué los Carruseles creados con IA <span class="gold-gradient-text">NO están Vendiendo</span>?
-                </h2>
-                <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto mt-2 leading-relaxed">
-                    La Inteligencia Artificial redacta textos aburridos y genéricos que la gente identifica en 1 segundo y pasa de largo. Para vender necesitas <strong class="text-white font-semibold">psicología humana de atracción</strong>.
-                </p>
+    <!-- MATRIZ DE DIAGNÓSTICO: ¿PARA QUIÉN ES / PARA QUIÉN NO ES? -->
+    <section class="py-16 bg-gradient-to-b from-capitana-purpleDeep to-capitana-purple text-white px-6 border-y border-capitana-gold/30">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-capitana-gold font-bold text-xs uppercase tracking-widest block mb-2 font-cinzel">Filtro Ético de Compradoras</span>
+                <h2 class="font-cinzel text-2xl md:text-4xl font-bold text-white">¿Es Este Sistema Para Ti?</h2>
+                <p class="text-gray-300 text-sm md:text-base mt-2 max-w-xl mx-auto">Queremos que inviertas con absoluta claridad sobre la propuesta.</p>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- COLUMNA IA GENÉRICA -->
-                <div class="bg-darkCard/80 p-6 rounded-2xl border border-red-900/40 relative">
-                    <div class="flex items-center gap-2 mb-4 text-red-400 font-extrabold text-sm uppercase tracking-wider">
-                        <i class="fa-solid fa-robot text-lg"></i>
-                        <span>Usar IA o Empezar de Cero</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- PARA QUIÉN SÍ ES -->
+                <div class="bg-white/5 border border-capitana-gold/40 rounded-2xl p-6 md:p-8 backdrop-blur-sm">
+                    <div class="flex items-center space-x-3 mb-6 border-b border-capitana-gold/30 pb-4">
+                        <div class="w-8 h-8 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-check"></i></div>
+                        <h3 class="font-cinzel text-lg font-bold text-white">ESTE SISTEMA SÍ ES PARA TI SI:</h3>
                     </div>
-                    <ul class="space-y-3.5 text-xs md:text-sm text-gray-400">
-                        <li class="flex items-start gap-2.5">
-                            <i class="fa-solid fa-xmark text-red-500 mt-0.5 text-sm flex-shrink-0"></i>
-                            <span><strong>Textos fríos y robóticos:</strong> Suenan igual a miles de cuentas que usan los mismos prompts de ChatGPT.</span>
+                    <ul class="space-y-4 text-xs md:text-sm text-gray-200">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-crown text-capitana-gold mr-3 mt-1"></i>
+                            <span>Quieres construir un negocio digital manteniendo tu <strong>privacidad protegida sin salir en cámara</strong>.</span>
                         </li>
-                        <li class="flex items-start gap-2.5">
-                            <i class="fa-solid fa-xmark text-red-500 mt-0.5 text-sm flex-shrink-0"></i>
-                            <span><strong>Cero estructura de retención:</strong> La IA no entiende cómo mantener el interés diapositiva a diapositiva.</span>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-crown text-capitana-gold mr-3 mt-1"></i>
+                            <span>Deseas vender productos digitales o servicios comunicando postura clara y autoridad.</span>
                         </li>
-                        <li class="flex items-start gap-2.5">
-                            <i class="fa-solid fa-xmark text-red-500 mt-0.5 text-sm flex-shrink-0"></i>
-                            <span><strong>Pierdes horas formateando:</strong> Tienes que pegar el texto y pelearte con Canva ajustando bloques a mano.</span>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-crown text-capitana-gold mr-3 mt-1"></i>
+                            <span>Buscas estructurar tus mensajes para convertir espectadoras en compradoras.</span>
                         </li>
-                        <li class="flex items-start gap-2.5">
-                            <i class="fa-solid fa-xmark text-red-500 mt-0.5 text-sm flex-shrink-0"></i>
-                            <span><strong>Sin llamados a la acción reales:</strong> Cierres genéricos que no generan ni un solo mensaje directo (DM).</span>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-crown text-capitana-gold mr-3 mt-1"></i>
+                            <span>Deseas adaptar las estructuras en Canva con tu propia paleta de colores e imágenes.</span>
                         </li>
                     </ul>
                 </div>
 
-                <!-- COLUMNA SISTEMA LA CAPITANA -->
-                <div class="bg-gradient-to-b from-imperial-900/90 to-darkCard p-6 rounded-2xl border border-gold-500/50 shadow-2xl relative royal-glow">
-                    <div class="flex items-center gap-2 mb-4 text-gold-400 font-extrabold text-sm uppercase tracking-wider">
-                        <i class="fa-solid fa-crown text-lg text-gold-500"></i>
-                        <span>30 Carruseles de La Capitana</span>
+                <!-- PARA QUIÉN NO ES -->
+                <div class="bg-white/5 border border-red-500/30 rounded-2xl p-6 md:p-8 backdrop-blur-sm">
+                    <div class="flex items-center space-x-3 mb-6 border-b border-red-500/30 pb-4">
+                        <div class="w-8 h-8 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-xmark"></i></div>
+                        <h3 class="font-cinzel text-lg font-bold text-white">ESTE SISTEMA NO ES PARA TI SI:</h3>
                     </div>
-                    <ul class="space-y-3.5 text-xs md:text-sm text-gray-200">
-                        <li class="flex items-start gap-2.5">
-                            <i class="fa-solid fa-check text-gold-500 mt-0.5 text-sm flex-shrink-0"></i>
-                            <span><strong>Ganchos Probadamente Efectivos:</strong> Redactados con la psicología que detiene el pulgar al instante.</span>
+                    <ul class="space-y-4 text-xs md:text-sm text-gray-300">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-xmark text-red-400 mr-3 mt-1"></i>
+                            <span>Buscas promesas falsas de "dinero fácil sin trabajo" o fórmulas mágicas.</span>
                         </li>
-                        <li class="flex items-start gap-2.5">
-                            <i class="fa-solid fa-check text-gold-500 mt-0.5 text-sm flex-shrink-0"></i>
-                            <span><strong>Listos en Canva:</strong> Diseños pulidos donde solo sustituyes palabras en 5 minutos.</span>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-xmark text-red-400 mr-3 mt-1"></i>
+                            <span>No estás dispuesta a personalizar el contenido e implementarlo en tu negocio.</span>
                         </li>
-                        <li class="flex items-start gap-2.5">
-                            <i class="fa-solid fa-check text-gold-500 mt-0.5 text-sm flex-shrink-0"></i>
-                            <span><strong>Multiplicador de Contenido Infinito:</strong> Cambia el producto o la foto y la plantilla te servirá para siempre.</span>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-xmark text-red-400 mr-3 mt-1"></i>
+                            <span>Prefieres hacer marketing agresivo, engañoso o de presión irresponsable.</span>
                         </li>
-                        <li class="flex items-start gap-2.5">
-                            <i class="fa-solid fa-check text-gold-500 mt-0.5 text-sm flex-shrink-0"></i>
-                            <span><strong>Garantía de Autoridad:</strong> Diseñados para que luzcas como la referente indiscutible de tu sector.</span>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-xmark text-red-400 mr-3 mt-1"></i>
+                            <span>Esperas que el sistema funcione solo sin que tú dediques tiempo inicial de configuración.</span>
                         </li>
                     </ul>
                 </div>
@@ -278,475 +306,197 @@
         </div>
     </section>
 
-    <!-- SECTION: EL MULTIPLICADOR DE CONTENIDO INFINITO -->
-    <section class="py-16 md:py-24 px-4 max-w-5xl mx-auto text-center">
-        <div class="max-w-3xl mx-auto mb-12">
-            <span class="text-imperial-400 font-extrabold uppercase tracking-widest text-xs">RECURSO REUTILIZABLE DE POR VIDA</span>
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">
-                No Compras 30 Días... Compras un <span class="gold-gradient-text">Sistema de Contenido Infinito</span>
-            </h2>
-            <p class="text-gray-300 text-sm md:text-base mt-3 leading-relaxed">
-                La gran ventaja de estas 30 estructuras pre-escritas es su **versatilidad de reciclaje**. Una sola plantilla puede transformarse en decenas de publicaciones distintas a lo largo del año.
+    <!-- SECCIÓN DE OPCIONES DE COMPRA CON TUS LINKS OFICIALES DE BEACONS -->
+    <section id="ofertas" class="py-16 md:py-24 px-6 max-w-5xl mx-auto scroll-mt-20">
+        <div class="text-center mb-14">
+            <span class="text-capitana-gold font-bold text-xs uppercase tracking-widest block mb-2 font-cinzel">Opciones Oficiales de Compra</span>
+            <h2 class="font-cinzel text-3xl md:text-5xl font-bold text-capitana-purple">Selecciona Tu Nivel de Acceso</h2>
+            <div class="w-24 h-1 bg-capitana-gold mx-auto mt-4 rounded-full"></div>
+            <p class="text-sm md:text-base text-gray-600 mt-4 max-w-2xl mx-auto">
+                Precios expresados en Dólares Estadounidenses (USD) para procesamiento internacional.
             </p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6 text-left">
-            <div class="bg-darkCard p-6 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all">
-                <div class="w-10 h-10 rounded-xl bg-imperial-900 border border-imperial-700/60 text-gold-400 flex items-center justify-center font-bold mb-4 text-lg">
-                    1
-                </div>
-                <h3 class="text-base font-bold text-white mb-2">Cambia el Ángulo de Encuadre</h3>
-                <p class="text-xs text-gray-400 leading-relaxed">Usa el carrusel hoy para hablar de *"Errores comunes"*, y el próximo mes usa la misma estructura para hablar de *"Mitos revelados"*. La retención será exactamente igual de alta.</p>
-            </div>
-
-            <div class="bg-darkCard p-6 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all">
-                <div class="w-10 h-10 rounded-xl bg-imperial-900 border border-imperial-700/60 text-gold-400 flex items-center justify-center font-bold mb-4 text-lg">
-                    2
-                </div>
-                <h3 class="text-base font-bold text-white mb-2">Adapta a Diferentes Ofertas</h3>
-                <p class="text-xs text-gray-400 leading-relaxed">Si lanzas un nuevo e-book, plantilla o servicio, simplemente reemplaza el llamado a la acción final y el producto mencionado. El motor de venta ya está construido.</p>
-            </div>
-
-            <div class="bg-darkCard p-6 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all">
-                <div class="w-10 h-10 rounded-xl bg-imperial-900 border border-imperial-700/60 text-gold-400 flex items-center justify-center font-bold mb-4 text-lg">
-                    3
-                </div>
-                <h3 class="text-base font-bold text-white mb-2">Nunca Vuelves a Empezar de Cero</h3>
-                <p class="text-xs text-gray-400 leading-relaxed">Olvídate del trauma del lienzo en blanco. Abres Canva, eliges 1 de las 30 estructuras, ajustas 3 frases y en menos de 5 minutos tienes tu post listo para publicar.</p>
-            </div>
-        </div>
-
-        <div class="mt-10 p-6 rounded-2xl bg-gradient-to-r from-imperial-950 via-darkCard to-imperial-950 border border-imperial-700/60 max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
-            <div class="space-y-1">
-                <h4 class="text-white font-bold text-sm">30 Plantillas × 12 Meses = +360 Publicaciones al Año</h4>
-                <p class="text-xs text-gray-400">Todo por un pago único de solo $27.00 USD hoy.</p>
-            </div>
-            <a href="https://shop.beacons.ai/lacapitanafaceless/0901d3c0-f534-48fb-8cfa-f34a13c35b21" class="gold-gradient-bg text-black font-extrabold text-xs py-3 px-5 rounded-xl flex-shrink-0 hover:scale-105 transition-transform">
-                OBTENER MI ACCESO VITALICIO
-            </a>
-        </div>
-    </section>
-
-    <!-- ESTO ES PARA TI SI... (TARGET AUDIENCE CHECKLIST) -->
-    <section class="py-16 bg-imperial-950/40 border-y border-imperial-900/80 px-4">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-center text-white mb-3">
-                ¿Este Pack de Carruseles es <span class="gold-gradient-text">Para Ti</span>?
-            </h2>
-            <p class="text-center text-gray-400 text-sm max-w-xl mx-auto mb-10">
-                Si te identificas con alguno de estos 4 escenarios cotidianos, La Capitana creó esta solución pensando exactamente en ti:
-            </p>
-
-            <div class="grid md:grid-cols-2 gap-4">
-                <div class="bg-darkCard p-6 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all flex items-start gap-4">
-                    <div class="w-10 h-10 rounded-xl bg-imperial-800/50 text-gold-400 flex items-center justify-center flex-shrink-0 mt-0.5 border border-imperial-700/50">
-                        <i class="fa-solid fa-clock text-lg"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-white text-base">Si no tienes tiempo para diseñar</h3>
-                        <p class="text-sm text-gray-400 mt-1 leading-relaxed">Si no dispones de horas libres para estar inventando carruseles ni cuadrando elementos visuales desde cero en Canva.</p>
-                    </div>
-                </div>
-
-                <div class="bg-darkCard p-6 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all flex items-start gap-4">
-                    <div class="w-10 h-10 rounded-xl bg-imperial-800/50 text-gold-400 flex items-center justify-center flex-shrink-0 mt-0.5 border border-imperial-700/50">
-                        <i class="fa-solid fa-bullseye text-lg"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-white text-base">Si no estás segura de enganchar</h3>
-                        <p class="text-sm text-gray-400 mt-1 leading-relaxed">Si dudas sobre si la estructura de tus publicaciones realmente logrará retener a la audiencia y despertar ganas de comprar.</p>
-                    </div>
-                </div>
-
-                <div class="bg-darkCard p-6 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all flex items-start gap-4">
-                    <div class="w-10 h-10 rounded-xl bg-imperial-800/50 text-gold-400 flex items-center justify-center flex-shrink-0 mt-0.5 border border-imperial-700/50">
-                        <i class="fa-solid fa-pen-slash text-lg"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-white text-base">Si cuando vas a escribir te quedas en blanco</h3>
-                        <p class="text-sm text-gray-400 mt-1 leading-relaxed">Si te sientas frente a la pantalla vacía sin saber qué poner en cada diapositiva ni cómo cerrar con un llamado a la acción efectivo.</p>
-                    </div>
-                </div>
-
-                <div class="bg-darkCard p-6 rounded-2xl border border-imperial-800/80 hover:border-gold-500/50 transition-all flex items-start gap-4">
-                    <div class="w-10 h-10 rounded-xl bg-imperial-800/50 text-gold-400 flex items-center justify-center flex-shrink-0 mt-0.5 border border-imperial-700/50">
-                        <i class="fa-solid fa-calendar-check text-lg"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-white text-base">Si quieres el mes resuelto de una vez</h3>
-                        <p class="text-sm text-gray-400 mt-1 leading-relaxed">Si buscas tener 30 días enteros de contenido estructurado listo para publicar sin volver a estresarte durante todo el mes.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- COMPARISON CALLOUT BANNER -->
-            <div class="mt-8 p-6 md:p-8 rounded-2xl bg-gradient-to-r from-imperial-950 via-darkCard to-imperial-950 border border-gold-500/40 text-center relative overflow-hidden">
-                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-gold-500/10 rounded-full blur-2xl"></div>
-                <h4 class="text-lg md:text-xl font-extrabold text-white mb-2">¿Podrías hacerlo tú sola desde cero?</h4>
-                <p class="text-sm md:text-base text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                    <strong class="text-gold-400 font-bold">¡Claro que sí!</strong> Pero será infinitamente más fácil y rápido si ya tienes <span class="text-white font-semibold">30 estructuras de carruseles listas en Canva, pre-escritas con ganchos de venta</span>. Diseñadas para que las puedas reutilizar infinitas veces, mes tras mes. Solo abres, adaptas, publicas y activas ventas.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- HIGH-CONVERTING OFFER & CHECKOUT SECTION -->
-    <section id="checkout" class="py-16 md:py-24 bg-imperial-950/80 border-t border-imperial-800 px-4 relative">
-        <div class="max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
             
-            <div class="text-center mb-10">
-                <div class="inline-flex items-center gap-2 bg-imperial-900/90 text-gold-400 border border-imperial-600/60 text-xs font-extrabold px-4 py-1.5 rounded-full uppercase tracking-widest mb-3 shadow-lg">
-                    <i class="fa-solid fa-lock text-gold-500"></i> PASARELA OFICIAL Y SEGURA DE LA CAPITANA
+            <!-- PLAN STARTER ($27 USD) CON TU LINK DE BEACONS INTEGRADO -->
+            <div class="bg-white rounded-3xl p-8 border-2 border-gray-200 flex flex-col justify-between shadow-sm hover:shadow-xl transition-all duration-300 relative">
+                <div>
+                    <div class="inline-block bg-gray-100 text-gray-700 font-bold text-[11px] uppercase tracking-wider px-3 py-1 rounded-full mb-4">
+                        Opción Starter
+                    </div>
+                    <h3 class="font-cinzel text-2xl font-bold text-capitana-purple mb-2">BLUEPRINT STARTER</h3>
+                    <p class="text-xs text-gray-500 mb-6">Acceso a la guía estratégica principal y al banco de ganchos.</p>
+
+                    <div class="flex items-baseline mb-6 border-b border-gray-100 pb-6">
+                        <span class="text-4xl md:text-5xl font-extrabold text-capitana-purple">$27</span>
+                        <span class="text-sm font-semibold text-gray-500 ml-2">USD (Pago Único)</span>
+                    </div>
+
+                    <ul class="space-y-4 text-xs md:text-sm text-gray-700 mb-8">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-circle-check text-green-600 mr-2.5 mt-0.5"></i>
+                            <span><strong>The Faceless Sales Blueprint™ (PDF)</strong> — El manual estratégico principal de monetización.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-circle-check text-green-600 mr-2.5 mt-0.5"></i>
+                            <span><strong>Banco de 40 Ganchos (Hooks)</strong> de alta retención para detener el scroll en tus publicaciones.</span>
+                        </li>
+                    </ul>
                 </div>
-                <h2 class="text-3xl md:text-5xl font-black text-white">Obtén Tu Acceso Inmediato</h2>
-                <p class="text-gray-300 text-sm mt-2">Haz clic abajo para asegurar tu pack con precio exclusivo de lanzamiento</p>
-                
-                <!-- Countdown Timer -->
-                <div class="mt-4 inline-flex items-center justify-center gap-3 bg-darkBg border border-gold-500/40 px-5 py-2 rounded-xl text-xs md:text-sm shadow-xl">
-                    <span class="text-gray-300 font-medium"><i class="fa-regular fa-clock text-gold-500 mr-1.5"></i> Esta oferta de lanzamiento expira en:</span>
-                    <span id="countdown" class="font-mono font-bold text-gold-400 text-base">14:59</span>
+
+                <div>
+                    <!-- LINK INTEGRADO PARA PLAN STARTER -->
+                    <a href="https://shop.beacons.ai/lacapitanafaceless/e39a8522-ff0f-4111-ab9c-3109fb548cfb" target="_blank" rel="noopener" class="w-full bg-capitana-purple hover:bg-capitana-purpleDeep text-white font-bold text-sm py-4 px-6 rounded-xl uppercase tracking-wider text-center block transition-all shadow-md">
+                        👑 Obtener Blueprint Starter ($27 USD)
+                    </a>
+                    <p class="text-[11px] text-gray-400 text-center mt-3"><i class="fa-solid fa-lock text-[10px] mr-1"></i> Descarga Digital Inmediata</p>
                 </div>
             </div>
 
-            <!-- MAIN OFFER CARD -->
-            <div class="bg-darkCard rounded-3xl border border-imperial-600/60 p-6 md:p-10 shadow-2xl royal-glow relative">
-                
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                    
-                    <!-- Left Side: Order Summary -->
-                    <div class="md:col-span-7 space-y-4">
-                        <div class="inline-block bg-imperial-900 text-gold-300 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider border border-imperial-700/60">
-                            👑 PAQUETE DE AUTORIDAD Y CONVERSIÓN
-                        </div>
-                        
-                        <h3 class="text-2xl font-black text-white leading-snug">
-                            30 Carruseles de Autoridad Pre-Escritos en Canva
-                        </h3>
-
-                        <p class="text-xs text-gray-300 leading-relaxed">
-                            Acceso inmediato a las 30 plantillas en Canva listas para personalizar con los colores, fuentes e imágenes de tu propia marca. Reutilizables de por vida para multiplicar tu contenido.
-                        </p>
-
-                        <div class="space-y-2.5 text-xs text-gray-300 pt-3 border-t border-imperial-800/80">
-                            <div class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-gold-500 text-sm"></i>
-                                <span>30 Estructuras de Carruseles Pre-Escritos</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-gold-500 text-sm"></i>
-                                <span>Ganchos Psicológicos Redactados para Vender</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-gold-500 text-sm"></i>
-                                <span>Compatibles con Canva Gratuito y Pro</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-gold-500 text-sm"></i>
-                                <span>Multiplicador Infinito de Contenido Reutilizable</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-gold-500 text-sm"></i>
-                                <span>Acceso de Por Vida e Inmediato</span>
-                            </div>
-                        </div>
-
-                        <!-- STORE UPSELLS INFO NOTICE (ORDER BUMP PREVIEW) -->
-                        <div class="p-4 rounded-2xl bg-gradient-to-r from-imperial-950 via-darkBg to-imperial-950 border border-gold-500/40 text-xs text-gray-300 mt-5 shadow-lg relative overflow-hidden">
-                            <div class="flex items-start gap-3">
-                                <div class="w-8 h-8 rounded-lg bg-imperial-900 border border-gold-500/40 text-gold-400 flex items-center justify-center flex-shrink-0 mt-0.5 shadow">
-                                    <i class="fa-solid fa-star text-sm"></i>
-                                </div>
-                                <div class="space-y-1 flex-1">
-                                    <div class="flex items-center justify-between flex-wrap gap-2">
-                                        <span class="text-gold-400 font-extrabold text-xs tracking-wider uppercase">
-                                            👑 COMPLEMENTO EXCLUSIVO EN TIENDA (OPCIONAL)
-                                        </span>
-                                        <span class="bg-gold-500/20 text-gold-300 border border-gold-500/40 text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider shadow-sm">
-                                            PRECIO ESPECIAL DE SESIÓN
-                                        </span>
-                                    </div>
-                                    <h4 class="text-white font-bold text-sm">60 Plantillas: "Vender por Historias en Canva"</h4>
-                                    <p class="text-xs text-gray-300 leading-relaxed">
-                                        Al avanzar a la tienda, podrás añadir en 1 solo clic estas 60 plantillas estratégicas en Canva para convertir las vistas de tus historias en ventas diarias, disponible con un <strong class="text-white font-semibold">descuento preferencial reservado únicamente para esta sesión</strong>.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Side: Pricing & CTA -->
-                    <div class="md:col-span-5 bg-darkBg p-6 rounded-2xl border border-imperial-800 text-center flex flex-col justify-center items-center shadow-inner">
-                        
-                        <span class="text-xs text-gray-400 font-bold uppercase tracking-wider">Precio Normal: <span class="line-through text-gray-500">$97 USD</span></span>
-                        
-                        <div class="my-3">
-                            <span class="text-xs text-gold-400 font-extrabold uppercase tracking-widest block">HOY PAGA SOLO</span>
-                            <span class="text-4xl md:text-5xl font-black gold-gradient-text">$27<span class="text-lg text-white font-bold">.00 USD</span></span>
-                        </div>
-
-                        <span class="text-[11px] bg-imperial-900/90 text-gold-300 border border-imperial-700/60 px-3 py-1 rounded-full font-bold mb-6">
-                            72% DE DESCUENTO APLICADO
-                        </span>
-
-                        <!-- DIRECT CHECKOUT BUTTON -->
-                        <a id="checkout-btn" href="https://shop.beacons.ai/lacapitanafaceless/0901d3c0-f534-48fb-8cfa-f34a13c35b21" onclick="handleCheckout(event)" class="w-full gold-gradient-bg text-black font-black text-base md:text-lg py-4 px-6 rounded-xl shadow-2xl hover:scale-[1.03] active:scale-[0.98] transition-all gold-glow flex flex-col items-center justify-center gap-1 group">
-                            <span class="flex items-center gap-2">
-                                <span>¡QUIERO MI ACCESO INMEDIATO!</span>
-                                <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                            </span>
-                            <span class="text-[10px] font-bold opacity-80 uppercase tracking-wider">Pago Seguro • Acceso Inmediato</span>
-                        </a>
-
-                        <div class="mt-4 flex items-center justify-center gap-3 text-gray-400 text-[11px]">
-                            <span class="flex items-center gap-1"><i class="fa-solid fa-shield-halved text-gold-500"></i> Cifrado SSL 256-bit</span>
-                            <span>•</span>
-                            <span class="flex items-center gap-1"><i class="fa-solid fa-bolt text-gold-500"></i> Entrega Digital</span>
-                        </div>
-
-                        <!-- LEGAL DIGITAL REFUND DISCLAIMER -->
-                        <p class="mt-3.5 text-[10px] text-gray-400/80 leading-snug border-t border-imperial-800/80 pt-2.5 px-2">
-                            <i class="fa-solid fa-scale-balanced text-gold-500/80 mr-1"></i>
-                            <strong class="text-gray-300 font-semibold">Aviso de Producto Digital:</strong> Debido a la naturaleza descargable y de acceso inmediato de las plantillas, la compra es final y no se admiten reembolsos conforme a la normativa de contenidos digitales.
-                        </p>
-
-                    </div>
-
+            <!-- BUNDLE IMPERIAL GOLD ($67 USD) CON TU LINK DE BEACONS INTEGRADO -->
+            <div class="purple-gradient-card rounded-3xl p-8 border-2 border-capitana-gold flex flex-col justify-between shadow-2xl relative transform md:-translate-y-2">
+                <div class="absolute -top-4 right-8 bg-capitana-gold text-black font-extrabold text-xs uppercase px-4 py-1.5 rounded-full shadow-lg tracking-wider">
+                    ✨ PACK COMPLETO DESTACADO
                 </div>
 
+                <div>
+                    <div class="inline-block bg-capitana-gold/20 text-capitana-gold border border-capitana-gold/40 font-bold text-[11px] uppercase tracking-wider px-3 py-1 rounded-full mb-4">
+                        Ecosistema Completo
+                    </div>
+                    <h3 class="font-cinzel text-2xl font-bold text-white mb-2">BUNDLE IMPERIAL GOLD®</h3>
+                    <p class="text-xs text-gray-300 mb-6">El paquete integral con todos los recursos de la marca.</p>
+
+                    <div class="flex items-baseline mb-6 border-b border-white/10 pb-6">
+                        <span class="text-4xl md:text-5xl font-extrabold text-capitana-gold">$67</span>
+                        <span class="text-sm font-semibold text-gray-300 ml-2">USD (Pago Único)</span>
+                    </div>
+
+                    <ul class="space-y-3.5 text-xs md:text-sm text-gray-100 mb-8">
+                        <li class="flex items-start text-capitana-goldLight">
+                            <i class="fa-solid fa-crown text-capitana-gold mr-2.5 mt-0.5"></i>
+                            <span><strong>The Faceless Sales Blueprint™ (PDF)</strong> + Banco de 40 Ganchos (Hooks).</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-capitana-gold mr-2.5 mt-0.5"></i>
+                            <span><strong>Pack de 30 Carruseles Editables en Canva</strong>.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-capitana-gold mr-2.5 mt-0.5"></i>
+                            <span><strong>Pack de 60 Stories de Venta y Recurso en Canva</strong> (Historias individuales).</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-capitana-gold mr-2.5 mt-0.5"></i>
+                            <span><strong>Kit de Conversión & Objeciones</strong>.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-capitana-gold mr-2.5 mt-0.5"></i>
+                            <span><strong>Hoja de Seguimiento/Excel</strong> para control de interacciones y ventas.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <!-- LINK INTEGRADO PARA BUNDLE GOLD -->
+                    <a href="https://shop.beacons.ai/lacapitanafaceless/183be972-05f2-4a82-a0a0-7eaf4d363fb3" target="_blank" rel="noopener" class="w-full gold-gradient-btn text-black font-extrabold text-sm py-4 px-6 rounded-xl uppercase tracking-wider text-center block transition-all transform hover:scale-[1.02]">
+                        👑 Acceder al Bundle Imperial Gold ($67 USD)
+                    </a>
+                    <p class="text-[11px] text-capitana-gold/80 text-center mt-3"><i class="fa-solid fa-bolt text-[10px] mr-1"></i> Entrega Digital Inmediata</p>
+                </div>
             </div>
 
         </div>
+
+        <!-- NOTA SOBRE ORDER BUMP -->
+        <div class="mt-10 bg-white rounded-2xl p-6 border border-capitana-gold/40 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-xl bg-capitana-gold/20 text-capitana-gold flex items-center justify-center text-xl shrink-0">
+                    <i class="fa-solid fa-cart-plus"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm text-capitana-purple">Opción de Order Bump en Checkout</h4>
+                    <p class="text-xs text-gray-600">Si seleccionas la opción Starter ($27 USD), en la pantalla de pago podrás añadir de forma opcional el pack de **60 Stories de Venta y Recurso por +$17 USD**.</p>
+                </div>
+            </div>
+            <a href="https://shop.beacons.ai/lacapitanafaceless/e39a8522-ff0f-4111-ab9c-3109fb548cfb" target="_blank" rel="noopener" class="text-xs font-bold text-capitana-purple hover:text-capitana-purpleDeep underline shrink-0">Ir a la Pasarela de Pago →</a>
+        </div>
     </section>
 
-    <!-- FAQ SECTION WITH INTERACTIVE ACCORDIONS -->
-    <section class="py-16 px-4 max-w-3xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-extrabold text-center text-white mb-8">Preguntas Frecuentes</h2>
-
-        <div class="space-y-3">
-            <div class="bg-darkCard rounded-xl border border-imperial-800/80 overflow-hidden">
-                <button type="button" onclick="toggleFaq(1)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors cursor-pointer select-none">
-                    <span>¿Por qué estas 30 plantillas son mejores que generar contenido con IA?</span>
-                    <i id="faq-icon-1" class="fa-solid fa-chevron-down text-gold-500 transition-transform duration-300 transform"></i>
-                </button>
-                <div id="faq-ans-1" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3 leading-relaxed">
-                    La IA escribe textos genéricos que carecen de psicología de retención visual y ganchos emocionales reales. Estas 30 plantillas están construidas con estructuras probadas de conversión humana que detienen el pulgar del usuario y disparan la interacción de tus DMs.
-                </div>
+    <!-- FAQS (PREGUNTAS FRECUENTES) CON POLÍTICA CLARA DE NO REEMBOLSO -->
+    <section class="py-16 bg-white border-t border-gray-200 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-capitana-gold font-bold text-xs uppercase tracking-widest block mb-2 font-cinzel">Respuestas Directas</span>
+                <h2 class="font-cinzel text-2xl md:text-4xl font-bold text-capitana-purple">Preguntas Frecuentes</h2>
+                <div class="w-16 h-1 bg-capitana-gold mx-auto mt-3 rounded-full"></div>
             </div>
 
-            <div class="bg-darkCard rounded-xl border border-imperial-800/80 overflow-hidden">
-                <button type="button" onclick="toggleFaq(2)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors cursor-pointer select-none">
-                    <span>¿Necesito Canva Pro para usar estas plantillas?</span>
-                    <i id="faq-icon-2" class="fa-solid fa-chevron-down text-gold-500 transition-transform duration-300 transform"></i>
-                </button>
-                <div id="faq-ans-2" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3 leading-relaxed">
-                    No. Todas las tipografías, elementos visuales y marcos utilizados son 100% compatibles tanto con la versión gratuita de Canva como con Canva Pro.
+            <div class="space-y-4">
+                <!-- FAQ 1: POLITICA DE NO REEMBOLSO -->
+                <div class="border border-amber-300 bg-amber-50/50 rounded-xl p-5">
+                    <h3 class="font-bold text-sm md:text-base text-capitana-purple mb-2 flex items-center">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-600 mr-2.5"></i>
+                        ¿Cuál es la política de devoluciones y reembolsos?
+                    </h3>
+                    <p class="text-xs md:text-sm text-gray-700 leading-relaxed pl-7">
+                        Al tratarse de productos digitales de entrega e impresiones descargables inmediatas (PDFs, enlaces a plantillas editables en Canva y plantillas de Excel), <strong>el material NO es reembolsable bajo ninguna circunstancia</strong>. Al realizar la compra adquieres el acceso directo al contenido de forma definitiva. Por favor, asegúrate de revisar lo que incluye cada opción antes de realizar el pago.
+                    </p>
                 </div>
-            </div>
 
-            <div class="bg-darkCard rounded-xl border border-imperial-800/80 overflow-hidden">
-                <button type="button" onclick="toggleFaq(3)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors cursor-pointer select-none">
-                    <span>¿Puedo reutilizar las plantillas mes tras mes?</span>
-                    <i id="faq-icon-3" class="fa-solid fa-chevron-down text-gold-500 transition-transform duration-300 transform"></i>
-                </button>
-                <div id="faq-ans-3" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3 leading-relaxed">
-                    ¡Sí! Esa es su mayor fortaleza. Tienes acceso de por vida a las 30 estructuras. Puedes usarlas cambiando el enfoque, las imágenes o la oferta tantas veces como quieras para alimentar todo tu año de contenido.
+                <!-- FAQ 2 -->
+                <div class="border border-gray-200 rounded-xl p-5 hover:border-capitana-gold/50 transition-all">
+                    <h3 class="font-bold text-sm md:text-base text-capitana-purple mb-2 flex items-center">
+                        <i class="fa-solid fa-circle-question text-capitana-gold mr-2.5"></i>
+                        ¿Necesito suscripción de pago en Canva para usar las plantillas?
+                    </h3>
+                    <p class="text-xs md:text-sm text-gray-600 leading-relaxed pl-7">
+                        No. Todas las plantillas editables están diseñadas para utilizarse con una cuenta gratuita de Canva. Puedes ajustar los diseños, agregar tus propios textos y cambiar colores sin pagar servicios extra.
+                    </p>
                 </div>
-            </div>
 
-            <div class="bg-darkCard rounded-xl border border-imperial-800/80 overflow-hidden">
-                <button type="button" onclick="toggleFaq(4)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors cursor-pointer select-none">
-                    <span>¿Existe política de reembolso o devolución?</span>
-                    <i id="faq-icon-4" class="fa-solid fa-chevron-down text-gold-500 transition-transform duration-300 transform"></i>
-                </button>
-                <div id="faq-ans-4" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3 leading-relaxed">
-                    Al tratarse de un producto digital con acceso instantáneo y de propiedad intelectual descargable (plantillas de Canva), no se admiten devoluciones ni reembolsos una vez realizada la compra.
+                <!-- FAQ 3 -->
+                <div class="border border-gray-200 rounded-xl p-5 hover:border-capitana-gold/50 transition-all">
+                    <h3 class="font-bold text-sm md:text-base text-capitana-purple mb-2 flex items-center">
+                        <i class="fa-solid fa-circle-question text-capitana-gold mr-2.5"></i>
+                        ¿Cómo recibo el material después de realizar la compra?
+                    </h3>
+                    <p class="text-xs md:text-sm text-gray-600 leading-relaxed pl-7">
+                        El acceso es automático. Tras confirmar el pago en la pasarela, obtendrás el acceso inmediato a la descarga y recibirás un correo electrónico de confirmación con todos tus enlaces de acceso.
+                    </p>
                 </div>
-            </div>
 
-            <div class="bg-darkCard rounded-xl border border-imperial-800/80 overflow-hidden">
-                <button type="button" onclick="toggleFaq(5)" class="w-full p-5 text-left font-bold text-white text-base flex justify-between items-center hover:text-gold-400 transition-colors cursor-pointer select-none">
-                    <span>¿Qué es el kit de 60 Plantillas para Vender por Historias en Canva?</span>
-                    <i id="faq-icon-5" class="fa-solid fa-chevron-down text-gold-500 transition-transform duration-300 transform"></i>
-                </button>
-                <div id="faq-ans-5" class="px-5 pb-5 text-sm text-gray-400 hidden border-t border-imperial-800/40 pt-3 leading-relaxed">
-                    Es un complemento estratégico opcional con un precio de oferta especial que verás habilitado en la tienda. Te entrega 60 plantillas en Canva diseñadas exclusivamente para interactuar, conectar y cerrar ventas diarias directamente desde tus Historias de Instagram.
+                <!-- FAQ 4 -->
+                <div class="border border-gray-200 rounded-xl p-5 hover:border-capitana-gold/50 transition-all">
+                    <h3 class="font-bold text-sm md:text-base text-capitana-purple mb-2 flex items-center">
+                        <i class="fa-solid fa-circle-question text-capitana-gold mr-2.5"></i>
+                        ¿Las plantillas de Stories son secuencias largas o individuales?
+                    </h3>
+                    <p class="text-xs md:text-sm text-gray-600 leading-relaxed pl-7">
+                        Son 60 plantillas de historias individuales de venta y recurso. Cada una está estructurada de forma independiente para que puedas publicar la que necesites según el objetivo del día.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="py-8 border-t border-imperial-800/80 text-center text-xs text-gray-500">
-        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-2">
-                <i class="fa-solid fa-crown text-gold-500"></i>
-                <span class="font-bold text-white">La Capitana Faceless</span>
+    <!-- FOOTER OFICIAL CON CLÁUSULAS ÉTICAS Y TRANSPARENCIA -->
+    <footer class="bg-capitana-purpleDeep text-white border-t border-capitana-gold/30 py-12 px-6">
+        <div class="max-w-5xl mx-auto text-center space-y-6">
+            <div class="flex justify-center items-center space-x-2">
+                <span class="text-capitana-gold text-2xl">👑</span>
+                <span class="font-cinzel text-xl font-bold tracking-wider text-white">LA CAPITANA FACELESS®</span>
             </div>
-            <p>© 2026 La Capitana Faceless. Todos los derechos reservados.</p>
+            
+            <p class="text-xs text-gray-400 max-w-xl mx-auto leading-relaxed">
+                Ecosistema de Marketing Digital, Copywriting Directo y Estrategia de Ventas Sin Rostro. Todos los derechos reservados © 2026.
+            </p>
+
+            <div class="pt-6 border-t border-white/10 text-[11px] text-gray-500 space-y-2">
+                <p>Este sitio no forma parte ni está respaldado por Meta Platforms, Inc., Facebook o Instagram.</p>
+                <p>Los productos digitales entregados no son reembolsables tras su adquisición.</p>
+            </div>
         </div>
     </footer>
-
-    <!-- MOBILE STICKY FLOATING CTA BAR -->
-    <div id="mobile-sticky-bar" class="fixed bottom-0 left-0 right-0 z-40 bg-darkCard/95 backdrop-blur-lg border-t border-gold-500/40 p-3 flex items-center justify-between gap-3 md:hidden shadow-2xl transition-transform duration-300 translate-y-full">
-        <div>
-            <span class="text-[10px] text-imperial-300 uppercase tracking-wider block font-bold">30 Carruseles Canva</span>
-            <span class="text-lg font-black gold-gradient-text leading-none">$27.00 <span class="text-xs text-gray-400 font-normal">USD</span></span>
-        </div>
-        <a href="https://shop.beacons.ai/lacapitanafaceless/0901d3c0-f534-48fb-8cfa-f34a13c35b21" class="gold-gradient-bg text-black font-extrabold text-xs py-3 px-5 rounded-xl shadow-lg flex items-center gap-1.5">
-            <span>OBTENER AHORA</span>
-            <i class="fa-solid fa-arrow-right text-[10px]"></i>
-        </a>
-    </div>
-
-    <!-- POPUP DE PRUEBA SOCIAL / COMPRAS EN VIVO -->
-    <div id="social-proof-toast" class="toast-hidden fixed bottom-20 md:bottom-6 left-4 right-4 sm:right-auto sm:max-w-sm z-[100] bg-darkCard/95 backdrop-blur-md border border-imperial-600/60 p-3.5 rounded-2xl shadow-2xl royal-glow flex items-center gap-3">
-        <div class="relative flex-shrink-0">
-            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-imperial-600 via-gold-500 to-imperial-400 p-[1px] flex items-center justify-center shadow-md">
-                <div class="w-full h-full bg-darkBg rounded-full flex items-center justify-center text-gold-400 font-bold text-sm" id="toast-avatar">
-                    MG
-                </div>
-            </div>
-            <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-darkCard flex items-center justify-center text-[8px] text-black font-extrabold">
-                <i class="fa-solid fa-check"></i>
-            </div>
-        </div>
-
-        <div class="flex-1 min-w-0">
-            <div class="flex items-center justify-between gap-1 mb-0.5">
-                <span class="text-xs font-bold text-white truncate" id="toast-name">María G.</span>
-                <span class="text-[10px] text-gray-400 flex-shrink-0" id="toast-time">Hace 2 min</span>
-            </div>
-            <p class="text-[11px] text-gold-400 font-medium leading-tight truncate">
-                Adquirió los <strong class="text-white font-semibold">30 Carruseles 👑</strong>
-            </p>
-            <span class="text-[9px] text-imperial-300 block mt-0.5" id="toast-location">Madrid, España • Compra verificada</span>
-        </div>
-
-        <button type="button" onclick="closeSocialProof()" class="text-gray-500 hover:text-white p-1 transition-colors flex-shrink-0 cursor-pointer">
-            <i class="fa-solid fa-xmark text-xs"></i>
-        </button>
-    </div>
-
-    <!-- INTERACTIVE SCRIPTS -->
-    <script>
-        // Official Beacons product link
-        const CHECKOUT_URL = "https://shop.beacons.ai/lacapitanafaceless/0901d3c0-f534-48fb-8cfa-f34a13c35b21"; 
-
-        function handleCheckout(event) {
-            if (CHECKOUT_URL && CHECKOUT_URL !== "#") {
-                event.preventDefault();
-                window.location.href = CHECKOUT_URL;
-            }
-        }
-
-        function toggleFaq(id) {
-            const ans = document.getElementById(`faq-ans-${id}`);
-            const icon = document.getElementById(`faq-icon-${id}`);
-            if (!ans) return;
-
-            if (ans.classList.contains('hidden')) {
-                ans.classList.remove('hidden');
-                if (icon) {
-                    icon.style.transform = 'rotate(180deg)';
-                }
-            } else {
-                ans.classList.add('hidden');
-                if (icon) {
-                    icon.style.transform = 'rotate(0deg)';
-                }
-            }
-        }
-
-        // Countdown timer implementation (15 minutes)
-        let timeInSeconds = 15 * 60;
-        const countdownEl = document.getElementById('countdown');
-        setInterval(() => {
-            if (timeInSeconds <= 0) timeInSeconds = 15 * 60;
-            timeInSeconds--;
-            const mins = Math.floor(timeInSeconds / 60);
-            const secs = timeInSeconds % 60;
-            if (countdownEl) {
-                countdownEl.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-            }
-        }, 1000);
-
-        // Mobile Sticky Bar Trigger on Scroll
-        const mobileStickyBar = document.getElementById('mobile-sticky-bar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 450) {
-                if (mobileStickyBar) mobileStickyBar.classList.remove('translate-y-full');
-            } else {
-                if (mobileStickyBar) mobileStickyBar.classList.add('translate-y-full');
-            }
-        });
-
-        // Dynamic Social Proof Toast Sales Generator
-        const buyerData = [
-            { name: "María G.", initials: "MG", location: "Madrid, España", time: "Hace 2 min" },
-            { name: "Sofía P.", initials: "SP", location: "Barcelona, España", time: "Hace 4 min" },
-            { name: "Valentina R.", initials: "VR", location: "Ciudad de México", time: "Hace 1 min" },
-            { name: "Camila T.", initials: "CT", location: "Bogotá, Colombia", time: "Hace 7 min" },
-            { name: "Elena M.", initials: "EM", location: "Buenos Aires, Argentina", time: "Hace 3 min" },
-            { name: "Lucía F.", initials: "LF", location: "Santiago, Chile", time: "Hace 5 min" },
-            { name: "Andrea B.", initials: "AB", location: "Miami, EE. UU.", time: "Hace 6 min" },
-            { name: "Daniela K.", initials: "DK", location: "Valencia, España", time: "Hace 8 min" }
-        ];
-
-        let toastIndex = 0;
-        let isToastDismissed = false;
-
-        function showNextNotification() {
-            if (isToastDismissed) return;
-            const toastEl = document.getElementById('social-proof-toast');
-            if (!toastEl) return;
-
-            const current = buyerData[toastIndex];
-            const avatarEl = document.getElementById('toast-avatar');
-            const nameEl = document.getElementById('toast-name');
-            const timeEl = document.getElementById('toast-time');
-            const locEl = document.getElementById('toast-location');
-
-            if (avatarEl) avatarEl.innerText = current.initials;
-            if (nameEl) nameEl.innerText = current.name;
-            if (timeEl) timeEl.innerText = current.time;
-            if (locEl) locEl.innerText = `${current.location} • Compra verificada`;
-
-            toastEl.classList.remove('toast-hidden');
-            toastEl.classList.add('toast-visible');
-
-            setTimeout(() => {
-                if (toastEl && !isToastDismissed) {
-                    toastEl.classList.remove('toast-visible');
-                    toastEl.classList.add('toast-hidden');
-                }
-            }, 4500);
-
-            toastIndex = (toastIndex + 1) % buyerData.length;
-        }
-
-        function closeSocialProof() {
-            isToastDismissed = true;
-            const toastEl = document.getElementById('social-proof-toast');
-            if (toastEl) {
-                toastEl.classList.remove('toast-visible');
-                toastEl.classList.add('toast-hidden');
-            }
-        }
-
-        // Guaranteed initialization even within iFrames or delayed DOM loads
-        function initSocialProof() {
-            setTimeout(() => {
-                showNextNotification();
-                setInterval(showNextNotification, 10000);
-            }, 1800);
-        }
-
-        if (document.readyState === 'complete' || document.readyState === 'interactive') {
-            initSocialProof();
-        } else {
-            document.addEventListener('DOMContentLoaded', initSocialProof);
-        }
-    </script>
 
 </body>
 </html>
